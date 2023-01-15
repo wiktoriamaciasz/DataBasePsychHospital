@@ -1,0 +1,94 @@
+CREATE TABLE Pacjenci (
+	ID INT PRIMARY KEY,
+	Imie VARCHAR(255),
+	Nazwisko VARCHAR(255),
+	Plec VARCHAR(255),
+	DataUrodzenia DATE,
+	Pesel INT,
+	Palenie BIT,
+	Wzrost INT,
+);
+
+CREATE TABLE Choroby (
+	ID INT PRIMARY KEY,
+	NazwaChoroby VARCHAR(255)
+);
+
+CREATE TABLE Terapie (
+	ID INT PRIMARY KEY,
+	NazwaTerapii VARCHAR(255)
+);
+
+CREATE TABLE Pracownicy (
+	ID INT PRIMARY KEY,
+	Imie VARCHAR(255),
+	Nazwisko VARCHAR(255),
+	Stanowisko VARCHAR(255),
+	StopienNaukowy VARCHAR(255),
+	Wyplata MONEY,
+	TypZatrudnienia VARCHAR(255),
+	DataZatrudnienia DATE,
+	NrKontaktowy INT,
+	Adres VARCHAR(255),
+	Miasto VARCHAR(255)
+);
+
+CREATE TABLE WszystkieChorobyPacjentow (
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	PRIMARY KEY (ID_Pacjenta, ID_Choroby),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+);
+
+CREATE TABLE Oddzialy (
+	ID INT PRIMARY KEY,
+	NazwaOddzialu VARCHAR(255),
+	Kierownik INT,
+	LiczbaMiejsc INT,
+	LiczbaPacjentow INT,
+	FOREIGN KEY(Kierownik) REFERENCES Pracownicy(ID),
+);
+
+CREATE TABLE Pobyty (
+	ID_pacjenta INT,
+	DataPrzyjecia DATE,
+	DataWypisu DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+);
+
+CREATE TABLE KategoriaLeku (
+	ID INT PRIMARY KEY,
+	NazwaKategorii VARCHAR(255)
+);
+
+CREATE TABLE Leki (
+	ID INT PRIMARY KEY,
+	NazwaLeku VARCHAR(255),
+	Generacja INT,
+	Producent INT,
+	Kategoria INT,
+	SubstancjaCzynna VARCHAR(255),
+	IloscLekuNaStanie INT,
+	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(ID),
+);
+
+CREATE TABLE StrategieLeczenia (
+	ID INT PRIMARY KEY,
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	ID_Leku INT,
+	DawkaLeku VARCHAR(255),
+	LekarzProwadzacy INT,
+	ID_Terapii INT,
+	ID_Oddzialu INT,
+	DataRozpoczecia DATE,
+	DataZakonczenia DATE,
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
+	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
+	FOREIGN KEY(ID_Terapii) REFERENCES Terapie(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(ID),
+);
