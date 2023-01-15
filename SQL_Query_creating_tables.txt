@@ -14,11 +14,6 @@ CREATE TABLE Choroby (
 	NazwaChoroby VARCHAR(255)
 );
 
-CREATE TABLE Terapie (
-	ID INT PRIMARY KEY,
-	NazwaTerapii VARCHAR(255)
-);
-
 CREATE TABLE Pracownicy (
 	ID INT PRIMARY KEY,
 	Imie VARCHAR(255),
@@ -81,7 +76,6 @@ CREATE TABLE StrategieLeczenia (
 	ID_Leku INT,
 	DawkaLeku VARCHAR(255),
 	LekarzProwadzacy INT,
-	ID_Terapii INT,
 	ID_Oddzialu INT,
 	DataRozpoczecia DATE,
 	DataZakonczenia DATE,
@@ -89,6 +83,114 @@ CREATE TABLE StrategieLeczenia (
 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
 	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
 	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
-	FOREIGN KEY(ID_Terapii) REFERENCES Terapie(ID),
 	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(ID),
+);
+
+
+CREATE TABLE BadanieMoczu (
+	ID_Pacjenta INT,
+	DataBadania DATE,
+	Barwa VARCHAR(255),
+	Klarownosc BIT,
+	OdczynPh INT,
+	CiezarMoczu INT,
+	Leukocyty BIT,
+	Hemoglobina BIT,
+	Bilirubina BIT,
+	Urobilinogen BIT,
+	Bialko BIT,
+	Glukoza BIT,
+	Ketony BIT,
+	Azotyny BIT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE BadanieKrwi (
+	ID_Pacjenta INT,
+	DataBadania DATE,
+	Barwa VARCHAR(255),
+	Erytrocyty INT,
+	Leukocyty INT,
+	Hemoglobina INT,
+	Hematokryt INT,
+	PlytkiKrwi INT,
+	Glukoza INT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE DaneKontaktowe (
+	ID_Osoby INT,
+	ID_Pacjenta INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	Adres VARCHAR(255),
+	Miasto VARCHAR(255),
+	Kraj VARCHAR(255),
+	PRIMARY KEY (ID_Osoby, ID_Pacjenta),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE DowstawcyLekow (
+	ID INT PRIMARY KEY,
+	ID_Leku INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	NazwaFirmy VARCHAR(255),
+	Adres VARCHAR(255),
+	Kraj VARCHAR(255),
+	UE BIT,
+	FOREIGN KEY(ID_Leku) REFERENCES LEKI(ID)
+);
+
+CREATE TABLE HistoriaWagi (
+	ID_Pacjenta INT,
+	Waga INT,
+	DataPomiaru DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPomiaru),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE InterakcjeLekowe (
+	ID_LEK_1 INT,
+	ID_LEK_2 INT,
+	TypInterakcji VARCHAR(255),
+	PRIMARY KEY (ID_LEK_1, ID_LEK_2),
+	FOREIGN KEY(ID_LEK_1) REFERENCES LEKI(ID),
+	FOREIGN KEY(ID_LEK_2) REFERENCES LEKI(ID)
+);
+
+CREATE TABLE ObjawyUboczneLekow (
+	ID_LEK INT,
+	ObjawUboczny VARCHAR(255),
+	PRIMARY KEY (ID_LEK, ObjawUboczny),
+	FOREIGN KEY(ID_LEK) REFERENCES LEKI(ID),
+);
+
+CREATE TABLE Objawy (
+	ID INT PRIMARY KEY,
+	NazwaObjawu VARCHAR(255),
+);
+
+CREATE TABLE ObjawyPacjentow (
+	ID_Pacjenta INT,
+	ID_Objawu INT,
+	DataWystapienia DATE,
+	PRIMARY KEY (ID_Pacjenta, ID_Objawu),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Objawu) REFERENCES Objawy(ID),
+);
+
+CREATE TABLE WynikiDanychPsychologicznych (
+	ID_Pacjenta INT,
+	Data DATE,
+	TestBECCA INT,
+	SkalaYOUNGA INT,
+	TestMMPI2 INT,
+	TestDUDIT INT,
+	SkalaAUDIT INT,
+	SkalaPANNS INT,
+	PRIMARY KEY (ID_Pacjenta, Data),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
 );
