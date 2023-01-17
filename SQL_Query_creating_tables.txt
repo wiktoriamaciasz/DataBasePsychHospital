@@ -204,3 +204,30 @@ INSERT INTO Pacjenci VALUES
 (5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
 (6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
 (7,'Lukas','Mak','m','1984-10-22',84102290645,1,183);
+
+INSERT INTO KategoriaLeku VALUES
+(1, 'SSRI-Antydepresanty'),
+(2, 'SNRI-Antydepresanty'),
+(3, 'Neuroleptyki'),
+(4, 'Stabilizator nastroju'),
+(5, 'Benzodiazepiny'),
+(6,'Agonista GABA'),
+(7,'Antagonista NMDA'),
+(8,'Antagonista receptora opioidowego');
+
+INSERT INTO Leki VALUES
+(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
+(2,'Bioxetin',NULL,'Sanofi Aventis',1,'Fluoksytyna',378),
+(3,'Parogen',NULL,'Mylan',1,'Paroksytyna',154),
+(4, 'Velaxin',NULL,'Egis',2,'Wenlafaksyna',79),
+(5, 'Olzapin', 2,'Lekam',3,'Olanzapina',601),
+(6,'Kwetaplex',2,'Adamed',3,'Kwetiapina',108),
+(7,'Solian',2,'Sanofi Aventis',3,'Amisulpiryd',123),
+(8,'Haloperidol',1,'Unia',3,'Haloperidol',396),
+(9,'Lithium Carbonicum',NULL,'GSK',4,'Lit',221),
+(10,'Depakine Chrono',NULL,'Sanofi Aventis',4,'Kwas Walproinowy',253),
+(11,'Xanax',NULL,'Pfizer',5,'Alprazolam',99),
+(12,'Relanium',NULL,'Polfa Warszawa S.A.',5,'Diazepam',138),
+(13,'Pregabalin',NULL,'Mylan',6,'Pregabalina',258),
+(14,'Biomentin',NULL,'Biofarm',7,'Memantyna',43),
+(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
