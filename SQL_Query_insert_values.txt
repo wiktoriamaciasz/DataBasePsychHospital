@@ -1,69 +1,9 @@
-INSERT VALUES INTO TABLE Pracownicy (
-	(1, 'Adam'', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
-  (2, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180)
-)
-
-
-INSERT VALUES INTO TABLE Choroby (
-  (1, "Schizofrenia"),
-  (2, "Zaburzenia ze spektrum autyzmu"),
-  (3, "epizod depresyjny")
-)
-
-CREATE TABLE WszystkieChorobyPacjentow (
-	ID_Pacjenta INT,
-	ID_Choroby INT,
-	PRIMARY KEY (ID_Pacjenta, ID_Choroby),
-	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
-	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
-);
-
-INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
-  (1, 1),
-  (1, 3),
-  (2, 2)
-)
-
-CREATE TABLE Oddzialy (
-	ID INT PRIMARY KEY,
-	NazwaOddzialu VARCHAR(255),
-	Kierownik INT,
-	LiczbaMiejsc INT,
-	LiczbaPacjentow INT,
-	FOREIGN KEY(Kierownik) REFERENCES Pracownicy(ID),
-);
-
-INSERT VALUES INTO TABLE Oddzialy (
-  (1, 'NazwaOddzialu', 1, 10, 0)
-)
-
-INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
-  (1, 1),
-  (1, 3)
-)
-
 CREATE TABLE Pobyty (
 	ID_pacjenta INT,
 	DataPrzyjecia DATE,
 	DataWypisu DATE,
 	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
-);
-
-CREATE TABLE KategoriaLeku (
-	ID INT PRIMARY KEY,
-	NazwaKategorii VARCHAR(255)
-);
-
-CREATE TABLE Leki (
-	ID INT PRIMARY KEY,
-	NazwaLeku VARCHAR(255),
-	Generacja INT,
-	Producent INT,
-	Kategoria INT,
-	SubstancjaCzynna VARCHAR(255),
-	IloscLekuNaStanie INT,
-	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(ID),
 );
 
 CREATE TABLE StrategieLeczenia (
@@ -200,7 +140,25 @@ INSERT INTO Pacjenci VALUES
 (4,'Maria','Kisiel','k','1995-03-10',95031074352,1,162),
 (5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
 (6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
-(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183);
+(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183),
+(8, 'Adam'', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
+(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180);
+
+INSERT VALUES INTO TABLE Choroby (
+  (1, "Schizofrenia"),
+  (2, "Zaburzenia ze spektrum autyzmu"),
+  (3, "epizod depresyjny")
+)
+
+INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
+  (1, 1),
+  (1, 3),
+  (2, 2)
+)
+
+INSERT VALUES INTO TABLE Oddzialy (
+  (1, 'NazwaOddzialu', 1, 10, 0)
+)
 
 INSERT INTO KategoriaLeku VALUES
 (1, 'SSRI-Antydepresanty'),
