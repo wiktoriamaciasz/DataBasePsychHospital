@@ -1,0 +1,230 @@
+INSERT VALUES INTO TABLE Pracownicy (
+	(1, 'Adam'', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
+  (2, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180)
+)
+
+
+INSERT VALUES INTO TABLE Choroby (
+  (1, "Schizofrenia"),
+  (2, "Zaburzenia ze spektrum autyzmu"),
+  (3, "epizod depresyjny")
+)
+
+CREATE TABLE WszystkieChorobyPacjentow (
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	PRIMARY KEY (ID_Pacjenta, ID_Choroby),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+);
+
+INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
+  (1, 1),
+  (1, 3),
+  (2, 2)
+)
+
+CREATE TABLE Oddzialy (
+	ID INT PRIMARY KEY,
+	NazwaOddzialu VARCHAR(255),
+	Kierownik INT,
+	LiczbaMiejsc INT,
+	LiczbaPacjentow INT,
+	FOREIGN KEY(Kierownik) REFERENCES Pracownicy(ID),
+);
+
+INSERT VALUES INTO TABLE Oddzialy (
+  (1, 'NazwaOddzialu', 1, 10, 0)
+)
+
+INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
+  (1, 1),
+  (1, 3)
+)
+
+CREATE TABLE Pobyty (
+	ID_pacjenta INT,
+	DataPrzyjecia DATE,
+	DataWypisu DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+);
+
+CREATE TABLE KategoriaLeku (
+	ID INT PRIMARY KEY,
+	NazwaKategorii VARCHAR(255)
+);
+
+CREATE TABLE Leki (
+	ID INT PRIMARY KEY,
+	NazwaLeku VARCHAR(255),
+	Generacja INT,
+	Producent INT,
+	Kategoria INT,
+	SubstancjaCzynna VARCHAR(255),
+	IloscLekuNaStanie INT,
+	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(ID),
+);
+
+CREATE TABLE StrategieLeczenia (
+	ID INT PRIMARY KEY,
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	ID_Leku INT,
+	DawkaLeku VARCHAR(255),
+	LekarzProwadzacy INT,
+	ID_Oddzialu INT,
+	DataRozpoczecia DATE,
+	DataZakonczenia DATE,
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
+	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(ID),
+);
+
+
+CREATE TABLE BadanieMoczu (
+	ID_Pacjenta INT,
+	DataBadania DATE,
+	Barwa VARCHAR(255),
+	Klarownosc BIT,
+	OdczynPh INT,
+	CiezarMoczu INT,
+	Leukocyty BIT,
+	Hemoglobina BIT,
+	Bilirubina BIT,
+	Urobilinogen BIT,
+	Bialko BIT,
+	Glukoza BIT,
+	Ketony BIT,
+	Azotyny BIT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE BadanieKrwi (
+	ID_Pacjenta INT,
+	DataBadania DATE,
+	Barwa VARCHAR(255),
+	Erytrocyty INT,
+	Leukocyty INT,
+	Hemoglobina INT,
+	Hematokryt INT,
+	PlytkiKrwi INT,
+	Glukoza INT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE DaneKontaktowe (
+	ID_Osoby INT,
+	ID_Pacjenta INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	Adres VARCHAR(255),
+	Miasto VARCHAR(255),
+	Kraj VARCHAR(255),
+	PRIMARY KEY (ID_Osoby, ID_Pacjenta),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE DowstawcyLekow (
+	ID INT PRIMARY KEY,
+	ID_Leku INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	NazwaFirmy VARCHAR(255),
+	Adres VARCHAR(255),
+	Kraj VARCHAR(255),
+	UE BIT,
+	FOREIGN KEY(ID_Leku) REFERENCES LEKI(ID)
+);
+
+CREATE TABLE HistoriaWagi (
+	ID_Pacjenta INT,
+	Waga INT,
+	DataPomiaru DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPomiaru),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+CREATE TABLE InterakcjeLekowe (
+	ID_LEK_1 INT,
+	ID_LEK_2 INT,
+	TypInterakcji VARCHAR(255),
+	PRIMARY KEY (ID_LEK_1, ID_LEK_2),
+	FOREIGN KEY(ID_LEK_1) REFERENCES LEKI(ID),
+	FOREIGN KEY(ID_LEK_2) REFERENCES LEKI(ID)
+);
+
+CREATE TABLE ObjawyUboczneLekow (
+	ID_LEK INT,
+	ObjawUboczny VARCHAR(255),
+	PRIMARY KEY (ID_LEK, ObjawUboczny),
+	FOREIGN KEY(ID_LEK) REFERENCES LEKI(ID),
+);
+
+CREATE TABLE Objawy (
+	ID INT PRIMARY KEY,
+	NazwaObjawu VARCHAR(255),
+);
+
+CREATE TABLE ObjawyPacjentow (
+	ID_Pacjenta INT,
+	ID_Objawu INT,
+	DataWystapienia DATE,
+	PRIMARY KEY (ID_Pacjenta, ID_Objawu),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Objawu) REFERENCES Objawy(ID),
+);
+
+CREATE TABLE WynikiDanychPsychologicznych (
+	ID_Pacjenta INT,
+	Data DATE,
+	TestBECCA INT,
+	SkalaYOUNGA INT,
+	TestMMPI2 INT,
+	TestDUDIT INT,
+	SkalaAUDIT INT,
+	SkalaPANNS INT,
+	PRIMARY KEY (ID_Pacjenta, Data),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+);
+
+
+INSERT INTO Pacjenci VALUES
+(1,'Norbert','Wrona','m','1993-12-16',93121606401,1,180),
+(2,'Sonia','Skowronek','k','1956-07-06',56070691276,0,159),
+(3,'Eugeniusz','Majewski','m','1981-01-01',81010184675,1,163),
+(4,'Maria','Kisiel','k','1995-03-10',95031074352,1,162),
+(5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
+(6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
+(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183);
+
+INSERT INTO KategoriaLeku VALUES
+(1, 'SSRI-Antydepresanty'),
+(2, 'SNRI-Antydepresanty'),
+(3, 'Neuroleptyki'),
+(4, 'Stabilizator nastroju'),
+(5, 'Benzodiazepiny'),
+(6,'Agonista GABA'),
+(7,'Antagonista NMDA'),
+(8,'Antagonista receptora opioidowego');
+
+INSERT INTO Leki VALUES
+(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
+(2,'Bioxetin',NULL,'Sanofi Aventis',1,'Fluoksytyna',378),
+(3,'Parogen',NULL,'Mylan',1,'Paroksytyna',154),
+(4, 'Velaxin',NULL,'Egis',2,'Wenlafaksyna',79),
+(5, 'Olzapin', 2,'Lekam',3,'Olanzapina',601),
+(6,'Kwetaplex',2,'Adamed',3,'Kwetiapina',108),
+(7,'Solian',2,'Sanofi Aventis',3,'Amisulpiryd',123),
+(8,'Haloperidol',1,'Unia',3,'Haloperidol',396),
+(9,'Lithium Carbonicum',NULL,'GSK',4,'Lit',221),
+(10,'Depakine Chrono',NULL,'Sanofi Aventis',4,'Kwas Walproinowy',253),
+(11,'Xanax',NULL,'Pfizer',5,'Alprazolam',99),
+(12,'Relanium',NULL,'Polfa Warszawa S.A.',5,'Diazepam',138),
+(13,'Pregabalin',NULL,'Mylan',6,'Pregabalina',258),
+(14,'Biomentin',NULL,'Biofarm',7,'Memantyna',43),
+(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
