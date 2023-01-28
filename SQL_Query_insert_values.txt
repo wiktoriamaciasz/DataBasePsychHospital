@@ -141,23 +141,62 @@ INSERT INTO Pacjenci VALUES
 (5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
 (6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
 (7,'Lukas','Mak','m','1984-10-22',84102290645,1,183),
-(8, 'Adam'', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
+(8, 'Adam', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
 (9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180);
 
-INSERT VALUES INTO TABLE Choroby (
-  (1, "Schizofrenia"),
-  (2, "Zaburzenia ze spektrum autyzmu"),
-  (3, "epizod depresyjny")
-)
+
+CREATE Table Choroby 
+(IdChoroby INT primary key,
+NazwaChoroby VARCHAR(256));
+
+INSERT INTO Choroby VALUES 
+(1, 'Schizofrenia'),
+(2, 'Zaburzenia ze spektrum autyzmu'),
+(3, 'Depresja'),
+(4, 'Zaburzenie lękowe'),
+(5, 'Choroba afektywna dwubiegunowa'),
+(6, 'PTSD'),
+(7, 'Zaburzenie osobowości'),
+(8, 'Otępienie'),
+(9, 'Nadciśnienie'),
+(10, 'Cukrzyca'),
+(11, 'Miazdzyca'),
+(12, 'Otyłość'),
+(13, 'Choroba Hashimoto'),
+(14, 'Bulimia');
+
+
 
 INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
   (1, 1),
   (1, 3),
-  (2, 2)
+  (2, 2),
+  (4,14),
+  (4, 7),
+  (6, 12),
+  (6, 11),
+  (6, 10),
+  (6, 6)
 )
 
+INSERT INTO HistoriaWagi VALUES
+(4, 51, '2019-03-14'),
+(4, 56, '2020-11-21'),
+(4, 53, '2021-12-02');
+
+CREATE Table Oddzialy(
+IdOddzialu INT Primary key,
+NazwaOddzialy VARCHAR(256),
+Kierownik INT,
+LiczbaMiejsc INT,
+LiczbaPacjentow INT);
+
 INSERT VALUES INTO TABLE Oddzialy (
-  (1, 'NazwaOddzialu', 1, 10, 0)
+  (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
+  (2, 'Odział Leczenia Alkoholowych Zespołów Abstynencyjnych', 2, 25, 0),
+  (3, 'Oddział Rehabilitacyjny', 3, 50, 0),
+  (4, 'Oddział Psychogeriatryczny', 4, 40, 0),
+  (5, 'Oddział Psychiatryczny Dzieci i Młodzieży', 5, 40, 0)
 )
 
 INSERT INTO KategoriaLeku VALUES
