@@ -377,3 +377,25 @@ PRINT 'Dodano nową diagnozę.'
 SELECT * FROM inserted
 GO
 
+
+--#4
+-- info o dodaniu strategii leczenia
+
+CREATE TRIGGER TR_INSERT_StrategieLeczenia ON StrategieLeczenia
+AFTER INSERT
+AS
+PRINT 'Dodano nową strategię leczenia pacjenta.'
+SELECT * FROM inserted
+GO
+
+
+--#5
+-- info o update'owaniu dostawcy leków 
+
+CREATE TRIGGER TR_UPDATE_DowstawcyLekow ON DowstawcyLekow
+AFTER UPDATE
+AS
+PRINT 'Zmodyfikowanio dostawcę danego leku.'
+SELECT * FROM deleted
+SELECT * FROM inserted
+GO
