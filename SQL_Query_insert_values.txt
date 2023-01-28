@@ -1,3 +1,5 @@
+-- Tworzenie tabel
+
 CREATE TABLE Pobyty (
 	ID_pacjenta INT,
 	DataPrzyjecia DATE,
@@ -132,39 +134,52 @@ CREATE TABLE WynikiDanychPsychologicznych (
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
 );
 
+CREATE TABLE KategoriaLeku(
+	IdKategorii INT Primary key,
+	NazwaKategorii VARCHAR(256));
+
+
+CREATE Table Choroby (
+	IdChoroby INT primary key,
+	NazwaChoroby VARCHAR(256));
+
+
+CREATE Table Oddzialy(
+	IdOddzialu INT Primary key,
+	NazwaOddzialy VARCHAR(256),
+	Kierownik INT,
+	LiczbaMiejsc INT,
+	LiczbaPacjentow INT);
+
+-- Wstawianie wartosci
 
 INSERT INTO Pacjenci VALUES
-(1,'Norbert','Wrona','m','1993-12-16',93121606401,1,180),
-(2,'Sonia','Skowronek','k','1956-07-06',56070691276,0,159),
-(3,'Eugeniusz','Majewski','m','1981-01-01',81010184675,1,163),
-(4,'Maria','Kisiel','k','1995-03-10',95031074352,1,162),
-(5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
-(6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
-(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183),
-(8, 'Adam', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
-(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180);
+	(1,'Norbert','Wrona','m','1993-12-16',93121606401,1,180),
+	(2,'Sonia','Skowronek','k','1956-07-06',56070691276,0,159),
+	(3,'Eugeniusz','Majewski','m','1981-01-01',81010184675,1,163),
+	(4,'Maria','Kisiel','k','1995-03-10',95031074352,1,162),
+	(5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
+	(6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
+	(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183),
+	(8, 'Adam', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
+	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180);
 
-
-CREATE Table Choroby 
-(IdChoroby INT primary key,
-NazwaChoroby VARCHAR(256));
 
 INSERT INTO Choroby VALUES 
-(1, 'Schizofrenia'),
-(2, 'Zaburzenia ze spektrum autyzmu'),
-(3, 'Depresja'),
-(4, 'Zaburzenie lękowe'),
-(5, 'Choroba afektywna dwubiegunowa'),
-(6, 'PTSD'),
-(7, 'Zaburzenie osobowości'),
-(8, 'Otępienie'),
-(9, 'Nadciśnienie'),
-(10, 'Cukrzyca'),
-(11, 'Miazdzyca'),
-(12, 'Otyłość'),
-(13, 'Choroba Hashimoto'),
-(14, 'Bulimia');
-
+	(1, 'Schizofrenia'),
+	(2, 'Zaburzenia ze spektrum autyzmu'),
+	(3, 'Depresja'),
+	(4, 'Zaburzenie lękowe'),
+	(5, 'Choroba afektywna dwubiegunowa'),
+	(6, 'PTSD'),
+	(7, 'Zaburzenie osobowości'),
+	(8, 'Otępienie'),
+	(9, 'Nadciśnienie'),
+	(10, 'Cukrzyca'),
+	(11, 'Miazdzyca'),
+	(12, 'Otyłość'),
+	(13, 'Choroba Hashimoto'),
+	(14, 'Bulimia');
 
 
 INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
@@ -180,16 +195,10 @@ INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
 )
 
 INSERT INTO HistoriaWagi VALUES
-(4, 51, '2019-03-14'),
-(4, 56, '2020-11-21'),
-(4, 53, '2021-12-02');
+	(4, 51, '2019-03-14'),
+	(4, 56, '2020-11-21'),
+	(4, 53, '2021-12-02');
 
-CREATE Table Oddzialy(
-IdOddzialu INT Primary key,
-NazwaOddzialy VARCHAR(256),
-Kierownik INT,
-LiczbaMiejsc INT,
-LiczbaPacjentow INT);
 
 INSERT VALUES INTO TABLE Oddzialy (
   (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
@@ -200,28 +209,43 @@ INSERT VALUES INTO TABLE Oddzialy (
 )
 
 INSERT INTO KategoriaLeku VALUES
-(1, 'SSRI-Antydepresanty'),
-(2, 'SNRI-Antydepresanty'),
-(3, 'Neuroleptyki'),
-(4, 'Stabilizator nastroju'),
-(5, 'Benzodiazepiny'),
-(6,'Agonista GABA'),
-(7,'Antagonista NMDA'),
-(8,'Antagonista receptora opioidowego');
+	(1, 'SSRI-Antydepresanty'),
+	(2, 'SNRI-Antydepresanty'),
+	(3, 'Neuroleptyki'),
+	(4, 'Stabilizator nastroju'),
+	(5, 'Benzodiazepiny'),
+	(6,'Agonista GABA'),
+	(7,'Antagonista NMDA'),
+	(8,'Antagonista receptora opioidowego');
 
 INSERT INTO Leki VALUES
-(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
-(2,'Bioxetin',NULL,'Sanofi Aventis',1,'Fluoksytyna',378),
-(3,'Parogen',NULL,'Mylan',1,'Paroksytyna',154),
-(4, 'Velaxin',NULL,'Egis',2,'Wenlafaksyna',79),
-(5, 'Olzapin', 2,'Lekam',3,'Olanzapina',601),
-(6,'Kwetaplex',2,'Adamed',3,'Kwetiapina',108),
-(7,'Solian',2,'Sanofi Aventis',3,'Amisulpiryd',123),
-(8,'Haloperidol',1,'Unia',3,'Haloperidol',396),
-(9,'Lithium Carbonicum',NULL,'GSK',4,'Lit',221),
-(10,'Depakine Chrono',NULL,'Sanofi Aventis',4,'Kwas Walproinowy',253),
-(11,'Xanax',NULL,'Pfizer',5,'Alprazolam',99),
-(12,'Relanium',NULL,'Polfa Warszawa S.A.',5,'Diazepam',138),
-(13,'Pregabalin',NULL,'Mylan',6,'Pregabalina',258),
-(14,'Biomentin',NULL,'Biofarm',7,'Memantyna',43),
-(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
+	(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
+	(2,'Bioxetin',NULL,'Sanofi Aventis',1,'Fluoksytyna',378),
+	(3,'Parogen',NULL,'Mylan',1,'Paroksytyna',154),
+	(4, 'Velaxin',NULL,'Egis',2,'Wenlafaksyna',79),
+	(5, 'Olzapin', 2,'Lekam',3,'Olanzapina',601),
+	(6,'Kwetaplex',2,'Adamed',3,'Kwetiapina',108),
+	(7,'Solian',2,'Sanofi Aventis',3,'Amisulpiryd',123),
+	(8,'Haloperidol',1,'Unia',3,'Haloperidol',396),
+	(9,'Lithium Carbonicum',NULL,'GSK',4,'Lit',221),
+	(10,'Depakine Chrono',NULL,'Sanofi Aventis',4,'Kwas Walproinowy',253),
+	(11,'Xanax',NULL,'Pfizer',5,'Alprazolam',99),
+	(12,'Relanium',NULL,'Polfa Warszawa S.A.',5,'Diazepam',138),
+	(13,'Pregabalin',NULL,'Mylan',6,'Pregabalina',258),
+	(14,'Biomentin',NULL,'Biofarm',7,'Memantyna',43),
+	(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
+
+INSERT INTO Objawy VALUES
+	(1,'obniżenie nastroju'),
+	(2,'problemy ze snem'),
+	(3,'apatia'),
+	(4,'myśli samobójcze'),
+	(5,'halucynacje'),
+	(6,'urojenia'),
+	(7,'drżenie ciała'),
+	(8,'niepokój'),
+	(9,'natrętne myśli'),
+	(10,'pobudzenie psychoruchowe'),
+	(11,'agresja'),
+	(12,'dezorganizacja myślenia')
+	;
