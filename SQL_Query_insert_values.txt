@@ -61,7 +61,7 @@ INSERT INTO Choroby VALUES
  	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
  );
 
-INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
+INSERT INTO WszystkieChorobyPacjentow VALUES
   (1, 1),
   (1, 3),
   (2, 2),
@@ -71,7 +71,6 @@ INSERT VALUES INTO TABLE WszystkieChorobyPacjentow (
   (6, 11),
   (6, 10),
   (6, 6)
-)
 
 
 CREATE TABLE Objawy (
@@ -181,21 +180,21 @@ INSERT INTO BadanieMoczu Values
 
 CREATE TABLE BadanieKrwi (
 	ID_Pacjenta INT,
-	DataBadania DATE,
-	Erytrocyty INT,
-	Leukocyty INT,
-	Hemoglobina INT,
-	Hematokryt INT,
-	PlytkiKrwi INT,
-	Glukoza INT,
+	DataBadania DATETIME,
+	Erytrocyty FLOAT,
+	Leukocyty FLOAT,
+	Hemoglobina FLOAT,
+	Hematokryt FLOAT,
+	PlytkiKrwi FLOAT,
+	Glukoza FLOAT,
 	PRIMARY KEY (ID_Pacjenta, DataBadania),
 	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
 );
 
 INSERT INTO BadanieKrwi VALUES
-(1, 2021-11-13, 4, 5, 14, 40, 300, 5.0),
-(1, 2021-11-13, 4.2, 4.7, 15, 41, 230, 4.5),
-(4, 2021-11-13, 3.5, 5, 10, 35, 300, 7.0);
+(1, '2021-11-13 06:00:00', 4, 5, 14, 40, 300, 5.0),
+(1, '2021-11-13 12:00:00', 4.2, 4.7, 15, 41, 230, 4.5),
+(4, '2021-11-13 18:00:00', 5, 10, 35, 300, 7.0);
 
 
 CREATE TABLE HistoriaWagi (
@@ -237,7 +236,7 @@ CREATE Table Oddzialy(
 	LiczbaMiejsc INT,
 	LiczbaPacjentow INT);
 
-INSERT VALUES INTO TABLE Oddzialy (
+INSERT INTO Oddzialy VALUES (
   (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
   (2, 'Odział Leczenia Alkoholowych Zespołów Abstynencyjnych', 2, 25, 0),
   (3, 'Oddział Rehabilitacyjny', 3, 50, 0),
@@ -264,6 +263,9 @@ INSERT VALUES INTO TABLE Oddzialy (
 
 
 -- LEKI
+CREATE TABLE KategoriaLeku(
+	IdKategorii INT Primary key,
+	NazwaKategorii VARCHAR(256));
 
  CREATE TABLE Leki (
  	ID INT PRIMARY KEY,
@@ -273,8 +275,28 @@ INSERT VALUES INTO TABLE Oddzialy (
  	Kategoria INT,
  	SubstancjaCzynna VARCHAR(255),
  	IloscLekuNaStanie INT,
- 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(ID),
+ 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii),
  );
+ 
+ 
+ CREATE TABLE ProducenciLekow (
+	ID INT PRIMARY KEY,
+	Nazwa VARCHAR(256)
+ );
+ 
+  INSERT INTO ProducenciLekow VALUES
+  (1, 'Mylan'),
+  (2, 'Sanofi Aventis'),
+  (3, 'Egis'),
+  (4, 'Lekam'),
+  (5, 'Adamed'),
+  (6, 'Unia'),
+  (7, 'GSK'),
+  (8, 'Pfizer'),
+  (9, 'Polfa Warszawa S.A.'),
+  (10, 'Biofarm'),
+  (11, 'Accord')
+
 
 INSERT INTO Leki VALUES
 	(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
@@ -294,9 +316,7 @@ INSERT INTO Leki VALUES
 	(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
 	
 
-CREATE TABLE KategoriaLeku(
-	IdKategorii INT Primary key,
-	NazwaKategorii VARCHAR(256));
+
 	
 INSERT INTO KategoriaLeku VALUES
 	(1, 'SSRI-Antydepresanty'),
