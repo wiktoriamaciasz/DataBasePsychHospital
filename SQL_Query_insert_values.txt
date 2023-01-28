@@ -297,27 +297,6 @@ CREATE TABLE KategoriaLeku(
   (10, 'Biofarm'),
   (11, 'Accord')
 
-
-INSERT INTO Leki VALUES
-	(1,'Sertagen',NULL,'Mylan',1,'Sertralina',207),
-	(2,'Bioxetin',NULL,'Sanofi Aventis',1,'Fluoksytyna',378),
-	(3,'Parogen',NULL,'Mylan',1,'Paroksytyna',154),
-	(4, 'Velaxin',NULL,'Egis',2,'Wenlafaksyna',79),
-	(5, 'Olzapin', 2,'Lekam',3,'Olanzapina',601),
-	(6,'Kwetaplex',2,'Adamed',3,'Kwetiapina',108),
-	(7,'Solian',2,'Sanofi Aventis',3,'Amisulpiryd',123),
-	(8,'Haloperidol',1,'Unia',3,'Haloperidol',396),
-	(9,'Lithium Carbonicum',NULL,'GSK',4,'Lit',221),
-	(10,'Depakine Chrono',NULL,'Sanofi Aventis',4,'Kwas Walproinowy',253),
-	(11,'Xanax',NULL,'Pfizer',5,'Alprazolam',99),
-	(12,'Relanium',NULL,'Polfa Warszawa S.A.',5,'Diazepam',138),
-	(13,'Pregabalin',NULL,'Mylan',6,'Pregabalina',258),
-	(14,'Biomentin',NULL,'Biofarm',7,'Memantyna',43),
-	(15,'Naltex',NULL,'Accord',8,'Naltrexone',71);
-	
-
-
-	
 INSERT INTO KategoriaLeku VALUES
 	(1, 'SSRI-Antydepresanty'),
 	(2, 'SNRI-Antydepresanty'),
@@ -327,6 +306,25 @@ INSERT INTO KategoriaLeku VALUES
 	(6,'Agonista GABA'),
 	(7,'Antagonista NMDA'),
 	(8,'Antagonista receptora opioidowego');
+
+
+INSERT INTO Leki VALUES
+	(1,'Sertagen',NULL,1,1,'Sertralina',207),
+	(2,'Bioxetin',NULL,2,1,'Fluoksytyna',378),
+	(3,'Parogen',NULL,1,1,'Paroksytyna',154),
+	(4, 'Velaxin',NULL,3,2,'Wenlafaksyna',79),
+	(5, 'Olzapin', 2,4,3,'Olanzapina',601),
+	(6,'Kwetaplex',2,5,3,'Kwetiapina',108),
+	(7,'Solian',2,2,3,'Amisulpiryd',123),
+	(8,'Haloperidol',1,6,3,'Haloperidol',396),
+	(9,'Lithium Carbonicum',NULL,7,4,'Lit',221),
+	(10,'Depakine Chrono',NULL,2,4,'Kwas Walproinowy',253),
+	(11,'Xanax',NULL,8,5,'Alprazolam',99),
+	(12,'Relanium',NULL,9,5,'Diazepam',138),
+	(13,'Pregabalin',NULL,1,6,'Pregabalina',258),
+	(14,'Biomentin',NULL,10,7,'Memantyna',43),
+	(15,'Naltex',NULL,11,8,'Naltrexone',71);
+	
 
 
 CREATE TABLE InterakcjeLekowe (
@@ -379,6 +377,7 @@ GO
 --#2
 -- info o dodaniu nowych pracowników szpitala
 
+GO
 CREATE TRIGGER TR_INSERT_Pracownicy ON Pracownicy
 AFTER INSERT
 AS
@@ -390,6 +389,7 @@ GO
 --#3
 -- info o dodaniu nowych diagnoz dla pacjentów
 
+GO
 CREATE TRIGGER TR_INSERT_WszystkieChorobyPacjentow ON WszystkieChorobyPacjentow
 AFTER INSERT
 AS
@@ -401,6 +401,7 @@ GO
 --#4
 -- info o dodaniu strategii leczenia
 
+GO
 CREATE TRIGGER TR_INSERT_StrategieLeczenia ON StrategieLeczenia
 AFTER INSERT
 AS
@@ -412,6 +413,7 @@ GO
 --#5
 -- info o update'owaniu dostawcy leków 
 
+GO
 CREATE TRIGGER TR_UPDATE_DowstawcyLekow ON DowstawcyLekow
 AFTER UPDATE
 AS
