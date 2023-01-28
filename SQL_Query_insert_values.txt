@@ -11,21 +11,21 @@ CREATE TABLE Pacjenci (
  	Nazwisko VARCHAR(255),
  	Plec VARCHAR(255),
  	DataUrodzenia DATE,
- 	Pesel INT,
+ 	Pesel VARCHAR(256),
  	Palenie BIT,
  	Wzrost INT,
  );
  
  INSERT INTO Pacjenci VALUES
-	(1,'Norbert','Wrona','m','1993-12-16',93121606401,1,180),
-	(2,'Sonia','Skowronek','k','1956-07-06',56070691276,0,159),
-	(3,'Eugeniusz','Majewski','m','1981-01-01',81010184675,1,163),
-	(4,'Maria','Kisiel','k','1995-03-10',95031074352,1,162),
-	(5,'Gustaw','Krajewski','m','1975-09-20',75092073429,1,174),
-	(6,'Zbigniew','Kowal','m','1970-02-25',70022589704,1,171),
-	(7,'Lukas','Mak','m','1984-10-22',84102290645,1,183),
-	(8, 'Adam', 'Nowak', 'M', '1998-11-07', 98110775991, 0, 178),
-	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', 97041708746, 0, 180);
+	(1,'Norbert','Wrona','m','1993-12-16','93121606401',1,180),
+	(2,'Sonia','Skowronek','k','1956-07-06','56070691276',0,159),
+	(3,'Eugeniusz','Majewski','m','1981-01-01','81010184675',1,163),
+	(4,'Maria','Kisiel','k','1995-03-10','95031074352',1,162),
+	(5,'Gustaw','Krajewski','m','1975-09-20','75092073429',1,174),
+	(6,'Zbigniew','Kowal','m','1970-02-25','70022589704',1,171),
+	(7,'Lukas','Mak','m','1984-10-22','84102290645',1,183),
+	(8, 'Adam', 'Nowak', 'M', '1998-11-07', '98110775991', 0, 178),
+	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', '97041708746', 0, 180);
  
 
 -- CHOROBY, OBJAWY
