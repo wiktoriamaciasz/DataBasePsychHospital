@@ -6,12 +6,12 @@ do bazy danych szpitala
 -- DANE DOTYCZĄCE PACJENTÓW ------------------------------------------------
 
 CREATE TABLE Pacjenci (
- 	ID INT PRIMARY KEY,
+ 	ID INT PRIMARY KEY IDENTITY(1,1),
  	Imie VARCHAR(255),
  	Nazwisko VARCHAR(255),
- 	Plec VARCHAR(255),
+ 	Plec CHAR(1),
  	DataUrodzenia DATE,
- 	Pesel VARCHAR(256),
+ 	Pesel VARCHAR(11),
  	Palenie BIT,
  	Wzrost INT,
  );
