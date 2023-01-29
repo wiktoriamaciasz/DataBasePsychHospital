@@ -17,15 +17,27 @@ CREATE TABLE Pacjenci (
  );
  
  INSERT INTO Pacjenci VALUES
-	(1,'Norbert','Wrona','m','1993-12-16','93121606401',1,180),
-	(2,'Sonia','Skowronek','k','1956-07-06','56070691276',0,159),
-	(3,'Eugeniusz','Majewski','m','1981-01-01','81010184675',1,163),
-	(4,'Maria','Kisiel','k','1995-03-10','95031074352',1,162),
-	(5,'Gustaw','Krajewski','m','1975-09-20','75092073429',1,174),
-	(6,'Zbigniew','Kowal','m','1970-02-25','70022589704',1,171),
-	(7,'Lukas','Mak','m','1984-10-22','84102290645',1,183),
-	(8, 'Adam', 'Nowak', 'M', '1998-11-07', '98110775991', 0, 178),
-	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', '97041708746', 0, 180);
+	('Ewelina', 'Przybylska', 'K', '1932-04-01', '32040176108', 1, 167),
+	('Zdzisław', 'Szulc', 'M', '1952-06-02', '52060291939', 0, 173),
+	('Zofia', 'Janik', 'K', '1950-09-19', '50091930982', 1, 169),
+	('Elżbieta', 'Nowak', 'K', '2000-12-25', '00322531707', 1, 180),
+	('Volodymyr', 'Laskowski', 'M', '1969-04-13', '69041384832', 1, 178),
+	('Maksymilian', 'Sobczak', 'M', '1982-04-11', '82041136995', 0, 162),
+	('Kamil', 'Chmielewski', 'M', '1954-01-12', '54011260197', 1, 178),
+	('Alan', 'Wieczorek', 'M', '1944-03-31', '44033187156', 0, 190),
+	('Witold', 'Kaczmarczyk', 'M', '2007-07-24', '07272485434', 0, 174),
+	('Irena', 'Gajewska', 'K', '1936-04-29', '36042946606', 1, 185),
+	('Olga', 'Kaczmarek', 'K', '1977-06-07', '77060741307', 1, 185),
+	('Sylwester', 'Kwiatkowski', 'M', '1997-05-17', '97051730934', 1, 179),
+	('Norbert', 'Zieliński', 'M', '1958-03-21', '58032157278', 0, 169),
+	('Stanisława', 'Górecka', 'K', '1976-12-12', '76121257869', 0, 187),
+	('Ewa', 'Szczepańska', 'K', '1969-11-14', '69111413448', 0, 185),
+	('Wiktor', 'Szulc', 'M', '1937-01-03', '37010382417', 0, 164),
+	('Danuta', 'Pawlak', 'K', '1921-11-15', '21111547347', 1, 174),
+	('Tomasz', 'Marciniak', 'M', '1956-03-18', '56031873337', 0, 167),
+	('Ireneusz', 'Nowakowski', 'M', '1932-02-12', '32021224013', 0, 184),
+	('Halina', 'Grabowska', 'K', '1966-05-08', '66050833368', 0, 176),
+	('Henryk', 'Janik', 'M', '1952-11-11', '52111172514', 1, 178)
  
 
 -- CHOROBY, OBJAWY
@@ -246,19 +258,48 @@ INSERT INTO Oddzialy VALUES (
 
 
  CREATE TABLE Pracownicy (
- 	ID INT PRIMARY KEY,
- 	Imie VARCHAR(255),
- 	Nazwisko VARCHAR(255),
- 	Stanowisko VARCHAR(255),
- 	StopienNaukowy VARCHAR(255),
+ 	ID INT PRIMARY KEY IDENTITY(1,1),
+ 	Imie VARCHAR(256),
+ 	Nazwisko VARCHAR(256),
+	Plec CHAR(1),
+	PESEL VARCHAR(11),
+ 	Stanowisko VARCHAR(256),
+ 	StopienNaukowy VARCHAR(256),
  	Wyplata MONEY,
- 	TypZatrudnienia VARCHAR(255),
+ 	TypZatrudnienia VARCHAR(256),
  	DataZatrudnienia DATE,
- 	NrKontaktowy INT,
- 	Adres VARCHAR(255),
- 	Miasto VARCHAR(255)
+ 	NrKontaktowy VARCHAR(256),
+ 	Adres VARCHAR(256),
+ 	Miasto VARCHAR(256)
  );
 
+INSERT INTO Pracownicy VALUES
+('Bogusław', 'Jaworski', 'M', '55061499658', 'Sekretarz', 'NULL', 3490, 'umowa o pracę', '1989-07-03', '+48 600140246', 'ul. Orkana 79/118', 'Radzymin'),
+('Karol', 'Konieczny', 'M', '36092072559', 'Dietetyk', 'Doktor', 7538, 'umowa o pracę', '2009-06-02', '+48 884988290', 'ul. Malinowa 146', 'Złotoryja'),
+('Alicja', 'Mazur', 'K', '43021719344', 'Asystent Medyczny', 'Doktor', 6282, 'umowa o pracę', '2022-11-22', '+48 880059857', 'ul. Bystrzycka 58/48', 'Rudnik nad Sanem'),
+('Beata', 'Górecka', 'K', '84031173089', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '2009-02-27', '+48 669617035', 'ul. Świętosławy 6/0', 'Marki'),
+('Iga', 'Nowakowska', 'K', '60020162126', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-01-25', '+48 608441073', 'ul. Sobócka 32/55', 'Józefów'),
+('Renata', 'Kowalczyk', 'K', '21062193686', 'Sekretarz', 'Magister', 4886, 'umowa zlecenie', '1986-02-26', '+48 736813994', 'ul. Wrocławska 35', 'Halinów'),
+('Wojciech', 'Nowak', 'M', '83050969091', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '2011-01-10', '+48 882550562', 'ul. Grzybowa 183', 'Bolesławiec'),
+('Damian', 'Chmielewski', 'M', '41090753894', 'Asystent Medyczny', 'Doktor', 6282, 'umowa o pracę', '2001-03-13', '+48 691386859', 'ul. Główna 82', 'Muszyna'),
+('Wiktor', 'Duda', 'M', '34010249254', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '2013-10-30', '+48 503876655', 'ul. Dworcowa 81/9', 'Golub-Dobrzyń'),
+('Michał', 'Piotrowski', 'M', '74100284358', 'Pielęgniarz', 'Licencjat', 4188, 'umowa o pracę', '2001-02-19', '+48 604287948', 'ul. Główna 45', 'Pruszków'),
+('Paulina', 'Baran', 'K', '48021346682', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '1984-04-13', '+48 519204723', 'ul. Broniewskiego 86/69', 'Jabłonowo Pomorskie'),
+('Barbara', 'Lewandowska', 'K', '20051412401', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '1964-12-16', '+48 727237534', 'ul. Skalna 90/42', 'Skała'),
+('Kornelia', 'Zielińska', 'K', '64011333401', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2011-02-20', '+48 888475962', 'ul. Polna 59/82', 'Zielona Góra'),
+('Michalina', 'Wójcik', 'K', '28041164068', 'Pielęgniarz', 'Doktor', 6282, 'umowa o pracę', '2003-03-02', '+48 501090590', 'ul. Witosa 45/17', 'Halinów'),
+('Milena', 'Walczak', 'K', '89060615964', 'Dietetyk', 'Doktor Habilitowany', 10051, 'umowa o pracę', '2018-04-03', '+48 780965766', 'ul. Kolorowa 65/39', 'Bogatynia'),
+('Andrii', 'Wróbel', 'M', '77092875131', 'Pielęgniarz', 'Licencjat', 4188, 'umowa o pracę', '2010-05-14', '+48 603192564', 'ul. Łąkowa 95', 'Płońsk'),
+('Dominik', 'Olszewski', 'M', '48110338592', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2014-03-11', '+48 734918420', 'ul. Diamentowa 21/27', 'Oława'),
+('Grzegorz', 'Kaźmierczak', 'M', '86011238494', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2011-10-25', '+48 785498443', 'ul. Świętosławy 69', 'Kamień Krajeński'),
+('Danuta', 'Baranowska', 'K', '69041491723', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '2020-03-19', '+48 574324952', 'ul. Jodłowa 54/117', 'Nowa Sarzyna'),
+('Teresa', 'Laskowska', 'K', '56030871923', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 'umowa o pracę', '2005-03-28', '+48 729588682', 'ul. Armii Krajowej 50/5', 'Wyszków'),
+('Jolanta', 'Dudek', 'K', '45051332342', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-11-18', '+48 577956862', 'ul. Wieniawskiego 85/11', 'Ząbkowice Śląskie'),
+('Kamila', 'Lis', 'K', '48052920349', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-02-23', '+48 667288572', 'ul. Partyzantów 173/116', 'Sobótka'),
+('Hanna', 'Zielińska', 'K', '95112953863', 'Asystent Medyczny', 'Magister', 4886, 'umowa o pracę', '2022-04-26', '+48 699041651', 'ul. Słodowa 40', 'Jordanów'),
+('Aleksandra', 'Borowska', 'K', '56111918547', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 'umowa o pracę', '2002-04-12', '+48 783433447', 'ul. Lipowa 26/73', 'Łochów'),
+('Arkadiusz', 'Bąk', 'M', '73050278712', 'Pielęgniarz', 'Magister', 4886, 'umowa o pracę', '2020-01-23', '+48 579809329', 'ul. Słowiańska 95', 'Wąsosz'),
+('Waldemar', 'Olszewski', 'M', '55041152939', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2010-11-04', '+48 536288123', 'ul. Wrocławska 4', 'Głubczyce')
 
 
 
