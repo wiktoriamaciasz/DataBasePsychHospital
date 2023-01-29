@@ -234,8 +234,7 @@ CREATE Table Oddzialy(
 	IdOddzialu INT Primary key,
 	NazwaOddzialy VARCHAR(256),
 	Kierownik INT,
-	LiczbaMiejsc INT,
-	LiczbaPacjentow INT);
+	LiczbaMiejsc INT);
 
 INSERT INTO Oddzialy VALUES (
   (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
