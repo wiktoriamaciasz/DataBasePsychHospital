@@ -1,5 +1,5 @@
 [ I. ]
-Funkcje i Widoki ( min 10 )
+Funkcje i Widoki ( min 10 10 widoków lub funkcji)
 
 1.
 FUNKCJA WYLICZAJĄCA WIEK PACJENTA
@@ -33,7 +33,7 @@ DO ZROBIENIA:
 
 
 [ II. ]
-Wyzwalacze i Procedury ( min 10 )
+Wyzwalacze i Procedury ( min 10 ) (co najmniej po 5 procedur i po 5 wyzwalaczy)
 
 1.
 info o update'owaniu pobytów w szpitalu 
@@ -71,5 +71,16 @@ INSTEAD OF INSERT
 CREATE TRIGGER TR_UPDATE_Pracownicy ON Pracownicy
 INSTEAD OF UPDATE
 
+10. PROCEDURA OCENIAJĄCA PRAWIDŁOWOŚĆ WYNIKÓW MOCZU PACJENTÓW 
+CREATE PROC WynikiMoczu (@id_pacjenta INT, @data DATE) AS
+
+11. PROCEDURA OCENIAJĄCA PRAWIDŁOWOŚĆ WYNIKÓW MOCZU PACJENTÓW - Z UWZGLĘDNIENIEM ICH PŁCI
+CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
+
+12. PROCEDURA WYLICZAJĄCA BMI PACJENTA 
+CREATE PROC BMI (@idpacjenta int, @data date) as 
+
+
 DO ZROBIENIA
+- Procedury sprawdzajace wyniki testow psychologicznych
 
