@@ -34,7 +34,7 @@ AS
 GO
 
 
--- WYZWALACZ INSTEAD OF UPDATE
+-- WYZWALACZ INSTEAD OF INSERT
 -- NA TABELI PACJENCI
 -- SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
 
@@ -42,9 +42,135 @@ GO
 CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
 INSTEAD OF INSERT
 AS
+	DECLARE @TEXT NVARCHAR(256)
+	DECLARE @unique BIT
+	DECLARE @pesel VARCHAR(256)
+	SET @unique = 1
+
 	DECLARE ITERATOR CURSOR FOR
 	SELECT Imie, Nazwisko, Plec, DataUrodzenia, Pesel, Palenie, Wzrost FROM inserted
 	OPEN Iterator
+	DECLARE @imie VARCHAR(256)
+	DECLARE @nazwisko VARCHAR(256)
+	DECLARE @plec VARCHAR(256)
+	DECLARE @dataurodzenia DATE
+	DECLARE @palenie BIT
+	DECLARE @wzrost INT
+
+	DECLARE @peselDateGood BIT
+	DECLARE @peselGood BIT
+
+	
+
+	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+	WHILE (@@FETCH_STATUS = 0 ) BEGIN
+
+		SET @peselDateGood = 1
+		SET @peselGood = 1
+		SET @unique = 1
+
+		-- sprawdzenie czy pesel jest unique
+		IF @pesel IN ( SELECT Pesel FROM Pacjenci ) BEGIN
+			SET @TEXT = FORMATMESSAGE ('Nie dodano pacjenta Pesel: %s. Pesel jest już w bazie danych',@pesel)
+			SET @unique = 0
+		END
+		
+		-- sprawdzenie daty i daty w peselu
+		IF ( @pesel IS NOT NULL ) AND ( @dataurodzenia IS NOT NULL ) BEGIN
+			DECLARE @peselday VARCHAR(2)
+			DECLARE @peselmonth VARCHAR(2)
+			DECLARE @peselyear VARCHAR(256)
+			DECLARE @peselmonthright CHAR(1)
+			DECLARE @peselmonthleft CHAR(1)
+			DECLARE @peselcentury CHAR(2)
+
+			SET @peselday = SUBSTRING(@pesel, 5, 2)
+
+			SET @peselmonthleft = SUBSTRING(@pesel, 3, 1)
+
+			IF @peselmonthleft IN (0, 1)
+				SET @peselcentury = '19'
+			IF @peselmonthleft IN (2, 3)
+				SET @peselcentury = '20'
+			IF @peselmonthleft IN (4, 5)
+				SET @peselcentury = '21'
+
+			IF @peselmonthleft = 2
+				SET @peselmonthleft = '0'
+			IF @peselmonthleft = 3
+				SET @peselmonthleft = '1'
+			IF @peselmonthleft = 4
+				SET @peselmonthleft = '0'
+			IF @peselmonthleft = 5
+				SET @peselmonthleft = '1'
+
+			SET @peselmonthright = SUBSTRING(@pesel, 4, 1)
+
+
+			SET @peselmonth = @peselmonthleft + @peselmonthright
+
+			SET @peselyear = SUBSTRING(@pesel, 1, 2)
+
+			DECLARE @peseldate VARCHAR(256)
+			SET @peseldate = @peselcentury + @peselyear + '-' + @peselmonth + '-' + @peselday
+
+			DECLARE @datedate VARCHAR(256)
+			SET @datedate = SUBSTRING( CAST(@dataurodzenia as char), 1, 11)
+
+			--PRINT @datedate
+			--PRINT @peseldate
+			IF @datedate = @peseldate
+				SET @peselDateGood = 1
+			ELSE
+				SET @peselDateGood = 0
+		END
+
+		IF (@pesel IS NOT NULL ) BEGIN
+			-- sprawwdzenie pesela
+			--PRINT dbo.CheckPesel(@pesel)
+			IF dbo.CheckPesel(@pesel) = 0
+				SET @peselGood = 0
+		END
+
+		IF (@peselDateGood = 1 AND @peselGood = 1 AND @unique = 1) BEGIN
+		INSERT INTO Pacjenci VALUES (@imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost)
+
+		SET @TEXT = FORMATMESSAGE (
+		'Dodano pacjenta %s %s Pesel: %s Data Urodzenia: %s',
+		@imie, @nazwisko, @pesel, SUBSTRING(CAST(@dataurodzenia as char), 1, 10)
+		)
+		END
+		IF (@peselGood = 0) BEGIN
+		SET @TEXT = FORMATMESSAGE (
+		'Nie dodano pacjenta %s %s. Błędny Pesel: %s',
+		@imie, @nazwisko, @pesel)
+		END
+		IF (@peselDateGood = 0) BEGIN
+		SET @TEXT = FORMATMESSAGE (
+		'Nie dodano pacjenta %s %s Pesel: %s Data Urodzenia: %s, błędny PESEL lub data urodzenia',
+		@imie, @nazwisko, @pesel, SUBSTRING(CAST(@dataurodzenia as char), 1, 10)
+		)
+		END
+		
+	PRINT @TEXT
+	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+END
+CLOSE Iterator
+DEALLOCATE Iterator
+GO
+
+-- WYZWALACZ INSTEAD OF UPDATE
+-- NA TABELI PACJENCI
+-- SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
+
+GO
+CREATE TRIGGER TR_UPDATE_Pacjenci ON Pacjenci
+INSTEAD OF UPDATE
+AS
+	DECLARE ITERATOR CURSOR FOR
+	SELECT ID, Imie, Nazwisko, Plec, DataUrodzenia, Pesel, Palenie, Wzrost FROM inserted
+	OPEN Iterator
+	DECLARE @id INT
 	DECLARE @imie VARCHAR(256)
 	DECLARE @nazwisko VARCHAR(256)
 	DECLARE @plec VARCHAR(256)
@@ -59,7 +185,7 @@ AS
 
 	--SET IDENTITY_INSERT Pacjenci ON
 
-	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+	FETCH Iterator INTO @id, @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
 	WHILE (@@FETCH_STATUS = 0 ) BEGIN
 		
 		-- sprawdzenie daty i daty w peselu
@@ -119,27 +245,31 @@ AS
 			SET @peselGood = 0
 
 		IF (@peselDateGood = 1 AND @peselGood = 1) BEGIN
-		INSERT INTO Pacjenci VALUES (@imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost)
+
+		UPDATE Pacjenci
+		SET Imie = @imie, Nazwisko = @nazwisko, Plec = @plec, DataUrodzenia = @dataurodzenia, Pesel = @pesel, Palenie = @palenie, Wzrost = @wzrost
+		WHERE Pacjenci.ID = @id
 
 		SET @TEXT = FORMATMESSAGE (
-		'Dodano pacjenta %s %s Pesel: %s Data Urodzenia: %s',
+		'Zmodyfikowano pacjenta %s %s Pesel: %s Data Urodzenia: %s',
 		@imie, @nazwisko, @pesel, SUBSTRING(CAST(@dataurodzenia as char), 1, 10)
 		)
 		END
 		IF (@peselGood = 0) BEGIN
 		SET @TEXT = FORMATMESSAGE (
-		'Nie dodano pacjenta %s %s. Błędny Pesel: %s',
+		'Nie zmodyfikowano pacjenta %s %s. Błędny Pesel: %s',
 		@imie, @nazwisko, @pesel)
+
 		END
 		IF (@peselDateGood = 0) BEGIN
 		SET @TEXT = FORMATMESSAGE (
-		'Nie dodano pacjenta %s %s Pesel: %s Data Urodzenia: %s, błędny PESEL lub data urodzenia',
+		'Nie zmodyfikowano pacjenta %s %s Pesel: %s Data Urodzenia: %s, błędny PESEL lub data urodzenia',
 		@imie, @nazwisko, @pesel, SUBSTRING(CAST(@dataurodzenia as char), 1, 10)
 		)
 		END
 		
 	PRINT @TEXT
-	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+	FETCH Iterator INTO @id, @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
 END
 CLOSE Iterator
 DEALLOCATE Iterator
