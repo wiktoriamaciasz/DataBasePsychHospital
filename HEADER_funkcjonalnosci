@@ -1,5 +1,5 @@
 [ I. ]
-Funkcje i Widoki ( min 10 10 widoków lub funkcji)
+Funkcje i Widoki ( min 10 widoków lub funkcji)
 
 1.
 FUNKCJA WYLICZAJĄCA WIEK PACJENTA
@@ -27,8 +27,14 @@ CREATE FUNCTION f_Pacjenci_Lekarza ( @imie VARCHAR(256), @nazwisko VARCHAR(256) 
 RETURNS table
 AS
 
-DO ZROBIENIA:
-- Widok pokazujący jakich pacjentów obecnie prowadzi lekarz - ZROBIONE
+7.
+WIDOK ILUSTRUJĄCY NAJPOPULARNIEJSZE LEKI WYKORZYSTYWANE PRZEZ LEKARZY W DANYM SZPITALU 
+CREATE VIEW UzycieLekow AS
+
+8.
+WIDOK ILUSTRUJĄCY CZĘSTOTLIWOŚĆ WYSTĘPOWANIA DANYCH JEDNOSTEK CHOROBOWYCH (WSZYTSKICH, NIE TYLKO PSYCHIATRYCZNYCH) W DANYM SZPITALU 
+CREATE VIEW CzestoscWystepowaniaJednostekChoorbowych AS
+
 
 
 
@@ -80,7 +86,15 @@ CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
 12. PROCEDURA WYLICZAJĄCA BMI PACJENTA 
 CREATE PROC BMI (@idpacjenta int, @data date) as 
 
+13. PROCEDURA OCENIAJĄCA DEPRESJĘ WEDŁUG SKALI BECCA 
+CREATE PROC TestBecca(@id_pacjenta INT, @data DATE) AS
+
+14. PROCEDURA OCENIAJĄCA EPIZODY MANIAKALNE W CHOROBIE AFEKTYWNEJ DWUBIEGUNOWEJ W SKALI YOUNGA
+CREATE PROC SkalaYOUNGA(@id_pacjenta INT, @data DATE) AS
+
+15. PROCEDURA OCENIAJĄCA UZALEŻNIENIE OD ALKOHOLU W SKALI AUDIT
+CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
 
 DO ZROBIENIA
-- Procedury sprawdzajace wyniki testow psychologicznych
+- Procedury sprawdzajace wyniki testow psychologicznych - pozostałe
 
