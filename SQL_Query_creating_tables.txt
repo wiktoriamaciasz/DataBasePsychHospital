@@ -19,6 +19,7 @@ KategoriaLeku [x], Leki [x], ProducenciLekow [x], InterakcjeLekowe [x], ObjawyUb
 
 Oddzialy [x],
 Pracownicy [x],
+TypZatrudnienia [x]
 
 Pobyty [x],
 
@@ -186,6 +187,11 @@ CREATE Table Oddzialy(
 	LiczbaMiejsc INT
 );
 
+CREATE TABLE TypZatrudnienia (
+	ID INT PRIMARY KEY,
+	Nazwa VARCHAR(256)
+);
+
 CREATE TABLE Pracownicy (
  	ID INT PRIMARY KEY IDENTITY(1,1),
  	Imie VARCHAR(256),
@@ -195,11 +201,12 @@ CREATE TABLE Pracownicy (
  	Stanowisko VARCHAR(256),
  	StopienNaukowy VARCHAR(256),
  	Wyplata MONEY,
- 	TypZatrudnienia VARCHAR(256),
+ 	ID_typZatrudnienia INT,
  	DataZatrudnienia DATE,
  	NrKontaktowy VARCHAR(256),
  	Adres VARCHAR(256),
- 	Miasto VARCHAR(256)
+ 	Miasto VARCHAR(256),
+	FOREIGN KEY(ID_typZatrudnienia) REFERENCES TypZatrudnienia(ID)
  );
  
 -- TWORZENIE POBYTÓW PACJENTÓW W SZPITALU
