@@ -51,6 +51,7 @@ CREATE TABLE Pobyty (
 	DataWypisu DATE,
 	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	CHECK (DataWypisu>DataPrzyjecia)
 );
 
 CREATE TABLE KategoriaLeku (
