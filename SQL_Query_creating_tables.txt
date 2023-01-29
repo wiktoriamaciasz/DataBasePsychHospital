@@ -1,6 +1,5 @@
 /*
 TABLICE:
-Pacjenci [x], DaneKontaktowe [x],
 -- TWORZENIE PACJENTOW, KONTATKU DO PACJENTOW
 -- TWORZENIE BADAŃ, WYNIKÓW, POMIARÓW PACJENTÓW
 -- TWORZENIE OBJAWÓW, CHORÓB PACJENTÓW
@@ -8,6 +7,8 @@ Pacjenci [x], DaneKontaktowe [x],
 -- TWORZENIE STRUKTURY, PRACOWNIKÓW SZPITALA
 -- TWORZENIE POBYTÓW PACJENTÓW W SZPITALU
 -- TWORZENIE STRATEGII LECZENIA
+
+Pacjenci [x], DaneKontaktowe [x],
 
 BadanieMoczu [x], BadanieKrwi  [x], HistoriaWagi [x], WynikiDanychPsychologicznych [x]
 
