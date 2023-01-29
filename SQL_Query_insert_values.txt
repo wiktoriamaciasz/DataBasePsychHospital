@@ -70,7 +70,7 @@ INSERT INTO Choroby VALUES
  	ID_Choroby INT,
  	PRIMARY KEY (ID_Pacjenta, ID_Choroby),
  	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
- 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+ 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID)
  );
 
 INSERT INTO WszystkieChorobyPacjentow VALUES
