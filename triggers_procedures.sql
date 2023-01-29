@@ -236,3 +236,17 @@ CREATE PROC SkalaYOUNGA(@id_pacjenta INT, @data DATE) AS
 GO
 
 
+/*
+Procedura oceniająca uzależnienie pacjenta od alkoholu z wykorzystaniem skali AUDIT
+*/
+GO
+CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
+    DECLARE @wynik INT
+    SET @wynik = (SELECT SkalaAUDIT FROM WynikiDanychPsychologicznych WHERE ID_Pacjenta = @id_pacjenta AND Data = @data)
+    IF @wynik >=8
+    PRINT 'wskazane pogłębione badanie diagnostyczne u terapeuty uzależnień' 
+    ELSE 
+    PRINT 'wynik w normie' 
+    RETURN @wynik
+GO
+
