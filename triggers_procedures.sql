@@ -211,3 +211,28 @@ CREATE PROC TestBecca(@id_pacjenta INT, @data DATE) AS
                 PRINT 'ciężka depresja' 
 GO
 
+
+/*
+Procedura oceniająca epizod maniakalny w chorobie afektywnej dwubiegunowej za pomocą skali Younga
+*/
+GO
+CREATE PROC SkalaYOUNGA(@id_pacjenta INT, @data DATE) AS
+    DECLARE @wynik INT
+    SET @wynik = (SELECT SkalaYounga FROM WynikiDanychPsychologicznych WHERE ID_Pacjenta = @id_pacjenta AND Data = @data)
+    IF @wynik BETWEEN 0 AND 12
+    PRINT 'remisja manii' 
+    ELSE 
+        IF @wynik BETWEEN 13 AND 19
+        PRINT 'minimalne symptomy manii' 
+        ELSE
+            IF @wynik BETWEEN 20 AND 25
+            PRINT 'hipomania' 
+            ELSE
+                IF @wynik BETWEEN 26 AND 37
+                PRINT 'umiarkowana mania'
+                ELSE
+                    IF @wynik>37
+                    PRINT 'ciężka mania'
+GO
+
+
