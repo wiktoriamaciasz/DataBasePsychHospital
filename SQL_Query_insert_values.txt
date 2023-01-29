@@ -135,7 +135,7 @@ CREATE TABLE StrategieLeczenia (
 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
 	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
 	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
-	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu),
 );
 
 
