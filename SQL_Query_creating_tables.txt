@@ -40,8 +40,7 @@ CREATE TABLE Oddzialy (
 	ID INT PRIMARY KEY,
 	NazwaOddzialu VARCHAR(255),
 	Kierownik INT,
-	LiczbaMiejsc INT,
-	LiczbaPacjentow INT,
+	LiczbaMiejsc INT
 	FOREIGN KEY(Kierownik) REFERENCES Pracownicy(ID),
 );
 
