@@ -236,13 +236,13 @@ CREATE Table Oddzialy(
 	Kierownik INT,
 	LiczbaMiejsc INT);
 
-INSERT INTO Oddzialy VALUES (
-  (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
-  (2, 'Odział Leczenia Alkoholowych Zespołów Abstynencyjnych', 2, 25, 0),
-  (3, 'Oddział Rehabilitacyjny', 3, 50, 0),
-  (4, 'Oddział Psychogeriatryczny', 4, 40, 0),
-  (5, 'Oddział Psychiatryczny Dzieci i Młodzieży', 5, 40, 0)
-)
+INSERT INTO Oddzialy VALUES 
+  (1, 'Oddział Ogólnopsychiatryczny', 1, 40),
+  (2, 'Odział Leczenia Alkoholowych Zespołów Abstynencyjnych', 2, 25),
+  (3, 'Oddział Rehabilitacyjny', 3, 50),
+  (4, 'Oddział Psychogeriatryczny', 4, 40),
+  (5, 'Oddział Psychiatryczny Dzieci i Młodzieży', 5, 40)
+
 
 
  CREATE TABLE Pracownicy (
