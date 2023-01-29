@@ -33,6 +33,7 @@ AS
 	END
 GO
 
+
 GO
 CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
 INSTEAD OF INSERT
@@ -58,18 +59,45 @@ AS
 	WHILE (@@FETCH_STATUS = 0 ) BEGIN
 		
 		-- sprawdzenie daty i daty w peselu
-		DECLARE @peselday VARCHAR(256)
-		DECLARE @peselmonth VARCHAR(256)
+		DECLARE @peselday VARCHAR(2)
+		DECLARE @peselmonth VARCHAR(2)
 		DECLARE @peselyear VARCHAR(256)
+		DECLARE @peselmonthright CHAR(1)
+		DECLARE @peselmonthleft CHAR(1)
+		DECLARE @peselcentury CHAR(2)
+
 		SET @peselday = SUBSTRING(@pesel, 5, 2)
-		SET @peselmonth = SUBSTRING(@pesel, 3, 2)
+
+		SET @peselmonthleft = SUBSTRING(@pesel, 3, 1)
+
+		IF @peselmonthleft IN (0, 1)
+			SET @peselcentury = '19'
+		IF @peselmonthleft IN (2, 3)
+			SET @peselcentury = '20'
+		IF @peselmonthleft IN (4, 5)
+			SET @peselcentury = '21'
+
+		IF @peselmonthleft = 2
+			SET @peselmonthleft = '0'
+		IF @peselmonthleft = 3
+			SET @peselmonthleft = '1'
+		IF @peselmonthleft = 4
+			SET @peselmonthleft = '0'
+		IF @peselmonthleft = 5
+			SET @peselmonthleft = '1'
+
+		SET @peselmonthright = SUBSTRING(@pesel, 4, 1)
+
+
+		SET @peselmonth = @peselmonthleft + @peselmonthright
+
 		SET @peselyear = SUBSTRING(@pesel, 1, 2)
 
 		DECLARE @peseldate VARCHAR(256)
-		SET @peseldate = @peselyear + '-' + @peselmonth + '-' + @peselday
+		SET @peseldate = @peselcentury + @peselyear + '-' + @peselmonth + '-' + @peselday
 
 		DECLARE @datedate VARCHAR(256)
-		SET @datedate = SUBSTRING( CAST(@dataurodzenia as char), 3, 11)
+		SET @datedate = SUBSTRING( CAST(@dataurodzenia as char), 1, 11)
 
 		--PRINT @datedate
 		--PRINT @peseldate
