@@ -17,8 +17,18 @@ CREATE VIEW DostepneMiejscaNaOddzialach
 FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ NUMERU PESEL (SUMA KONTROLNA)
 CREATE FUNCTION CheckPESEL ( @PESEL VARCHAR(256) )
 
+5.
+WIDOK POKAZUJĄCY WSZYSTKICH LEKARZY I ICH PACJENTÓW
+CREATE VIEW vw_Pacjenci_Lekarzy AS
+
+6.
+FUNKCJA POKAZUJĄCA LEKARZA I JEGO PACJENTÓW
+CREATE FUNCTION f_Pacjenci_Lekarza ( @imie VARCHAR(256), @nazwisko VARCHAR(256) )
+RETURNS table
+AS
+
 DO ZROBIENIA:
-- Widok pokazujący jakich pacjentów obecnie prowadzi lekarz
+- Widok pokazujący jakich pacjentów obecnie prowadzi lekarz - ZROBIONE
 
 
 
