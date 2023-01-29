@@ -151,9 +151,9 @@ CREATE TABLE StrategieLeczenia (
 
 
 CREATE TABLE DaneKontaktowe (
-	ID_Osoby INT,
+	ID_Osoby INT IDENTITY(1,1),
 	ID_Pacjenta INT,
-	NumerKontaktowy INT,
+	NumerKontaktowy VARCHAR(255),
 	EMAIL VARCHAR(255),
 	Adres VARCHAR(255),
 	Miasto VARCHAR(255),
@@ -161,6 +161,18 @@ CREATE TABLE DaneKontaktowe (
 	PRIMARY KEY (ID_Osoby, ID_Pacjenta),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
 );
+
+INSERT INTO DaneKontaktowe VALUES
+(1, '+48 507836657', 'email1@domena1.com', 'ul. Saturna 2/43', 'Iłowa', 'Polska'),
+(1, '+48 510621350', 'email2@domena1.com', 'ul. Sportowa 5', 'Biała Rawska', 'Polska'),
+(2, '+48 509393005', 'email3@domena1.com', 'ul. Gospodarcza 41/63', 'Milicz', 'Polska'),
+(3, '+48 880677938', 'email4@domena1.com', 'ul. Grunwaldzka 44', 'Ścinawa', 'Polska'),
+(4, '+48 537299150', 'email5@domena1.com', 'ul. Tęczowa 2/68', 'Lewin Brzeski', 'Polska'),
+(6, '+48 515319351', 'email1@domena2.com', 'ul. Wioślarska 40', 'Mszczonów', 'Polska'),
+(5, '+48 735118959', 'email2@domena2.com', 'ul. Widokowa 54/26', 'Lipsko', 'Polska'),
+(11, '+48 575269049', 'email3@domena2.com', 'ul. Dunikowskiego 2/14', 'Chodecz', 'Polska'),
+(11, '+48 663553284', 'email4@domena2.com', 'ul. Spółdzielcza 154/17', 'Pakość', 'Polska'),
+(7, '+48 720583722', 'email1@domena3.com', 'ul. Wrocławska 78/46', 'Łęknica', 'Polska')
 
 
 -- BADANIA PACJENTÓW ------------------------------------------------
