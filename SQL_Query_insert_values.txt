@@ -6,26 +6,38 @@ do bazy danych szpitala
 -- DANE DOTYCZĄCE PACJENTÓW ------------------------------------------------
 
 CREATE TABLE Pacjenci (
- 	ID INT PRIMARY KEY,
+ 	ID INT PRIMARY KEY IDENTITY(1,1),
  	Imie VARCHAR(255),
  	Nazwisko VARCHAR(255),
- 	Plec VARCHAR(255),
+ 	Plec CHAR(1),
  	DataUrodzenia DATE,
- 	Pesel VARCHAR(256),
+ 	Pesel VARCHAR(11),
  	Palenie BIT,
  	Wzrost INT,
  );
  
  INSERT INTO Pacjenci VALUES
-	(1,'Norbert','Wrona','m','1993-12-16','93121606401',1,180),
-	(2,'Sonia','Skowronek','k','1956-07-06','56070691276',0,159),
-	(3,'Eugeniusz','Majewski','m','1981-01-01','81010184675',1,163),
-	(4,'Maria','Kisiel','k','1995-03-10','95031074352',1,162),
-	(5,'Gustaw','Krajewski','m','1975-09-20','75092073429',1,174),
-	(6,'Zbigniew','Kowal','m','1970-02-25','70022589704',1,171),
-	(7,'Lukas','Mak','m','1984-10-22','84102290645',1,183),
-	(8, 'Adam', 'Nowak', 'M', '1998-11-07', '98110775991', 0, 178),
-	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', '97041708746', 0, 180);
+	('Ewelina', 'Przybylska', 'K', '1932-04-01', '32040176108', 1, 167),
+	('Zdzisław', 'Szulc', 'M', '1952-06-02', '52060291939', 0, 173),
+	('Zofia', 'Janik', 'K', '1950-09-19', '50091930982', 1, 169),
+	('Elżbieta', 'Nowak', 'K', '2000-12-25', '00322531707', 1, 180),
+	('Volodymyr', 'Laskowski', 'M', '1969-04-13', '69041384832', 1, 178),
+	('Maksymilian', 'Sobczak', 'M', '1982-04-11', '82041136995', 0, 162),
+	('Kamil', 'Chmielewski', 'M', '1954-01-12', '54011260197', 1, 178),
+	('Alan', 'Wieczorek', 'M', '1944-03-31', '44033187156', 0, 190),
+	('Witold', 'Kaczmarczyk', 'M', '2007-07-24', '07272485434', 0, 174),
+	('Irena', 'Gajewska', 'K', '1936-04-29', '36042946606', 1, 185),
+	('Olga', 'Kaczmarek', 'K', '1977-06-07', '77060741307', 1, 185),
+	('Sylwester', 'Kwiatkowski', 'M', '1997-05-17', '97051730934', 1, 179),
+	('Norbert', 'Zieliński', 'M', '1958-03-21', '58032157278', 0, 169),
+	('Stanisława', 'Górecka', 'K', '1976-12-12', '76121257869', 0, 187),
+	('Ewa', 'Szczepańska', 'K', '1969-11-14', '69111413448', 0, 185),
+	('Wiktor', 'Szulc', 'M', '1937-01-03', '37010382417', 0, 164),
+	('Danuta', 'Pawlak', 'K', '1921-11-15', '21111547347', 1, 174),
+	('Tomasz', 'Marciniak', 'M', '1956-03-18', '56031873337', 0, 167),
+	('Ireneusz', 'Nowakowski', 'M', '1932-02-12', '32021224013', 0, 184),
+	('Halina', 'Grabowska', 'K', '1966-05-08', '66050833368', 0, 176),
+	('Henryk', 'Janik', 'M', '1952-11-11', '52111172514', 1, 178)
  
 
 -- CHOROBY, OBJAWY
@@ -145,9 +157,9 @@ INSERT INTO StrategieLeczenia VALUES
 
 
 CREATE TABLE DaneKontaktowe (
-	ID_Osoby INT,
+	ID_Osoby INT IDENTITY(1,1),
 	ID_Pacjenta INT,
-	NumerKontaktowy INT,
+	NumerKontaktowy VARCHAR(255),
 	EMAIL VARCHAR(255),
 	Adres VARCHAR(255),
 	Miasto VARCHAR(255),
@@ -155,6 +167,18 @@ CREATE TABLE DaneKontaktowe (
 	PRIMARY KEY (ID_Osoby, ID_Pacjenta),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
 );
+
+INSERT INTO DaneKontaktowe VALUES
+(1, '+48 507836657', 'email1@domena1.com', 'ul. Saturna 2/43', 'Iłowa', 'Polska'),
+(1, '+48 510621350', 'email2@domena1.com', 'ul. Sportowa 5', 'Biała Rawska', 'Polska'),
+(2, '+48 509393005', 'email3@domena1.com', 'ul. Gospodarcza 41/63', 'Milicz', 'Polska'),
+(3, '+48 880677938', 'email4@domena1.com', 'ul. Grunwaldzka 44', 'Ścinawa', 'Polska'),
+(4, '+48 537299150', 'email5@domena1.com', 'ul. Tęczowa 2/68', 'Lewin Brzeski', 'Polska'),
+(6, '+48 515319351', 'email1@domena2.com', 'ul. Wioślarska 40', 'Mszczonów', 'Polska'),
+(5, '+48 735118959', 'email2@domena2.com', 'ul. Widokowa 54/26', 'Lipsko', 'Polska'),
+(11, '+48 575269049', 'email3@domena2.com', 'ul. Dunikowskiego 2/14', 'Chodecz', 'Polska'),
+(11, '+48 663553284', 'email4@domena2.com', 'ul. Spółdzielcza 154/17', 'Pakość', 'Polska'),
+(7, '+48 720583722', 'email1@domena3.com', 'ul. Wrocławska 78/46', 'Łęknica', 'Polska')
 
 
 -- BADANIA PACJENTÓW ------------------------------------------------
@@ -251,17 +275,19 @@ INSERT INTO Oddzialy VALUES
 
 
  CREATE TABLE Pracownicy (
- 	ID INT PRIMARY KEY,
- 	Imie VARCHAR(255),
- 	Nazwisko VARCHAR(255),
- 	Stanowisko VARCHAR(255),
- 	StopienNaukowy VARCHAR(255),
+ 	ID INT PRIMARY KEY IDENTITY(1,1),
+ 	Imie VARCHAR(256),
+ 	Nazwisko VARCHAR(256),
+	Plec CHAR(1),
+	PESEL VARCHAR(11),
+ 	Stanowisko VARCHAR(256),
+ 	StopienNaukowy VARCHAR(256),
  	Wyplata MONEY,
- 	TypZatrudnienia VARCHAR(255),
+ 	TypZatrudnienia VARCHAR(256),
  	DataZatrudnienia DATE,
- 	NrKontaktowy INT,
- 	Adres VARCHAR(255),
- 	Miasto VARCHAR(255)
+ 	NrKontaktowy VARCHAR(256),
+ 	Adres VARCHAR(256),
+ 	Miasto VARCHAR(256)
  );
 
 INSERT INTO Pracownicy VALUES
@@ -295,7 +321,8 @@ INSERT INTO Pracownicy VALUES
 ('Ilona', 'Błaszczyk', 'K', '61102787163', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '1994-06-12', '+48 792087878', 'ul. Grzybowa 75/28', 'Łęknica'),
 ('Monika', 'Brzezińska', 'K', '92011167144', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2021-07-21', '+48 737109278', 'ul. Sportowa 130', 'Wołomin'),
 ('Natalia', 'Kozłowska', 'K', '64102341786', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '2014-10-25', '+48 662980485', 'ul. Sosnowa 1/61', 'Szlichtyngowa'),
-('Mirosława', 'Jakubowska', 'K', '84091822026', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2010-05-02', '+48 512092160', 'ul. Kremowa 91/86', 'Oświęcim')
+('Mirosława', 'Jakubowska', 'K', '84091822026', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2010-05-02', '+48 512092160', 'ul. Kremowa 91/86', 'Oświęcim');
+
 
 
 -- LEKI
