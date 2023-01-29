@@ -259,7 +259,38 @@ INSERT INTO Oddzialy VALUES
  	Miasto VARCHAR(255)
  );
 
-
+INSERT INTO Pracownicy VALUES
+('Bogusław', 'Jaworski', 'M', '55061499658', 'Sekretarz', 'NULL', 3490, 'umowa o pracę', '1989-07-03', '+48 600140246', 'ul. Orkana 79/118', 'Radzymin'),
+('Karol', 'Konieczny', 'M', '36092072559', 'Dietetyk', 'Doktor', 7538, 'umowa o pracę', '2009-06-02', '+48 884988290', 'ul. Malinowa 146', 'Złotoryja'),
+('Alicja', 'Mazur', 'K', '43021719344', 'Asystent Medyczny', 'Doktor', 6282, 'umowa o pracę', '2022-11-22', '+48 880059857', 'ul. Bystrzycka 58/48', 'Rudnik nad Sanem'),
+('Beata', 'Górecka', 'K', '84031173089', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '2009-02-27', '+48 669617035', 'ul. Świętosławy 6/0', 'Marki'),
+('Iga', 'Nowakowska', 'K', '60020162126', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-01-25', '+48 608441073', 'ul. Sobócka 32/55', 'Józefów'),
+('Renata', 'Kowalczyk', 'K', '21062193686', 'Sekretarz', 'Magister', 4886, 'umowa zlecenie', '1986-02-26', '+48 736813994', 'ul. Wrocławska 35', 'Halinów'),
+('Wojciech', 'Nowak', 'M', '83050969091', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '2011-01-10', '+48 882550562', 'ul. Grzybowa 183', 'Bolesławiec'),
+('Damian', 'Chmielewski', 'M', '41090753894', 'Asystent Medyczny', 'Doktor', 6282, 'umowa o pracę', '2001-03-13', '+48 691386859', 'ul. Główna 82', 'Muszyna'),
+('Wiktor', 'Duda', 'M', '34010249254', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '2013-10-30', '+48 503876655', 'ul. Dworcowa 81/9', 'Golub-Dobrzyń'),
+('Michał', 'Piotrowski', 'M', '74100284358', 'Pielęgniarz', 'Licencjat', 4188, 'umowa o pracę', '2001-02-19', '+48 604287948', 'ul. Główna 45', 'Pruszków'),
+('Paulina', 'Baran', 'K', '48021346682', 'Pielęgniarz', 'NULL', 3490, 'umowa o pracę', '1984-04-13', '+48 519204723', 'ul. Broniewskiego 86/69', 'Jabłonowo Pomorskie'),
+('Barbara', 'Lewandowska', 'K', '20051412401', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '1964-12-16', '+48 727237534', 'ul. Skalna 90/42', 'Skała'),
+('Kornelia', 'Zielińska', 'K', '64011333401', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2011-02-20', '+48 888475962', 'ul. Polna 59/82', 'Zielona Góra'),
+('Michalina', 'Wójcik', 'K', '28041164068', 'Pielęgniarz', 'Doktor', 6282, 'umowa o pracę', '2003-03-02', '+48 501090590', 'ul. Witosa 45/17', 'Halinów'),
+('Milena', 'Walczak', 'K', '89060615964', 'Dietetyk', 'Doktor Habilitowany', 10051, 'umowa o pracę', '2018-04-03', '+48 780965766', 'ul. Kolorowa 65/39', 'Bogatynia'),
+('Andrii', 'Wróbel', 'M', '77092875131', 'Pielęgniarz', 'Licencjat', 4188, 'umowa o pracę', '2010-05-14', '+48 603192564', 'ul. Łąkowa 95', 'Płońsk'),
+('Dominik', 'Olszewski', 'M', '48110338592', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2014-03-11', '+48 734918420', 'ul. Diamentowa 21/27', 'Oława'),
+('Grzegorz', 'Kaźmierczak', 'M', '86011238494', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2011-10-25', '+48 785498443', 'ul. Świętosławy 69', 'Kamień Krajeński'),
+('Danuta', 'Baranowska', 'K', '69041491723', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '2020-03-19', '+48 574324952', 'ul. Jodłowa 54/117', 'Nowa Sarzyna'),
+('Teresa', 'Laskowska', 'K', '56030871923', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 'umowa o pracę', '2005-03-28', '+48 729588682', 'ul. Armii Krajowej 50/5', 'Wyszków'),
+('Jolanta', 'Dudek', 'K', '45051332342', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-11-18', '+48 577956862', 'ul. Wieniawskiego 85/11', 'Ząbkowice Śląskie'),
+('Kamila', 'Lis', 'K', '48052920349', 'Dietetyk', 'Magister', 5863, 'umowa o pracę', '1996-02-23', '+48 667288572', 'ul. Partyzantów 173/116', 'Sobótka'),
+('Hanna', 'Zielińska', 'K', '95112953863', 'Asystent Medyczny', 'Magister', 4886, 'umowa o pracę', '2022-04-26', '+48 699041651', 'ul. Słodowa 40', 'Jordanów'),
+('Aleksandra', 'Borowska', 'K', '56111918547', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 'umowa o pracę', '2002-04-12', '+48 783433447', 'ul. Lipowa 26/73', 'Łochów'),
+('Arkadiusz', 'Bąk', 'M', '73050278712', 'Pielęgniarz', 'Magister', 4886, 'umowa o pracę', '2020-01-23', '+48 579809329', 'ul. Słowiańska 95', 'Wąsosz'),
+('Waldemar', 'Olszewski', 'M', '55041152939', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 'umowa o pracę', '2010-11-04', '+48 536288123', 'ul. Wrocławska 4', 'Głubczyce'),
+('Artur', 'Kowalski', 'M', '26111373619', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2010-05-26', '+48 782686113', 'ul. Ogrodowa 95', 'Rawa Mazowiecka'),
+('Ilona', 'Błaszczyk', 'K', '61102787163', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '1994-06-12', '+48 792087878', 'ul. Grzybowa 75/28', 'Łęknica'),
+('Monika', 'Brzezińska', 'K', '92011167144', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2021-07-21', '+48 737109278', 'ul. Sportowa 130', 'Wołomin'),
+('Natalia', 'Kozłowska', 'K', '64102341786', 'Lekarz', 'Doktor Habilitowany', 16752, 'umowa o pracę', '2014-10-25', '+48 662980485', 'ul. Sosnowa 1/61', 'Szlichtyngowa'),
+('Mirosława', 'Jakubowska', 'K', '84091822026', 'Lekarz', 'Doktor', 12564, 'umowa o pracę', '2010-05-02', '+48 512092160', 'ul. Kremowa 91/86', 'Oświęcim')
 
 
 -- LEKI
