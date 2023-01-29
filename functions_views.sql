@@ -87,3 +87,14 @@ INNER JOIN
 Choroby C ON WCP.ID_Choroby=C.IDChoroby
 GROUP BY NazwaChoroby
 
+
+/*
+Widok ilustrujący najpopularniejsze leki używane przez lekarzy w terapii pacjentów w danym szpitalu
+*/
+CREATE VIEW UzycieLekow AS
+SELECT P.ID, P.Imie, P.Nazwisko, L.NazwaLeku, COUNT(NazwaLeku) Ilość FROM Pracownicy P
+INNER JOIN StrategieLeczenia SL
+ON P.ID=SL.LekarzProwadzacy
+INNER JOIN Leki L ON L.ID= SL.ID_LEKU 
+WHERE P.Stanowisko = 'Lekarz'
+GROUP BY P.Nazwisko, L.NazwaLeku, P.ID, P.Imie
