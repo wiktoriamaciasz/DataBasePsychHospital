@@ -40,8 +40,7 @@ CREATE TABLE Oddzialy (
 	ID INT PRIMARY KEY,
 	NazwaOddzialu VARCHAR(255),
 	Kierownik INT,
-	LiczbaMiejsc INT,
-	LiczbaPacjentow INT,
+	LiczbaMiejsc INT
 	FOREIGN KEY(Kierownik) REFERENCES Pracownicy(ID),
 );
 
@@ -51,6 +50,7 @@ CREATE TABLE Pobyty (
 	DataWypisu DATE,
 	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	CHECK (DataWypisu>DataPrzyjecia)
 );
 
 CREATE TABLE KategoriaLeku (
