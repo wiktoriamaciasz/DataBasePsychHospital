@@ -1,0 +1,423 @@
+/* Tworzenie tabel i dodawanie wstępnych wartości
+do bazy danych szpitala
+*/
+
+
+-- DANE DOTYCZĄCE PACJENTÓW ------------------------------------------------
+
+CREATE TABLE Pacjenci (
+ 	ID INT PRIMARY KEY,
+ 	Imie VARCHAR(255),
+ 	Nazwisko VARCHAR(255),
+ 	Plec VARCHAR(255),
+ 	DataUrodzenia DATE,
+ 	Pesel VARCHAR(256),
+ 	Palenie BIT,
+ 	Wzrost INT,
+ );
+ 
+ INSERT INTO Pacjenci VALUES
+	(1,'Norbert','Wrona','m','1993-12-16','93121606401',1,180),
+	(2,'Sonia','Skowronek','k','1956-07-06','56070691276',0,159),
+	(3,'Eugeniusz','Majewski','m','1981-01-01','81010184675',1,163),
+	(4,'Maria','Kisiel','k','1995-03-10','95031074352',1,162),
+	(5,'Gustaw','Krajewski','m','1975-09-20','75092073429',1,174),
+	(6,'Zbigniew','Kowal','m','1970-02-25','70022589704',1,171),
+	(7,'Lukas','Mak','m','1984-10-22','84102290645',1,183),
+	(8, 'Adam', 'Nowak', 'M', '1998-11-07', '98110775991', 0, 178),
+	(9, 'Magdalena', 'Kowalska', 'K', '1997-04-17', '97041708746', 0, 180);
+ 
+
+-- CHOROBY, OBJAWY
+ 
+ CREATE TABLE Choroby (
+ 	ID INT PRIMARY KEY,
+ 	NazwaChoroby VARCHAR(255)
+ );
+ 
+INSERT INTO Choroby VALUES 
+	(1, 'Schizofrenia'),
+	(2, 'Zaburzenia ze spektrum autyzmu'),
+	(3, 'Depresja'),
+	(4, 'Zaburzenie lękowe'),
+	(5, 'Choroba afektywna dwubiegunowa'),
+	(6, 'PTSD'),
+	(7, 'Zaburzenie osobowości'),
+	(8, 'Otępienie'),
+	(9, 'Nadciśnienie'),
+	(10, 'Cukrzyca'),
+	(11, 'Miazdzyca'),
+	(12, 'Otyłość'),
+	(13, 'Choroba Hashimoto'),
+	(14, 'Bulimia');
+
+
+
+ CREATE TABLE WszystkieChorobyPacjentow (
+ 	ID_Pacjenta INT,
+ 	ID_Choroby INT,
+ 	PRIMARY KEY (ID_Pacjenta, ID_Choroby),
+ 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+ 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+ );
+
+INSERT INTO WszystkieChorobyPacjentow VALUES
+  (1, 1),
+  (1, 3),
+  (2, 2),
+  (4,14),
+  (4, 7),
+  (6, 12),
+  (6, 11),
+  (6, 10),
+  (6, 6)
+
+
+CREATE TABLE Objawy (
+	ID INT PRIMARY KEY,
+	NazwaObjawu VARCHAR(255),
+);
+
+INSERT INTO Objawy VALUES
+	(1,'obniżenie nastroju'),
+	(2,'problemy ze snem'),
+	(3,'apatia'),
+	(4,'myśli samobójcze'),
+	(5,'halucynacje'),
+	(6,'urojenia'),
+	(7,'drżenie ciała'),
+	(8,'niepokój'),
+	(9,'natrętne myśli'),
+	(10,'pobudzenie psychoruchowe'),
+	(11,'agresja'),
+	(12,'dezorganizacja myślenia')
+	;
+
+
+CREATE TABLE ObjawyPacjentow (
+	ID_Pacjenta INT,
+	ID_Objawu INT,
+	DataWystapienia DATE,
+	PRIMARY KEY (ID_Pacjenta, ID_Objawu),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Objawu) REFERENCES Objawy(ID),
+);
+
+INSERT INTO ObjawyPacjentow VALUES
+(6, 8, '2020-10-12'),
+(6, 10, '2020-10-14'),
+(6, 11, '2020-10-14'),
+(4, 9, '2020-11-21');
+
+
+-- POBYTY W SZPITALU I STOSOWANE STRATEGIE LECZENIA
+
+CREATE TABLE Pobyty (
+	ID_pacjenta INT,
+	DataPrzyjecia DATE,
+	DataWypisu DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+);
+
+CREATE TABLE StrategieLeczenia (
+	ID INT PRIMARY KEY,
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	ID_Leku INT,
+	DawkaLeku VARCHAR(255),
+	LekarzProwadzacy INT,
+	ID_Oddzialu INT,
+	DataRozpoczecia DATE,
+	DataZakonczenia DATE,
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
+	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(ID),
+);
+
+
+CREATE TABLE DaneKontaktowe (
+	ID_Osoby INT,
+	ID_Pacjenta INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	Adres VARCHAR(255),
+	Miasto VARCHAR(255),
+	Kraj VARCHAR(255),
+	PRIMARY KEY (ID_Osoby, ID_Pacjenta),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+
+-- BADANIA PACJENTÓW ------------------------------------------------
+
+
+CREATE TABLE BadanieMoczu (
+	ID_Pacjenta INT,
+	DataBadania DATE,
+	Barwa VARCHAR(255),
+	Klarownosc BIT,
+	OdczynPh INT,
+	CiezarMoczu INT,
+	Leukocyty BIT,
+	Hemoglobina BIT,
+	Bilirubina BIT,
+	Urobilinogen BIT,
+	Bialko BIT,
+	Glukoza BIT,
+	Ketony BIT,
+	Azotyny BIT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+INSERT INTO BadanieMoczu Values
+(2, '2021-10-09', 'słomkowy', 1, 6, 1.03, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, '2021-12-19','słomkowy', 1, 7, 1.02, 0, 0, 0, 0, 0, 0, 0, 0);
+
+
+CREATE TABLE BadanieKrwi (
+	ID_Pacjenta INT,
+	DataBadania DATETIME,
+	Erytrocyty FLOAT,
+	Leukocyty FLOAT,
+	Hemoglobina FLOAT,
+	Hematokryt FLOAT,
+	PlytkiKrwi FLOAT,
+	Glukoza FLOAT,
+	PRIMARY KEY (ID_Pacjenta, DataBadania),
+	FOREIGN KEY (ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+INSERT INTO BadanieKrwi VALUES
+(1, '2021-11-13 06:00:00', 4, 5, 14, 40, 300, 5.0),
+(1, '2021-11-13 12:00:00', 4.2, 4.7, 15, 41, 230, 4.5),
+(4, '2021-11-13 18:00:00', 5, 10, 35, 300, 7.0);
+
+
+CREATE TABLE HistoriaWagi (
+	ID_Pacjenta INT,
+	Waga INT,
+	DataPomiaru DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPomiaru),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
+);
+
+INSERT INTO HistoriaWagi VALUES
+	(4, 51, '2019-03-14'),
+	(4, 56, '2020-11-21'),
+	(4, 53, '2021-12-02');
+	
+	
+CREATE TABLE WynikiDanychPsychologicznych (
+	ID_Pacjenta INT,
+	Data DATE,
+	TestBECCA INT,
+	SkalaYOUNGA INT,
+	TestMMPI2 INT,
+	TestDUDIT INT,
+	SkalaAUDIT INT,
+	SkalaPANNS INT,
+	PRIMARY KEY (ID_Pacjenta, Data),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+);
+
+	
+
+
+-- ORGANIZACJA SZPITALA
+
+CREATE Table Oddzialy(
+	IdOddzialu INT Primary key,
+	NazwaOddzialy VARCHAR(256),
+	Kierownik INT,
+	LiczbaMiejsc INT,
+	LiczbaPacjentow INT);
+
+INSERT INTO Oddzialy VALUES (
+  (1, 'Oddział Ogólnopsychiatryczny', 1, 40, 3),
+  (2, 'Odział Leczenia Alkoholowych Zespołów Abstynencyjnych', 2, 25, 0),
+  (3, 'Oddział Rehabilitacyjny', 3, 50, 0),
+  (4, 'Oddział Psychogeriatryczny', 4, 40, 0),
+  (5, 'Oddział Psychiatryczny Dzieci i Młodzieży', 5, 40, 0)
+)
+
+
+ CREATE TABLE Pracownicy (
+ 	ID INT PRIMARY KEY,
+ 	Imie VARCHAR(255),
+ 	Nazwisko VARCHAR(255),
+ 	Stanowisko VARCHAR(255),
+ 	StopienNaukowy VARCHAR(255),
+ 	Wyplata MONEY,
+ 	TypZatrudnienia VARCHAR(255),
+ 	DataZatrudnienia DATE,
+ 	NrKontaktowy INT,
+ 	Adres VARCHAR(255),
+ 	Miasto VARCHAR(255)
+ );
+
+
+
+
+-- LEKI
+CREATE TABLE KategoriaLeku(
+	IdKategorii INT Primary key,
+	NazwaKategorii VARCHAR(256));
+
+ CREATE TABLE Leki (
+ 	ID INT PRIMARY KEY,
+ 	NazwaLeku VARCHAR(255),
+ 	Generacja INT,
+ 	Producent INT,
+ 	Kategoria INT,
+ 	SubstancjaCzynna VARCHAR(255),
+ 	IloscLekuNaStanie INT,
+ 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii),
+ );
+ 
+ 
+ CREATE TABLE ProducenciLekow (
+	ID INT PRIMARY KEY,
+	Nazwa VARCHAR(256)
+ );
+ 
+  INSERT INTO ProducenciLekow VALUES
+  (1, 'Mylan'),
+  (2, 'Sanofi Aventis'),
+  (3, 'Egis'),
+  (4, 'Lekam'),
+  (5, 'Adamed'),
+  (6, 'Unia'),
+  (7, 'GSK'),
+  (8, 'Pfizer'),
+  (9, 'Polfa Warszawa S.A.'),
+  (10, 'Biofarm'),
+  (11, 'Accord')
+
+INSERT INTO KategoriaLeku VALUES
+	(1, 'SSRI-Antydepresanty'),
+	(2, 'SNRI-Antydepresanty'),
+	(3, 'Neuroleptyki'),
+	(4, 'Stabilizator nastroju'),
+	(5, 'Benzodiazepiny'),
+	(6,'Agonista GABA'),
+	(7,'Antagonista NMDA'),
+	(8,'Antagonista receptora opioidowego');
+
+
+INSERT INTO Leki VALUES
+	(1,'Sertagen',NULL,1,1,'Sertralina',207),
+	(2,'Bioxetin',NULL,2,1,'Fluoksytyna',378),
+	(3,'Parogen',NULL,1,1,'Paroksytyna',154),
+	(4, 'Velaxin',NULL,3,2,'Wenlafaksyna',79),
+	(5, 'Olzapin', 2,4,3,'Olanzapina',601),
+	(6,'Kwetaplex',2,5,3,'Kwetiapina',108),
+	(7,'Solian',2,2,3,'Amisulpiryd',123),
+	(8,'Haloperidol',1,6,3,'Haloperidol',396),
+	(9,'Lithium Carbonicum',NULL,7,4,'Lit',221),
+	(10,'Depakine Chrono',NULL,2,4,'Kwas Walproinowy',253),
+	(11,'Xanax',NULL,8,5,'Alprazolam',99),
+	(12,'Relanium',NULL,9,5,'Diazepam',138),
+	(13,'Pregabalin',NULL,1,6,'Pregabalina',258),
+	(14,'Biomentin',NULL,10,7,'Memantyna',43),
+	(15,'Naltex',NULL,11,8,'Naltrexone',71);
+	
+
+
+CREATE TABLE InterakcjeLekowe (
+	ID_LEK_1 INT,
+	ID_LEK_2 INT,
+	TypInterakcji VARCHAR(255),
+	PRIMARY KEY (ID_LEK_1, ID_LEK_2),
+	FOREIGN KEY(ID_LEK_1) REFERENCES LEKI(ID),
+	FOREIGN KEY(ID_LEK_2) REFERENCES LEKI(ID)
+);
+
+
+CREATE TABLE ObjawyUboczneLekow (
+	ID_LEK INT,
+	ObjawUboczny VARCHAR(255),
+	PRIMARY KEY (ID_LEK, ObjawUboczny),
+	FOREIGN KEY(ID_LEK) REFERENCES LEKI(ID),
+);
+
+
+CREATE TABLE DowstawcyLekow (
+	ID INT PRIMARY KEY,
+	ID_Leku INT,
+	NumerKontaktowy INT,
+	EMAIL VARCHAR(255),
+	NazwaFirmy VARCHAR(255),
+	Adres VARCHAR(255),
+	Kraj VARCHAR(255),
+	UE BIT,
+	FOREIGN KEY(ID_Leku) REFERENCES LEKI(ID)
+);
+
+
+
+
+-- TWORZENIE WYZWALACZY (5)
+
+--#1
+-- info o update'owaniu pobytów w szpitalu 
+
+CREATE TRIGGER TR_UPDATE_Pobyty ON Pobyty
+AFTER UPDATE
+AS
+PRINT 'Zmodyfikowanio zawartość danych na temat pobytów pacjentów w szpitalu.'
+SELECT * FROM deleted
+SELECT * FROM inserted
+GO
+
+
+--#2
+-- info o dodaniu nowych pracowników szpitala
+
+GO
+CREATE TRIGGER TR_INSERT_Pracownicy ON Pracownicy
+AFTER INSERT
+AS
+PRINT 'Dodano nowego pracownika szpitala.'
+SELECT * FROM inserted
+GO
+
+
+--#3
+-- info o dodaniu nowych diagnoz dla pacjentów
+
+GO
+CREATE TRIGGER TR_INSERT_WszystkieChorobyPacjentow ON WszystkieChorobyPacjentow
+AFTER INSERT
+AS
+PRINT 'Dodano nową diagnozę.'
+SELECT * FROM inserted
+GO
+
+
+--#4
+-- info o dodaniu strategii leczenia
+
+GO
+CREATE TRIGGER TR_INSERT_StrategieLeczenia ON StrategieLeczenia
+AFTER INSERT
+AS
+PRINT 'Dodano nową strategię leczenia pacjenta.'
+SELECT * FROM inserted
+GO
+
+
+--#5
+-- info o update'owaniu dostawcy leków 
+
+GO
+CREATE TRIGGER TR_UPDATE_DowstawcyLekow ON DowstawcyLekow
+AFTER UPDATE
+AS
+PRINT 'Zmodyfikowanio dostawcę danego leku.'
+SELECT * FROM deleted
+SELECT * FROM inserted
+GO
