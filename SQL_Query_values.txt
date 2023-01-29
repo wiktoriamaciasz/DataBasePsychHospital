@@ -1,4 +1,4 @@
-/* Tworzenie tabel i dodawanie wstępnych wartości
+/* Dodawanie wstępnych wartości
 do bazy danych szpitala
 */
 /*
