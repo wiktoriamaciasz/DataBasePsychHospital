@@ -1,0 +1,20 @@
+--FUNKCJA WYLICZAJĄCA WIEK PACJENTA
+
+SELECT ObliczWiek(2)
+
+-- WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
+
+SELECT * FROM Info_Pobyty
+
+-- WIDOK INFORMUJĄCY O WYPEŁNIENIU ODDZIALÓW SZPITALNYCH PRZEZ PACJENTÓW
+SELECT * FROM DostepneMiejscaNaOddzialach
+
+-- WIDOK pokazujący lekarzy i ich obecnych pacjentow
+SELECT * FROM vw_Pacjenci_Lekarzy 
+
+-- FUNKCJA pokazująca lekarza i jego obecnych pacjentów
+
+SELECT [dbo].f_Pacjenci_Lekarza('Milena', 'Krajewska') AS x
+
+--Widok zwracający częstość występowania danych jednostek chorobowych w szpitalu
+SELECT * FROM CzestoscWystepowaniaJednostekChoorbowych 
