@@ -17,10 +17,13 @@ CREATE VIEW DostepneMiejscaNaOddzialach
 FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ NUMERU PESEL (SUMA KONTROLNA)
 CREATE FUNCTION CheckPESEL ( @PESEL VARCHAR(256) )
 
+DO ZROBIENIA:
+- Widok pokazujący jakich pacjentów obecnie prowadzi lekarz
+
+
+
 [ II. ]
 Wyzwalacze i Procedury ( min 10 )
-
-
 
 1.
 info o update'owaniu pobytów w szpitalu 
@@ -44,3 +47,8 @@ CREATE TRIGGER TR_UPDATE_DowstawcyLekow ON DowstawcyLekow
 
 6. WYZWALACZ INSTEAD OF UPDATE NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
 CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
+
+DO ZROBIENIA
+- wyzwalacz na pacjentach przy modyfikacji
+- wyzwalacz na pracownikach przy dodawaniu
+- wyzwalacz na pracownikach przy modyfikacji
