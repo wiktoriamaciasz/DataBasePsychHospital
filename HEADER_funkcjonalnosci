@@ -1,0 +1,46 @@
+[ I. ]
+Funkcje i Widoki ( min 10 )
+
+1.
+FUNKCJA WYLICZAJĄCA WIEK PACJENTA
+Create function ObliczWiek(@idpacjenta INT)
+
+2.
+WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
+CREATE VIEW Info_Pobyty AS
+
+3.
+WIDOK INFORMUJĄCY O WYPEŁNIENIU ODDZIALÓW SZPITALNYCH PRZEZ PACJENTÓW
+CREATE VIEW DostepneMiejscaNaOddzialach
+
+4.
+FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ NUMERU PESEL (SUMA KONTROLNA)
+CREATE FUNCTION CheckPESEL ( @PESEL VARCHAR(256) )
+
+[ II. ]
+Wyzwalacze i Procedury ( min 10 )
+
+
+
+1.
+info o update'owaniu pobytów w szpitalu 
+CREATE TRIGGER TR_UPDATE_Pobyty ON Pobyty
+
+2.
+info o dodaniu nowych pracowników szpitala
+CREATE TRIGGER TR_INSERT_Pracownicy ON Pracownicy
+
+3.
+info o dodaniu nowych diagnoz dla pacjentów
+CREATE TRIGGER TR_INSERT_WszystkieChorobyPacjentow ON WszystkieChorobyPacjentow
+
+4.
+info o dodaniu strategii leczenia
+CREATE TRIGGER TR_INSERT_StrategieLeczenia ON StrategieLeczenia
+
+5.
+info o update'owaniu dostawcy leków 
+CREATE TRIGGER TR_UPDATE_DowstawcyLekow ON DowstawcyLekow
+
+6. WYZWALACZ INSTEAD OF UPDATE NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
+CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
