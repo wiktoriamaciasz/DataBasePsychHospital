@@ -190,3 +190,24 @@ CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
 GO
 
 
+/*
+Procedura oceniająca wyniki pacjenta w skali depresji Becca 
+*/
+
+GO
+CREATE PROC TestBecca(@id_pacjenta INT, @data DATE) AS
+    DECLARE @wynik INT
+    SET @wynik = (SELECT TestBECCA FROM WynikiDanychPsychologicznych WHERE ID_Pacjenta = @id_pacjenta AND Data = @data)
+    IF @wynik BETWEEN 0 AND 11
+    PRINT 'brak depresji' 
+    ELSE 
+        IF @wynik BETWEEN 12 AND 19
+        PRINT 'lekka depresja' 
+        ELSE
+            IF @wynik BETWEEN 20 AND 25
+            PRINT 'umiarkowana depresja' 
+            ELSE
+                IF @wynik > 26 
+                PRINT 'ciężka depresja' 
+GO
+
