@@ -22,7 +22,7 @@ AS
 	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 10, 1) AS INT) * 3 ) % 10 -- 3
 
 
-	SET @sum = 10 - (@sum % 10)
+	SET @sum = ( 10 - (@sum % 10) ) % 10
 
 	IF @sum = @controlSum
 		SET @result=1
@@ -289,7 +289,7 @@ AS
 	
 
 	DECLARE ITERATOR CURSOR FOR
-	SELECT Imie, Nazwisko, Plec, Pesel, Stanowisko, StopienNaukowy, Wyplata, TypZatrudnienia, DataZatrudnienia, NrKontaktowy, Adres, Miasto FROM inserted
+	SELECT Imie, Nazwisko, Plec, Pesel, Stanowisko, StopienNaukowy, Wyplata, ID_typZatrudnienia, DataZatrudnienia, NrKontaktowy, Adres, Miasto FROM inserted
 	OPEN Iterator
 	DECLARE @imie VARCHAR(256)
 	DECLARE @nazwisko VARCHAR(256)
@@ -299,7 +299,7 @@ AS
 	DECLARE @dataurodzenia DATE
 	DECLARE @stopienNaukowy VARCHAR(256)
 	DECLARE @wyplata MONEY
-	DECLARE @typZatrudnienia VARCHAR(256)
+	DECLARE @typZatrudnienia INT
 	DECLARE @dataZatrudnienia DATE
 	DECLARE @nrKontaktowy VARCHAR(256)
 	DECLARE @adres VARCHAR(256)
@@ -358,7 +358,7 @@ INSTEAD OF UPDATE
 AS
 	DECLARE @TEXT VARCHAR(256)
 	DECLARE ITERATOR CURSOR FOR
-	SELECT ID, Imie, Nazwisko, Plec, Pesel, Stanowisko, StopienNaukowy, Wyplata, TypZatrudnienia, DataZatrudnienia, NrKontaktowy, Adres, Miasto FROM inserted
+	SELECT ID, Imie, Nazwisko, Plec, Pesel, Stanowisko, StopienNaukowy, Wyplata, ID_typZatrudnienia, DataZatrudnienia, NrKontaktowy, Adres, Miasto FROM inserted
 	OPEN Iterator
 	DECLARE @id INT
 	DECLARE @imie VARCHAR(256)
@@ -369,7 +369,7 @@ AS
 	DECLARE @dataurodzenia DATE
 	DECLARE @stopienNaukowy VARCHAR(256)
 	DECLARE @wyplata MONEY
-	DECLARE @typZatrudnienia VARCHAR(256)
+	DECLARE @typZatrudnienia INT
 	DECLARE @dataZatrudnienia DATE
 	DECLARE @nrKontaktowy VARCHAR(256)
 	DECLARE @adres VARCHAR(256)
@@ -391,7 +391,7 @@ AS
 		IF @peselGood = 1 BEGIN
 			UPDATE Pracownicy
 			SET Imie = @imie, Nazwisko = @nazwisko, Plec = @plec, Pesel = @pesel, Stanowisko = @stanowisko, StopienNaukowy = @stopienNaukowy, Wyplata = @wyplata,
-			TypZatrudnienia = @typZatrudnienia, DataZatrudnienia = @dataZatrudnienia, NrKontaktowy = @nrKontaktowy, Adres = @adres, Miasto = @miasto
+			ID_typZatrudnienia = @typZatrudnienia, DataZatrudnienia = @dataZatrudnienia, NrKontaktowy = @nrKontaktowy, Adres = @adres, Miasto = @miasto
 			WHERE Pracownicy.ID = @id
 
 			SET @TEXT = FORMATMESSAGE (

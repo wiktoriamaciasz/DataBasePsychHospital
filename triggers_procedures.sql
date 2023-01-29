@@ -16,7 +16,7 @@ GO
 -- info o dodaniu nowych pracowników szpitala
 
 GO
-CREATE TRIGGER TR_INSERT_Pracownicy ON Pracownicy
+CREATE TRIGGER TR_AFTER_INSERT_Pracownicy ON Pracownicy
 AFTER INSERT
 AS
 PRINT 'Dodano nowego pracownika szpitala.'
