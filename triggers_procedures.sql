@@ -46,3 +46,19 @@ AS
 PRINT 'Dodano nową strategię leczenia pacjenta.'
 SELECT * FROM inserted
 GO
+
+
+
+-- TWORZENIE PROCEDUR (5)
+/* Procedura wylicza BMI Pacjeta
+*/
+GO
+create proc bmi (@idpacjenta int, @data date) as 
+    declare @waga FLOAT
+    set @waga = (select waga from HistoriaWagi where id_pacjenta = @idpacjenta and datapomiaru = @data)
+    declare @wzrost FLOAT 
+    set @wzrost = (select wzrost from Pacjenci where id = @idpacjenta)
+    declare @bmi FLOAT
+    set @bmi= (@waga)/POWER((@wzrost/100),2)
+    return @bmi 
+GO
