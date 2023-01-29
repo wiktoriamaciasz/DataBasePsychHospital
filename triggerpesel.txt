@@ -22,7 +22,7 @@ AS
 	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 10, 1) AS INT) * 3 ) % 10 -- 3
 
 
-	SET @sum = 10 - (@sum % 10)
+	SET @sum = ( 10 - (@sum % 10) ) % 10
 
 	IF @sum = @controlSum
 		SET @result=1
