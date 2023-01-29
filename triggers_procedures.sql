@@ -145,3 +145,48 @@ CREATE PROC WynikiMoczu (@id_pacjenta INT, @data DATE) AS
 GO
 
 
+
+/* Procedura zwracająca prawidłowość wyników krwi pacjentów - procedura bierze poprawkę na wyznaczone normy osobno dla mężczyzn i kobiet*/
+GO
+CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
+	DECLARE @Erytrocyty FLOAT
+	DECLARE @plec VARCHAR(256)
+	SET @Erytrocyty = (SELECT Erytrocyty FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	SET @plec = (SELECT plec FROM Pacjenci WHERE ID = @id_pacjenta)
+	IF (@Erytrocyty BETWEEN 3.5 AND 5.2 AND @plec='K') OR (@Erytrocyty BETWEEN 4.5 AND 5.4 AND @plec='M')
+	PRINT('Liczba erytrocytów liczona w mln/mm3 - prawidłowa')
+	ELSE
+	PRINT('Liczba erytrocytów liczona w mln/mm3 - nieprawidłowa')	
+	DECLARE @Leukocyty FLOAT
+	SET @Leukocyty = (SELECT Leukocyty FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	IF @Leukocyty BETWEEN 4 AND 10
+	PRINT('Liczba leukocytów liczona w tys./μl - prawidłowa')
+	ELSE
+	PRINT('Liczba leukocytów liczona w tys./μl - nieprawidłowa')
+	DECLARE @Hemoglobina FLOAT
+	SET @Hemoglobina = (SELECT Hemoglobina FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	IF (@Hemoglobina BETWEEN 12 AND 16 AND @plec='K') OR (@Hemoglobina BETWEEN 13 AND 18 AND @plec='M')
+	PRINT('Ilość hemoglobiny liczona w g/dl - prawidłowa')
+	ELSE
+	PRINT('Ilość hemoglobiny liczona w g/dl - nieprawidłowa')	
+	DECLARE @Hematokryt FLOAT
+	SET @Hematokryt = (SELECT Hematokryt FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	IF (@Hematokryt BETWEEN 37 AND 47 AND @plec='K') OR (@Hematokryt BETWEEN 40 AND 50 AND @plec='M')
+	PRINT('Hematokryt (%) prawidłowy')
+	ELSE
+	PRINT('Hematokryt (%) nieprawidłowy')	
+	DECLARE @PlytkiKrwi FLOAT
+	SET @PlytkiKrwi = (SELECT PlytkiKrwi FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	IF @PlytkiKrwi BETWEEN 150 AND 400
+	PRINT('Liczba płytek krwi liczona w tys./μl - prawidłowa')
+	ELSE
+	PRINT('Liczba płytek krwi liczona w tys./μl - nieprawidłowa')
+	DECLARE @Glukoza FLOAT
+	SET @Glukoza = (SELECT Glukoza FROM BadanieKrwi WHERE ID_Pacjenta = @id_pacjenta AND DataBadania = @dataczas)
+	IF @Glukoza BETWEEN 80 AND 140
+	PRINT('Poziom glukozy (mg/dl) - prawidłowy')
+	ELSE
+	PRINT('Poziom glukozy (mg/dl) - nieprawidłowy')
+GO
+
+
