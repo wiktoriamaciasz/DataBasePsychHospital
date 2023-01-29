@@ -61,7 +61,50 @@ INSERT INTO Pacjenci VALUES
   ('Józef', 'Adamczyk', 'M', NULL, NULL, 0, 172),
   ('Amelia', 'Mazur', 'K', '1939-09-12', '39091293668', 1, 189),
   ('Aniela', 'Wójcik', 'K', '1995-03-31', '95033192507', 1, 163),
-  ('Halina', 'Sikorska', 'K', '1964-09-24', '64092426801', 0, 170)
+  ('Halina', 'Sikorska', 'K', '1964-09-24', '64092426801', 0, 170),
+ ('Andrzej', 'Borowski', 'M', '2010-04-27', '10242788770', 1, 163),
+('Radosław', 'Walczak', 'M', '1948-12-27', '48122783377', 1, 165),
+('Oliwia', 'Ziółkowska', 'K', '1964-04-18', '64041839269', 1, 171),
+('Włodzimierz', 'Zawadzki', 'M', '1927-03-03', '27030377818', 1, 183),
+('Kamila', 'Dąbrowska', 'K', '1985-10-05', '85100565084', 0, 177),
+('Mirosław', 'Jasiński', 'M', '1952-07-05', '52070530857', 0, 182),
+('Wiktor', 'Zakrzewski', 'M', '1980-05-30', '80053093233', 1, 176),
+('Dawid', 'Wróbel', 'M', '1928-06-21', '28062166818', 0, 183),
+('Nadia', 'Tomaszewska', 'K', '1979-07-11', '79071111324', 1, 164),
+('Mariola', 'Krawczyk', 'K', '1970-08-18', '70081814560', 0, 164),
+('Eugeniusz', 'Bąk', 'M', '1937-05-04', '37050426919', 1, 160),
+('Bartosz', 'Błaszczyk', 'M', '1932-02-18', '32021887030', 1, 177),
+('Łucja', 'Sawicka', 'K', '2005-06-09', '05260951365', 1, 176),
+('Nadia', 'Makowska', 'K', '1944-04-15', '44041513947', 0, 187),
+('Wanda', 'Maciejewska', 'K', '2008-01-11', '08211158224', 1, 169),
+('Emilia', 'Sadowska', 'K', '1920-05-05', '20050514685', 0, 181),
+('Andrzej', 'Zieliński', 'M', '2007-12-06', '07320652719', 0, 181),
+('Kazimiera', 'Borowska', 'K', '1988-04-22', '88042251307', 1, 178),
+('Marta', 'Wojciechowska', 'K', '2005-11-24', '05312423727', 0, 160),
+('Justyna', 'Zalewska', 'K', '1994-03-31', '94033119268', 1, 170),
+('Stanisława', 'Sobczak', 'K', '1920-08-14', '20081463820', 1, 165),
+('Amelia', 'Sawicka', 'K', '2010-08-24', '10282484045', 0, 167),
+('Arkadiusz', 'Wiśniewski', 'M', '1940-07-27', '40072739275', 0, 184),
+('Oliwier', 'Kołodziej', 'M', '1954-12-27', '54122786678', 1, 169),
+('Zygmunt', 'Malinowski', 'M', '1979-10-03', '79100334157', 0, 186),
+('Wiktor', 'Grabowski', 'M', '1945-07-02', '45070263379', 1, 177),
+('Volodymyr', 'Mazur', 'M', '1927-07-07', '27070770592', 0, 169),
+('Zdzisław', 'Błaszczyk', 'M', '1920-07-03', '20070396177', 0, 176),
+('Kornelia', 'Zawadzka', 'K', '1936-10-20', '36102071927', 0, 188),
+('Ireneusz', 'Pietrzak', 'M', '1978-04-12', '78041222233', 0, 160),
+('Edward', 'Ziółkowski', 'M', '1960-10-25', '60102588514', 0, 163),
+('Alina', 'Król', 'K', '1963-04-19', '63041966227', 1, 162),
+('Joanna', 'Sobczak', 'K', '1927-01-21', '27012143541', 0, 168),
+('Paulina', 'Zawadzka', 'K', '1937-08-11', '37081140705', 0, 171),
+('Mariusz', 'Mazurek', 'M', '1969-12-26', '69122672838', 1, 169),
+('Marcin', 'Kucharski', 'M', '2005-01-21', '05212150552', 0, 190),
+('Józef', 'Borkowski', 'M', '1945-01-08', '45010825436', 1, 183),
+('Monika', 'Sobczak', 'K', '1977-04-25', '77042598486', 0, 183),
+('Aleksandra', 'Kania', 'K', '1978-01-18', '78011899407', 1, 175),
+('Julia', 'Gajewska', 'K', '1923-09-27', '23092772268', 1, 178),
+('Katarzyna', 'Borowska', 'K', '1922-08-27', '22082764986', 0, 164),
+('Jolanta', 'Chmielewska', 'K', '1963-09-16', '63091693906', 1, 165),
+('Łucja', 'Jabłońska', 'K', '1957-01-23', '57012373466', 1, 163);
 
 INSERT INTO DaneKontaktowe VALUES
   (1, '+48 507836657', 'email1@domena1.com', 'ul. Saturna 2/43', 'Iłowa', 'Polska'),
@@ -181,94 +224,53 @@ INSERT INTO TypZatrudnienia VALUES
 
 
 INSERT INTO Pracownicy VALUES
-('Ewa', 'Duda', 'K', '39100828485', 'Pielęgniarz', 'Magister', 4886, 0, '1971-09-12', '+48 660722049', 'ul. Szkolna 66/13', 'Chełm')
-('Władysława', 'Kaźmierczak', 'K', '78101690987', 'Sekretarz', 'Magister', 4886, 0, '2003-05-02', '+48 534411135', 'ul. Jedności Narodowej 7/76', 'Stalowa Wola')
-('Tomasz', 'Kaczmarczyk', 'M', '81100658717', 'Dyrektor', 'Doktor', 12564, 0, '2006-03-05', '+48 734319080', 'ul. Kołłątaja 58/77', 'Kamieńsk')
-('Marzena', 'Kaczmarek', 'K', '47031113307', 'Sekretarz', 'Licencjat', 4188, 1, '1994-09-19', '+48 605349635', 'ul. Diamentowa 68/110', 'Strzelin')
-('Łukasz', 'Kalinowski', 'M', '53061772973', 'Pielęgniarz', 'Licencjat', 4188, 0, '2003-01-07', '+48 575462833', 'ul. Skargi 166/41', 'Ostrów Lubelski')
-('Antoni', 'Wróblewski', 'M', '82031577414', 'Asystent Medyczny', 'Licencjat', 4188, 0, '2007-11-01', '+48 725311256', 'ul. Norwida 71/56', 'Błonie')
-('Magdalena', 'Duda', 'K', '28052276503', 'Pielęgniarz', 'NULL', 3490, 0, '1974-07-08', '+48 725950744', 'ul. Karpacka 107', 'Wąbrzeźno')
-('Rafał', 'Jaworski', 'M', '48091395072', 'Asystent Medyczny', 'Licencjat', 4188, 0, '1990-02-04', '+48 798111497', 'ul. Strzelecka 26/46', 'Sława')
-('Regina', 'Mróz', 'K', '71033166407', 'Dietetyk', 'Magister', 5863, 0, '2002-02-10', '+48 538695426', 'ul. Konopnickiej 47/108', 'Strzyżów')
-('Bartłomiej', 'Grabowski', 'M', '73121082257', 'Sekretarz', 'Licencjat', 4188, 0, '2008-07-19', '+48 886286913', 'ul. Akacjowa 24', 'Żyrardów')
-('Weronika', 'Michalska', 'K', '55061756784', 'Dyrektor', 'Doktor', 12564, 0, '1989-01-14', '+48 535172279', 'ul. Nadrzeczna 16/36', 'Ciechocinek')
-('Zuzanna', 'Makowska', 'K', '34020470945', 'Asystent Medyczny', 'Doktor', 6282, 1, '1959-02-12', '+48 886112575', 'ul. Szkolna 199', 'Sława')
-('Stanisław', 'Kamiński', 'M', '22022372310', 'Lekarz', 'Doktor', 12564, 0, '1990-08-04', '+48 519968876', 'ul. Polna 74', 'Mszana Dolna')
-('Robert', 'Pietrzak', 'M', '28020881731', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 0, '2002-03-29', '+48 722675198', 'ul. Bolesława Krzywoustego 29/52', 'Sanok')
-('Przemysław', 'Konieczny', 'M', '60012570474', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1994-07-11', '+48 888009346', 'ul. Szpitalna 24', 'Strzelce Opolskie')
-('Antonina', 'Nowakowska', 'K', '28051240202', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '2005-01-29', '+48 577218246', 'ul. Racławicka 98/22', 'Chocianów')
-('Renata', 'Olszewska', 'K', '33020614320', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '2008-02-15', '+48 533480346', 'ul. Rzemieślnicza 22/69', 'Muszyna')
-('Sebastian', 'Zalewski', 'M', '30021710611', 'Pielęgniarz', 'Doktor', 6282, 0, '1972-04-18', '+48 692433724', 'ul. Kwiatowa 75/110', 'Nisko')
-('Adrian', 'Piotrowski', 'M', '76062492891', 'Lekarz', 'Doktor', 12564, 0, '2009-11-19', '+48 535302361', 'ul. Grzybowa 37/5', 'Sulechów')
-('Łukasz', 'Krupa', 'M', '36032327073', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '1984-10-15', '+48 889957690', 'ul. Kwiatowa 22/33', 'Nałęczów')
-('Robert', 'Jankowski', 'M', '63052683397', 'Sekretarz', 'Licencjat', 4188, 0, '2005-11-07', '+48 697636211', 'ul. Republikańska 47/110', 'Ostrołęka')
-('Patryk', 'Adamski', 'M', '57042380414', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 0, '2000-11-12', '+48 785646888', 'ul. Borówkowa 15', 'Muszyna')
-('Marianna', 'Maciejewska', 'K', '68030678981', 'Asystent Medyczny', 'Magister', 4886, 1, '2000-02-17', '+48 574848831', 'ul. Kamiennogórska 25', 'Bystrzyca Kłodzka')
-('Milena', 'Krajewska', 'K', '24032237847', 'Pielęgniarz', 'Doktor', 6282, 0, '1972-06-03', '+48 517964280', 'ul. Parkowa 171/109', 'Rudnik nad Sanem')
-('Henryka', 'Sadowska', 'K', '64080231585', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '1997-08-29', '+48 691397350', 'ul. Wieniawskiego 27/42', 'Głogów')
-('Jerzy', 'Nowicki', 'M', '20110458294', 'Pielęgniarz', 'Doktor', 6282, 0, '1948-08-12', '+48 571205958', 'ul. Kasprowicza 165/27', 'Sulejówek')
-('Konrad', 'Adamczyk', 'M', '78090785877', 'Lekarz', 'Doktor', 12564, 0, '2004-07-28', '+48 732364034', 'ul. Reymonta 196/40', 'Koluszki')
-('Patryk', 'Konieczny', 'M', '44053155935', 'Sekretarz', 'NULL', 3490, 1, '1989-03-05', '+48 579537234', 'ul. Fiołkowa 145', 'Szydłowiec')
-('Aniela', 'Pawlak', 'K', '68082413284', 'Asystent Medyczny', 'Doktor', 6282, 0, '2006-04-08', '+48 887377881', 'ul. Reja 157', 'Oława')
-('Hubert', 'Stępień', 'M', '75092873531', 'Dietetyk', 'Magister', 5863, 0, '2003-09-03', '+48 887306710', 'ul. Zielone Wzgórze 33/66', 'Sochaczew')
-('Klaudia', 'Janik', 'K', '73053071107', 'Sekretarz', 'NULL', 3490, 0, '2007-08-28', '+48 576632463', 'ul. Grzybowa 27/25', 'Iłowa')
-('Artur', 'Maciejewski', 'M', '32061111717', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 0, '1974-03-16', '+48 509985826', 'ul. Długa 164/101', 'Iłowa')
-('Dorota', 'Kołodziej', 'K', '83101571729', 'Asystent Medyczny', 'Doktor', 6282, 1, '2010-03-15', '+48 506957707', 'ul. Rubinowa 55/32', 'Szczebrzeszyn')
-('Liliana', 'Szczepańska', 'K', '32040634543', 'Pielęgniarz', 'NULL', 3490, 0, '1988-03-11', '+48 509272906', 'ul. Krótka 83', 'Zakroczym')
-('Maja', 'Urbańska', 'K', '71120147001', 'Sekretarz', 'Magister', 4886, 1, '2010-12-04', '+48 881724149', 'ul. Reymonta 39/99', 'Płock')
-('Andrzej', 'Kaźmierczak', 'M', '23052185213', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1964-02-22', '+48 665404637', 'ul. Jastrzębia 151/59', 'Wieluń')
-('Natalia', 'Wiśniewska', 'K', '62041571343', 'Sekretarz', 'Magister', 4886, 1, '1987-03-09', '+48 735927575', 'ul. Dolna 66', 'Nowa Sól')
-('Jan', 'Krawczyk', 'M', '36080235494', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 0, '1992-05-17', '+48 602651686', 'ul. Morelowa 70/68', 'Drzewica')
-('Janusz', 'Szulc', 'M', '66032263033', 'Diagnostyk Laboratoryjny', 'Doktor', 7538, 0, '2004-05-29', '+48 600893868', 'ul. Kościuszki 65/103', 'Janikowo')
-('Jolanta', 'Piotrowska', 'K', '75101125244', 'Sekretarz', 'NULL', 3490, 0, '2010-04-16', '+48 661273500', 'ul. Tuwima 30/23', 'Świdnik')
-('Katarzyna', 'Nowak', 'K', '67021711304', 'Dietetyk', 'Doktor', 7538, 0, '2002-08-20', '+48 608989572', 'ul. Głogowska 77', 'Nowe')
-('Artur', 'Adamski', 'M', '21122532233', 'Sekretarz', 'Licencjat', 4188, 1, '1971-06-24', '+48 534877196', 'ul. Rumiankowa 63/97', 'Chocianów')
-('Ignacy', 'Wasilewski', 'M', '57083193075', 'Sekretarz', 'NULL', 3490, 0, '1999-12-21', '+48 797751711', 'ul. Ogrodowa 48/84', 'Lubsko')
-('Zuzanna', 'Sikorska', 'K', '53060191083', 'Sekretarz', 'Licencjat', 4188, 0, '1988-08-12', '+48 885688847', 'ul. Nałkowskiej 71/79', 'Ząbkowice Śląskie')
-('Edyta', 'Pawlak', 'K', '78032755689', 'Asystent Medyczny', 'Magister', 4886, 1, '2005-01-11', '+48 793318325', 'ul. Kasprowicza 4', 'Głogów')
-('Ignacy', 'Wiśniewski', 'M', '33121072395', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1992-05-12', '+48 695998770', 'ul. Krótka 42/19', 'Lubaczów')
-('Irena', 'Urbańska', 'K', '61051787302', 'Sekretarz', 'Licencjat', 4188, 0, '1989-09-02', '+48 696590301', 'ul. Modrzewiowa 122', 'Lewin Brzeski')
-('Arkadiusz', 'Wróbel', 'M', '59103180719', 'Sekretarz', 'NULL', 3490, 0, '1987-12-14', '+48 604344947', 'ul. Norwida 139/32', 'Kraków')
-('Daria', 'Pietrzak', 'K', '28102470363', 'Pielęgniarz', 'Doktor', 6282, 0, '1956-12-14', '+48 662895426', 'ul. Kołłątaja 146', 'Skwierzyna')
-('Jagoda', 'Janik', 'K', '49042850866', 'Sekretarz', 'Magister', 4886, 0, '1999-01-28', '+48 728795431', 'ul. Listopada 11', 'Puławy')
-('Patrycja', 'Nowakowska', 'K', '22071966401', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1983-04-09', '+48 513715220', 'ul. Słoneczna 60/64', 'Wałbrzych')
-('Wiesław', 'Jabłoński', 'M', '43100271952', 'Pielęgniarz', 'Doktor', 6282, 0, '2009-03-08', '+48 726928445', 'ul. Sportowa 90/105', 'Kowary')
-('Wiesław', 'Lewandowski', 'M', '85062699597', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '2010-02-03', '+48 730613252', 'ul. Kościuszki 37', 'Krasnystaw')
-('Rafał', 'Błaszczyk', 'M', '55030567751', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1997-12-30', '+48 578861443', 'ul. Dolna 49', 'Nowogrodziec')
-('Renata', 'Kaczmarek', 'K', '39111193420', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '1978-10-18', '+48 509438098', 'ul. Cukrownicza 62/57', 'Tyczyn')
-('Weronika', 'Kaźmierczak', 'K', '37011533423', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1971-11-22', '+48 603932642', 'ul. Słowackiego 29/92', 'Gryfów Śląski')
-('Sławomir', 'Chmielewski', 'M', '54011148819', 'Pielęgniarz', 'Licencjat', 4188, 0, '1989-01-26', '+48 604124647', 'ul. Świętosławy 94', 'Nowy Targ')
-('Tomasz', 'Zalewski', 'M', '34061173414', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1963-06-15', '+48 533604955', 'ul. Jesionowa 4/13', 'Kozienice')
-('Zofia', 'Jankowska', 'K', '44082491228', 'Pielęgniarz', 'Licencjat', 4188, 0, '2008-12-10', '+48 604027782', 'ul. Olimpijska 161/5', 'Ryglice')
-('Ewelina', 'Olszewska', 'K', '44080979722', 'Pielęgniarz', 'Licencjat', 4188, 0, '2004-12-26', '+48 789887524', 'ul. Turkusowa 30', 'Lubań')
-('Bartłomiej', 'Zieliński', 'M', '49091921052', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1979-11-05', '+48 696468060', 'ul. Klonowa 13', 'Kudowa-Zdrój')
-('Wanda', 'Nowakowska', 'K', '25112574845', 'Pielęgniarz', 'Licencjat', 4188, 0, '1975-10-27', '+48 603085922', 'ul. Morcinka 98/52', 'Krośniewice')
-('Andrzej', 'Zieliński', 'M', '58071338777', 'Pielęgniarz', 'NULL', 3490, 0, '1983-07-31', '+48 729075387', 'ul. Hawrysza 14', 'Solec Kujawski')
-('Jolanta', 'Sokołowska', 'K', '65122828989', 'Sekretarz', 'NULL', 3490, 0, '2005-02-26', '+48 534266245', 'ul. Zamkowa 38', 'Łęczyca')
-('Oliwier', 'Kaźmierczak', 'M', '29082391297', 'Pielęgniarz', 'Magister', 4886, 0, '2003-03-24', '+48 508451847', 'ul. Barbary 82/41', 'Lubniewice')
-('Mieczysław', 'Kucharski', 'M', '21112237335', 'Dietetyk', 'Doktor', 7538, 0, '1966-01-09', '+48 788505853', 'ul. Kasprowicza 90/28', 'Bełżyce')
-('Henryk', 'Dudek', 'M', '27011622670', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 0, '1966-10-05', '+48 601967384', 'ul. Mietkowska 1/83', 'Żary')
-('Justyna', 'Baran', 'K', '78110922042', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '2008-11-30', '+48 534137881', 'ul. Hirszfelda 46/117', 'Oborniki Śląskie')
-('Wiktoria', 'Szymańska', 'K', '75092177901', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '2007-09-14', '+48 789770745', 'ul. Głogowska 15/119', 'Krapkowice')
-('Sabina', 'Borowska', 'K', '63080725560', 'Sekretarz', 'Licencjat', 4188, 1, '1996-05-04', '+48 503113236', 'ul. Kwiatowa 172/63', 'Mława')
-('Karolina', 'Kubiak', 'K', '35121249643', 'Asystent Medyczny', 'Doktor', 6282, 1, '1987-12-09', '+48 791303142', 'ul. Morcinka 54', 'Radomsko')
-('Karol', 'Adamczyk', 'M', '72042852415', 'Pielęgniarz', 'Licencjat', 4188, 0, '2008-03-10', '+48 795213063', 'ul. Partyzantów 93/21', 'Dębica')
-('Angelika', 'Kucharska', 'K', '77112539120', 'Pielęgniarz', 'Licencjat', 4188, 0, '2005-10-02', '+48 507836622', 'ul. Węglowa 86/7', 'Kowalewo Pomorskie')
-('Agata', 'Olszewska', 'K', '82112817769', 'Pielęgniarz', 'NULL', 3490, 0, '2009-09-21', '+48 605192273', 'ul. Morelowa 173/12', 'Ożarów Mazowiecki')
-('Cezary', 'Jakubowski', 'M', '61020878411', 'Pielęgniarz', 'NULL', 3490, 0, '2009-03-07', '+48 576233049', 'ul. Staromiejska 40/103', 'Chodecz')
-('Sławomir', 'Lewandowski', 'M', '76031064511', 'Sekretarz', 'Licencjat', 4188, 0, '2010-07-14', '+48 511440841', 'ul. Piwna 63/5', 'Włocławek')
-('Wojciech', 'Michalak', 'M', '58120243937', 'Dietetyk', 'Doktor', 7538, 0, '1991-02-20', '+48 505417795', 'ul. Wodna 172', 'Janowiec Wielkopolski')
-('Franciszek', 'Kubiak', 'M', '62041464636', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 0, '1993-11-02', '+48 734063672', 'ul. Głogowska 41/60', 'Rabka-Zdrój')
-('Klaudia', 'Kaczmarczyk', 'K', '82030517264', 'Lekarz', 'Doktor', 12564, 0, '2007-02-08', '+48 722424740', 'ul. Polna 47/94', 'Świebodzin')
-('Laura', 'Janik', 'K', '30061596345', 'Pielęgniarz', 'Doktor', 6282, 0, '1963-02-05', '+48 570635904', 'ul. Osiedle 23/11', 'Bobowa')
-('Hubert', 'Kaczmarek', 'M', '83120578156', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '2009-04-28', '+48 729679285', 'ul. Lipowa 31/74', 'Bochnia')
-('Dominik', 'Brzeziński', 'M', '66013053835', 'Pielęgniarz', 'Licencjat', 4188, 0, '1995-01-14', '+48 694352768', 'ul. Sybiraków 55', 'Koronowo')
-('Marcelina', 'Sikora', 'K', '52061963602', 'Sekretarz', 'NULL', 3490, 0, '1989-12-06', '+48 513949105', 'ul. Szpitalna 100/54', 'Gostynin')
-('Antoni', 'Sadowski', 'M', '72072177878', 'Dietetyk', 'Doktor', 7538, 0, '2003-01-31', '+48 724093224', 'ul. Widokowa 163/88', 'Toruń')
-('Aleksandra', 'Adamska', 'K', '31070160501', 'Asystent Medyczny', 'Licencjat', 4188, 1, '1998-10-07', '+48 881531167', 'ul. Poprzeczna 21', 'Tyczyn')
-('Katarzyna', 'Brzezińska', 'K', '27103170920', 'Sekretarz', 'Magister', 4886, 0, '1983-11-17', '+48 736104841', 'ul. Samborska 147/52', 'Milanówek')
-('Wojciech', 'Adamczyk', 'M', '66092885510', 'Dyrektor', 'Doktor', 12564, 0, '2002-07-27', '+48 532438866', 'ul. Skalna 15/25', 'Piotrków Kujawski')
-('Beata', 'Dudek', 'K', '61112722888', 'Dietetyk', 'Doktor', 7538, 0, '1987-11-24', '+48 885593450', 'ul. Saneczkowa 80/32', 'Lubień Kujawski')
+('Artur', 'Adamski', 'M', '21122532233', 'Sekretarz', 'Licencjat', 4188, 1, '1971-06-24', '+48 534877196', 'ul. Rumiankowa 63/97', 'Chocianów'),
+('Ignacy', 'Wasilewski', 'M', '57083193075', 'Sekretarz', 'NULL', 3490, 0, '1999-12-21', '+48 797751711', 'ul. Ogrodowa 48/84', 'Lubsko'),
+('Zuzanna', 'Sikorska', 'K', '53060191083', 'Sekretarz', 'Licencjat', 4188, 0, '1988-08-12', '+48 885688847', 'ul. Nałkowskiej 71/79', 'Ząbkowice Śląskie'),
+('Edyta', 'Pawlak', 'K', '78032755689', 'Asystent Medyczny', 'Magister', 4886, 1, '2005-01-11', '+48 793318325', 'ul. Kasprowicza 4', 'Głogów'),
+('Ignacy', 'Wiśniewski', 'M', '33121072395', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1992-05-12', '+48 695998770', 'ul. Krótka 42/19', 'Lubaczów'),
+('Irena', 'Urbańska', 'K', '61051787302', 'Sekretarz', 'Licencjat', 4188, 0, '1989-09-02', '+48 696590301', 'ul. Modrzewiowa 122', 'Lewin Brzeski'),
+('Arkadiusz', 'Wróbel', 'M', '59103180719', 'Sekretarz', 'NULL', 3490, 0, '1987-12-14', '+48 604344947', 'ul. Norwida 139/32', 'Kraków'),
+('Daria', 'Pietrzak', 'K', '28102470363', 'Pielęgniarz', 'Doktor', 6282, 0, '1956-12-14', '+48 662895426', 'ul. Kołłątaja 146', 'Skwierzyna'),
+('Jagoda', 'Janik', 'K', '49042850866', 'Sekretarz', 'Magister', 4886, 0, '1999-01-28', '+48 728795431', 'ul. Listopada 11', 'Puławy'),
+('Patrycja', 'Nowakowska', 'K', '22071966401', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1983-04-09', '+48 513715220', 'ul. Słoneczna 60/64', 'Wałbrzych'),
+('Wiesław', 'Jabłoński', 'M', '43100271952', 'Pielęgniarz', 'Doktor', 6282, 0, '2009-03-08', '+48 726928445', 'ul. Sportowa 90/105', 'Kowary'),
+('Wiesław', 'Lewandowski', 'M', '85062699597', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '2010-02-03', '+48 730613252', 'ul. Kościuszki 37', 'Krasnystaw'),
+('Rafał', 'Błaszczyk', 'M', '55030567751', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '1997-12-30', '+48 578861443', 'ul. Dolna 49', 'Nowogrodziec'),
+('Renata', 'Kaczmarek', 'K', '39111193420', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '1978-10-18', '+48 509438098', 'ul. Cukrownicza 62/57', 'Tyczyn'),
+('Weronika', 'Kaźmierczak', 'K', '37011533423', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1971-11-22', '+48 603932642', 'ul. Słowackiego 29/92', 'Gryfów Śląski'),
+('Sławomir', 'Chmielewski', 'M', '54011148819', 'Pielęgniarz', 'Licencjat', 4188, 0, '1989-01-26', '+48 604124647', 'ul. Świętosławy 94', 'Nowy Targ'),
+('Tomasz', 'Zalewski', 'M', '34061173414', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1963-06-15', '+48 533604955', 'ul. Jesionowa 4/13', 'Kozienice'),
+('Zofia', 'Jankowska', 'K', '44082491228', 'Pielęgniarz', 'Licencjat', 4188, 0, '2008-12-10', '+48 604027782', 'ul. Olimpijska 161/5', 'Ryglice'),
+('Ewelina', 'Olszewska', 'K', '44080979722', 'Pielęgniarz', 'Licencjat', 4188, 0, '2004-12-26', '+48 789887524', 'ul. Turkusowa 30', 'Lubań'),
+('Bartłomiej', 'Zieliński', 'M', '49091921052', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '1979-11-05', '+48 696468060', 'ul. Klonowa 13', 'Kudowa-Zdrój'),
+('Wanda', 'Nowakowska', 'K', '25112574845', 'Pielęgniarz', 'Licencjat', 4188, 0, '1975-10-27', '+48 603085922', 'ul. Morcinka 98/52', 'Krośniewice'),
+('Andrzej', 'Zieliński', 'M', '58071338777', 'Pielęgniarz', 'NULL', 3490, 0, '1983-07-31', '+48 729075387', 'ul. Hawrysza 14', 'Solec Kujawski'),
+('Jolanta', 'Sokołowska', 'K', '65122828989', 'Sekretarz', 'NULL', 3490, 0, '2005-02-26', '+48 534266245', 'ul. Zamkowa 38', 'Łęczyca'),
+('Oliwier', 'Kaźmierczak', 'M', '29082391297', 'Pielęgniarz', 'Magister', 4886, 0, '2003-03-24', '+48 508451847', 'ul. Barbary 82/41', 'Lubniewice'),
+('Mieczysław', 'Kucharski', 'M', '21112237335', 'Dietetyk', 'Doktor', 7538, 0, '1966-01-09', '+48 788505853', 'ul. Kasprowicza 90/28', 'Bełżyce'),
+('Henryk', 'Dudek', 'M', '27011622670', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 0, '1966-10-05', '+48 601967384', 'ul. Mietkowska 1/83', 'Żary'),
+('Justyna', 'Baran', 'K', '78110922042', 'Dyrektor', 'Doktor Habilitowany', 16752, 0, '2008-11-30', '+48 534137881', 'ul. Hirszfelda 46/117', 'Oborniki Śląskie'),
+('Wiktoria', 'Szymańska', 'K', '75092177901', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '2007-09-14', '+48 789770745', 'ul. Głogowska 15/119', 'Krapkowice'),
+('Sabina', 'Borowska', 'K', '63080725560', 'Sekretarz', 'Licencjat', 4188, 1, '1996-05-04', '+48 503113236', 'ul. Kwiatowa 172/63', 'Mława'),
+('Karolina', 'Kubiak', 'K', '35121249643', 'Asystent Medyczny', 'Doktor', 6282, 1, '1987-12-09', '+48 791303142', 'ul. Morcinka 54', 'Radomsko'),
+('Karol', 'Adamczyk', 'M', '72042852415', 'Pielęgniarz', 'Licencjat', 4188, 0, '2008-03-10', '+48 795213063', 'ul. Partyzantów 93/21', 'Dębica'),
+('Angelika', 'Kucharska', 'K', '77112539120', 'Pielęgniarz', 'Licencjat', 4188, 0, '2005-10-02', '+48 507836622', 'ul. Węglowa 86/7', 'Kowalewo Pomorskie'),
+('Agata', 'Olszewska', 'K', '82112817769', 'Pielęgniarz', 'NULL', 3490, 0, '2009-09-21', '+48 605192273', 'ul. Morelowa 173/12', 'Ożarów Mazowiecki'),
+('Cezary', 'Jakubowski', 'M', '61020878411', 'Pielęgniarz', 'NULL', 3490, 0, '2009-03-07', '+48 576233049', 'ul. Staromiejska 40/103', 'Chodecz'),
+('Sławomir', 'Lewandowski', 'M', '76031064511', 'Sekretarz', 'Licencjat', 4188, 0, '2010-07-14', '+48 511440841', 'ul. Piwna 63/5', 'Włocławek'),
+('Wojciech', 'Michalak', 'M', '58120243937', 'Dietetyk', 'Doktor', 7538, 0, '1991-02-20', '+48 505417795', 'ul. Wodna 172', 'Janowiec Wielkopolski'),
+('Franciszek', 'Kubiak', 'M', '62041464636', 'Diagnostyk Laboratoryjny', 'Licencjat', 5025, 0, '1993-11-02', '+48 734063672', 'ul. Głogowska 41/60', 'Rabka-Zdrój'),
+('Klaudia', 'Kaczmarczyk', 'K', '82030517264', 'Lekarz', 'Doktor', 12564, 0, '2007-02-08', '+48 722424740', 'ul. Polna 47/94', 'Świebodzin'),
+('Laura', 'Janik', 'K', '30061596345', 'Pielęgniarz', 'Doktor', 6282, 0, '1963-02-05', '+48 570635904', 'ul. Osiedle 23/11', 'Bobowa'),
+('Hubert', 'Kaczmarek', 'M', '83120578156', 'Lekarz', 'Doktor Habilitowany', 16752, 0, '2009-04-28', '+48 729679285', 'ul. Lipowa 31/74', 'Bochnia'),
+('Dominik', 'Brzeziński', 'M', '66013053835', 'Pielęgniarz', 'Licencjat', 4188, 0, '1995-01-14', '+48 694352768', 'ul. Sybiraków 55', 'Koronowo'),
+('Marcelina', 'Sikora', 'K', '52061963602', 'Sekretarz', 'NULL', 3490, 0, '1989-12-06', '+48 513949105', 'ul. Szpitalna 100/54', 'Gostynin'),
+('Antoni', 'Sadowski', 'M', '72072177878', 'Dietetyk', 'Doktor', 7538, 0, '2003-01-31', '+48 724093224', 'ul. Widokowa 163/88', 'Toruń'),
+('Aleksandra', 'Adamska', 'K', '31070160501', 'Asystent Medyczny', 'Licencjat', 4188, 1, '1998-10-07', '+48 881531167', 'ul. Poprzeczna 21', 'Tyczyn'),
+('Katarzyna', 'Brzezińska', 'K', '27103170920', 'Sekretarz', 'Magister', 4886, 0, '1983-11-17', '+48 736104841', 'ul. Samborska 147/52', 'Milanówek'),
+('Wojciech', 'Adamczyk', 'M', '66092885510', 'Dyrektor', 'Doktor', 12564, 0, '2002-07-27', '+48 532438866', 'ul. Skalna 15/25', 'Piotrków Kujawski'),
+('Beata', 'Dudek', 'K', '61112722888', 'Dietetyk', 'Doktor', 7538, 0, '1987-11-24', '+48 885593450', 'ul. Saneczkowa 80/32', 'Lubień Kujawski'),
 ('Dominik', 'Dudek', 'M', '42071432838', 'Lekarz', 'Doktor', 12564, 0, '1972-06-08', '+48 887706574', 'ul. Stroma 88/4', 'Wolbrom');
 
 -- WPROWADZENIE DANYCH PRZYKŁADOWYCH DO POBYTÓW PACJENTÓW W SZPITALU
