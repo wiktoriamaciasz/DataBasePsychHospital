@@ -1,3 +1,4 @@
+
 GO
 CREATE FUNCTION CheckPESEL ( @PESEL VARCHAR(256) )
 RETURNS BIT
@@ -11,14 +12,17 @@ AS
 
 	SET @sum = CAST( SUBSTRING(@PESEL, 1, 1) AS INT) -- 1
 	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 2, 1) AS INT) * 3 ) % 10 -- 3
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 3, 1) AS INT) * 3 ) % 10 -- 7
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 4, 1) AS INT) * 3 ) % 10 -- 9
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 5, 1) AS INT) * 3 ) % 10 -- 1
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 3, 1) AS INT) * 7 ) % 10 -- 7
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 4, 1) AS INT) * 9 ) % 10 -- 9
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 5, 1) AS INT) * 1 ) % 10 -- 1
 	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 6, 1) AS INT) * 3 ) % 10 -- 3
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 7, 1) AS INT) * 3 ) % 10 -- 7
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 8, 1) AS INT) * 3 ) % 10 -- 9
-	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 9, 1) AS INT) * 3 ) % 10 -- 1
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 7, 1) AS INT) * 7 ) % 10 -- 7
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 8, 1) AS INT) * 9 ) % 10 -- 9
+	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 9, 1) AS INT) * 1 ) % 10 -- 1
 	SET @sum = ( @sum + CAST( SUBSTRING(@PESEL, 10, 1) AS INT) * 3 ) % 10 -- 3
+
+
+	SET @sum = 10 - (@sum % 10)
 
 	IF @sum = @controlSum
 		SET @result=1
@@ -34,9 +38,8 @@ CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
 INSTEAD OF INSERT
 AS
 	DECLARE ITERATOR CURSOR FOR
-	SELECT ID, Imie, Nazwisko, Plec, DataUrodzenia, Pesel, Palenie, Wzrost FROM inserted
+	SELECT Imie, Nazwisko, Plec, DataUrodzenia, Pesel, Palenie, Wzrost FROM inserted
 	OPEN Iterator
-	DECLARE @id INT
 	DECLARE @imie VARCHAR(256)
 	DECLARE @nazwisko VARCHAR(256)
 	DECLARE @plec VARCHAR(256)
@@ -49,7 +52,9 @@ AS
 
 	DECLARE @TEXT NVARCHAR(256)
 
-	FETCH Iterator INTO @id, @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+	--SET IDENTITY_INSERT Pacjenci ON
+
+	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
 	WHILE (@@FETCH_STATUS = 0 ) BEGIN
 		
 		-- sprawdzenie daty i daty w peselu
@@ -68,21 +73,21 @@ AS
 
 		--PRINT @datedate
 		--PRINT @peseldate
-
 		IF @datedate = @peseldate
 			SET @peselDateGood = 1
 		ELSE
 			SET @peselDateGood = 0
 
+		-- sprawwdzenie pesela
+		--PRINT dbo.CheckPesel(@pesel)
 		DECLARE @peselGood BIT
 		IF dbo.CheckPesel(@pesel) = 1
 			SET @peselGood = 1
 		ELSE
 			SET @peselGood = 0
 
-		
 		IF (@peselDateGood = 1 AND @peselGood = 1) BEGIN
-		INSERT INTO Pacjenci VALUES (@id, @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost)
+		INSERT INTO Pacjenci VALUES (@imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost)
 
 		SET @TEXT = FORMATMESSAGE (
 		'Dodano pacjenta %s %s Pesel: %s Data Urodzenia: %s',
@@ -102,8 +107,7 @@ AS
 		END
 		
 	PRINT @TEXT
-
-	FETCH Iterator INTO @id, @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
+	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
 END
 CLOSE Iterator
 DEALLOCATE Iterator
