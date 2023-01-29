@@ -26,3 +26,18 @@ SELECT *,
 		order by DataPrzyjecia
         RANGE BETWEEN unbounded preceding AND unbounded following) [Liczba pobytów ogółem] 
 FROM Pobyty
+
+
+
+
+/*
+WIDOK INFORMUJĄCY O WYPEŁNIENIU ODDZIALÓW SZPITALNYCH PRZEZ PACJENTÓW
+*/
+CREATE VIEW DostepneMiejscaNaOddzialach AS
+select count(*) as LiczbaOsobNaOddziale , t1.LiczbaWszystkichMiejsc, (t1.LiczbaWszystkichMiejsc-count(*)) AS PozostaleMiejsca ,t1.NazwaOddzialu from
+(select ID_Pacjenta, o.IdOddzialu as ID_Oddzialu, MIN(o.NazwaOddzialy) AS NazwaOddzialu, MIN(o.LiczbaMiejsc) AS LiczbaWszystkichMiejsc
+from StrategieLeczenia sl inner join oddzialy o
+on o.IdOddzialu = sl.Id_Oddzialu
+where DataZakonczenia is null
+group by id_pacjenta, o.IdOddzialu) as t1
+group by t1.ID_Oddzialu, t1.NazwaOddzialu, t1.LiczbaWszystkichMiejsc
