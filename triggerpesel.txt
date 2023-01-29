@@ -42,6 +42,11 @@ GO
 CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
 INSTEAD OF INSERT
 AS
+	DECLARE @TEXT NVARCHAR(256)
+	DECLARE @unique BIT
+	DECLARE @pesel VARCHAR(256)
+	SET @unique = 1
+
 	DECLARE ITERATOR CURSOR FOR
 	SELECT Imie, Nazwisko, Plec, DataUrodzenia, Pesel, Palenie, Wzrost FROM inserted
 	OPEN Iterator
@@ -49,76 +54,85 @@ AS
 	DECLARE @nazwisko VARCHAR(256)
 	DECLARE @plec VARCHAR(256)
 	DECLARE @dataurodzenia DATE
-	DECLARE @pesel VARCHAR(256)
 	DECLARE @palenie BIT
 	DECLARE @wzrost INT
 
 	DECLARE @peselDateGood BIT
+	DECLARE @peselGood BIT
 
-	DECLARE @TEXT NVARCHAR(256)
-
-	--SET IDENTITY_INSERT Pacjenci ON
+	
 
 	FETCH Iterator INTO @imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost
 	WHILE (@@FETCH_STATUS = 0 ) BEGIN
+
+		SET @peselDateGood = 1
+		SET @peselGood = 1
+		SET @unique = 1
+
+		-- sprawdzenie czy pesel jest unique
+		IF @pesel IN ( SELECT Pesel FROM Pacjenci ) BEGIN
+			SET @TEXT = FORMATMESSAGE ('Nie dodano pacjenta Pesel: %s. Pesel jest już w bazie danych',@pesel)
+			SET @unique = 0
+		END
 		
 		-- sprawdzenie daty i daty w peselu
-		DECLARE @peselday VARCHAR(2)
-		DECLARE @peselmonth VARCHAR(2)
-		DECLARE @peselyear VARCHAR(256)
-		DECLARE @peselmonthright CHAR(1)
-		DECLARE @peselmonthleft CHAR(1)
-		DECLARE @peselcentury CHAR(2)
+		IF ( @pesel IS NOT NULL ) AND ( @dataurodzenia IS NOT NULL ) BEGIN
+			DECLARE @peselday VARCHAR(2)
+			DECLARE @peselmonth VARCHAR(2)
+			DECLARE @peselyear VARCHAR(256)
+			DECLARE @peselmonthright CHAR(1)
+			DECLARE @peselmonthleft CHAR(1)
+			DECLARE @peselcentury CHAR(2)
 
-		SET @peselday = SUBSTRING(@pesel, 5, 2)
+			SET @peselday = SUBSTRING(@pesel, 5, 2)
 
-		SET @peselmonthleft = SUBSTRING(@pesel, 3, 1)
+			SET @peselmonthleft = SUBSTRING(@pesel, 3, 1)
 
-		IF @peselmonthleft IN (0, 1)
-			SET @peselcentury = '19'
-		IF @peselmonthleft IN (2, 3)
-			SET @peselcentury = '20'
-		IF @peselmonthleft IN (4, 5)
-			SET @peselcentury = '21'
+			IF @peselmonthleft IN (0, 1)
+				SET @peselcentury = '19'
+			IF @peselmonthleft IN (2, 3)
+				SET @peselcentury = '20'
+			IF @peselmonthleft IN (4, 5)
+				SET @peselcentury = '21'
 
-		IF @peselmonthleft = 2
-			SET @peselmonthleft = '0'
-		IF @peselmonthleft = 3
-			SET @peselmonthleft = '1'
-		IF @peselmonthleft = 4
-			SET @peselmonthleft = '0'
-		IF @peselmonthleft = 5
-			SET @peselmonthleft = '1'
+			IF @peselmonthleft = 2
+				SET @peselmonthleft = '0'
+			IF @peselmonthleft = 3
+				SET @peselmonthleft = '1'
+			IF @peselmonthleft = 4
+				SET @peselmonthleft = '0'
+			IF @peselmonthleft = 5
+				SET @peselmonthleft = '1'
 
-		SET @peselmonthright = SUBSTRING(@pesel, 4, 1)
+			SET @peselmonthright = SUBSTRING(@pesel, 4, 1)
 
 
-		SET @peselmonth = @peselmonthleft + @peselmonthright
+			SET @peselmonth = @peselmonthleft + @peselmonthright
 
-		SET @peselyear = SUBSTRING(@pesel, 1, 2)
+			SET @peselyear = SUBSTRING(@pesel, 1, 2)
 
-		DECLARE @peseldate VARCHAR(256)
-		SET @peseldate = @peselcentury + @peselyear + '-' + @peselmonth + '-' + @peselday
+			DECLARE @peseldate VARCHAR(256)
+			SET @peseldate = @peselcentury + @peselyear + '-' + @peselmonth + '-' + @peselday
 
-		DECLARE @datedate VARCHAR(256)
-		SET @datedate = SUBSTRING( CAST(@dataurodzenia as char), 1, 11)
+			DECLARE @datedate VARCHAR(256)
+			SET @datedate = SUBSTRING( CAST(@dataurodzenia as char), 1, 11)
 
-		--PRINT @datedate
-		--PRINT @peseldate
-		IF @datedate = @peseldate
-			SET @peselDateGood = 1
-		ELSE
-			SET @peselDateGood = 0
+			--PRINT @datedate
+			--PRINT @peseldate
+			IF @datedate = @peseldate
+				SET @peselDateGood = 1
+			ELSE
+				SET @peselDateGood = 0
+		END
 
-		-- sprawwdzenie pesela
-		--PRINT dbo.CheckPesel(@pesel)
-		DECLARE @peselGood BIT
-		IF dbo.CheckPesel(@pesel) = 1
-			SET @peselGood = 1
-		ELSE
-			SET @peselGood = 0
+		IF (@pesel IS NOT NULL ) BEGIN
+			-- sprawwdzenie pesela
+			--PRINT dbo.CheckPesel(@pesel)
+			IF dbo.CheckPesel(@pesel) = 0
+				SET @peselGood = 0
+		END
 
-		IF (@peselDateGood = 1 AND @peselGood = 1) BEGIN
+		IF (@peselDateGood = 1 AND @peselGood = 1 AND @unique = 1) BEGIN
 		INSERT INTO Pacjenci VALUES (@imie, @nazwisko, @plec, @dataurodzenia, @pesel, @palenie, @wzrost)
 
 		SET @TEXT = FORMATMESSAGE (
