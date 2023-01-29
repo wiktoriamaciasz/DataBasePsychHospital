@@ -14,3 +14,15 @@ Begin
 		return datediff(MONTH,@DataUro, getdate())/12 - 1
 	return datediff(MONTH,@DataUro, getdate())/12
 End
+
+
+/*
+WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
+*/
+CREATE VIEW Info_Pobyty AS
+SELECT *,
+	datediff(dd,DataPrzyjecia,DataWypisu) AS Dni,
+    COUNT(*) OVER (PARTITION BY ID_pacjenta
+		order by DataPrzyjecia
+        RANGE BETWEEN unbounded preceding AND unbounded following) [Liczba pobytów ogółem] 
+FROM Pobyty
