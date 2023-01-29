@@ -72,3 +72,18 @@ WHERE Pracownicy.Imie = @imie AND Pracownicy.Nazwisko = @nazwisko
 
 )
 GO
+
+
+
+/*
+Widok zwracający częstość występowania danych jednostek chorobowych w szpitalu
+*/
+
+CREATE VIEW CzestoscWystepowaniaJednostekChoorbowych AS
+SELECT COUNT(*) AS [Liczba Pacjentów], NazwaChoroby [Nazwa Choroby] FROM Pacjenci P
+INNER JOIN 
+WszystkieChorobyPacjentow WCP ON P.ID = WCP.ID_Pacjenta
+INNER JOIN
+Choroby C ON WCP.ID_Choroby=C.IDChoroby
+GROUP BY NazwaChoroby
+
