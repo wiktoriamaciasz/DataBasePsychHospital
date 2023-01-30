@@ -13,7 +13,7 @@ CREATE TABLE Pacjenci (
  	DataUrodzenia DATE,
  	Pesel VARCHAR(11),
  	Palenie BIT,
- 	Wzrost INT,
+ 	Wzrost INT
  );
  
  INSERT INTO Pacjenci VALUES
@@ -87,7 +87,7 @@ INSERT INTO WszystkieChorobyPacjentow VALUES
 
 CREATE TABLE Objawy (
 	ID INT PRIMARY KEY,
-	NazwaObjawu VARCHAR(255),
+	NazwaObjawu VARCHAR(255)
 );
 
 INSERT INTO Objawy VALUES
@@ -112,7 +112,7 @@ CREATE TABLE ObjawyPacjentow (
 	DataWystapienia DATE,
 	PRIMARY KEY (ID_Pacjenta, ID_Objawu),
 	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
-	FOREIGN KEY(ID_Objawu) REFERENCES Objawy(ID),
+	FOREIGN KEY(ID_Objawu) REFERENCES Objawy(ID)
 );
 
 INSERT INTO ObjawyPacjentow VALUES
@@ -147,7 +147,7 @@ CREATE TABLE StrategieLeczenia (
 	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
 	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
 	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
-	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu)
 );
 
 
@@ -224,7 +224,7 @@ CREATE TABLE BadanieKrwi (
 INSERT INTO BadanieKrwi VALUES
 (1, '2021-11-13 06:00:00', 4, 5, 14, 40, 300, 5.0),
 (1, '2021-11-13 12:00:00', 4.2, 4.7, 15, 41, 230, 4.5),
-(4, '2021-11-13 18:00:00', 5, 10, 35, 300, 7.0);
+(4, '2021-11-13 18:00:00', 4, 5, 10, 35, 300, 7.0);
 
 
 CREATE TABLE HistoriaWagi (
@@ -251,7 +251,7 @@ CREATE TABLE WynikiDanychPsychologicznych (
 	SkalaAUDIT INT,
 	SkalaPANNS INT,
 	PRIMARY KEY (ID_Pacjenta, Data),
-	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID)
 );
 
 	
@@ -338,7 +338,7 @@ CREATE TABLE KategoriaLeku(
  	Kategoria INT,
  	SubstancjaCzynna VARCHAR(255),
  	IloscLekuNaStanie INT,
- 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii),
+ 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii)
  );
  
  
@@ -349,7 +349,7 @@ CREATE TABLE KategoriaLeku(
 	Email VARCHAR(255),
 	Adres VARCHAR(255),
 	Kraj VARCHAR(255),
-	UE BIT,
+	UE BIT
  );
  
  
@@ -410,7 +410,7 @@ CREATE TABLE ObjawyUboczneLekow (
 	ID_LEK INT,
 	ObjawUboczny VARCHAR(255),
 	PRIMARY KEY (ID_LEK, ObjawUboczny),
-	FOREIGN KEY(ID_LEK) REFERENCES LEKI(ID),
+	FOREIGN KEY(ID_LEK) REFERENCES LEKI(ID)
 );
 
 
