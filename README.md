@@ -1,7 +1,6 @@
 
 # Baza Danych Szpitala Psychiatrycznego - Opis
 --------------------------------------------
-##Wiktoria Maciasz, Piotr Rywczak
 
 
 ## 1.	Cel
