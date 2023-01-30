@@ -799,7 +799,7 @@ TypZatrudnienia [x]
 
 Pobyty [x],
 
-StrategieLeczenia [x]
+StrategieLeczenia [x]  (AktualneStrategieLeczenia [x], HistoriaStrategieLeczenia [x])
 */
 
 -- TWORZENIE PACJENTOW, KONTATKU DO PACJENTOW
@@ -1001,8 +1001,9 @@ CREATE TABLE Pobyty (
 
 -- TWORZENIE STRATEGII LECZENIA
 
+/*
 CREATE TABLE StrategieLeczenia (
-	ID INT PRIMARY KEY,
+	ID INT PRIMARY KEY IDENTITY(1,1),
 	ID_Pacjenta INT,
 	ID_Choroby INT,
 	ID_Leku INT,
@@ -1018,6 +1019,41 @@ CREATE TABLE StrategieLeczenia (
 	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu),
 );
 
+*/
+--DROP TABLE  AktualneStrategieLeczenia
+
+CREATE TABLE AktualneStrategieLeczenia (
+	ID INT PRIMARY KEY IDENTITY(1,1),
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	ID_Leku INT,
+	DawkaLeku VARCHAR(255),
+	LekarzProwadzacy INT,
+	ID_Oddzialu INT,
+	DataRozpoczecia DATE,
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
+	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu),
+);
+
+CREATE TABLE HistoriaStrategieLeczenia (
+	ID INT PRIMARY KEY,
+	ID_Pacjenta INT,
+	ID_Choroby INT,
+	ID_Leku INT,
+	DawkaLeku VARCHAR(255),
+	LekarzProwadzacy INT,
+	ID_Oddzialu INT,
+	DataRozpoczecia DATE,
+	DataZakonczenia DATE,
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	FOREIGN KEY(ID_Choroby) REFERENCES Choroby(ID),
+	FOREIGN KEY(ID_Leku) REFERENCES Leki(ID),
+	FOREIGN KEY(LekarzProwadzacy) REFERENCES Pracownicy(ID),
+	FOREIGN KEY(ID_Oddzialu) REFERENCES Oddzialy(IdOddzialu),
+);
 
 13.	Typowe zapytania dla bazy danych
 
