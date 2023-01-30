@@ -190,6 +190,19 @@ INSERT INTO KategoriaLeku VALUES
 	(6,'Agonista GABA'),
 	(7,'Antagonista NMDA'),
 	(8,'Antagonista receptora opioidowego');
+	
+  INSERT INTO ProducenciLekow VALUES
+  (1, 'Mylan', 225466400, 'reception@mylan.com', 'Canonsburg 15317 Pennsylvania', 'USA',0),
+  (2, 'Sanofi Aventis', 330153774000, 'sanofiaventis@sanofi.com', '46 avenue de la Grande Armee 75017 Paris', 'France', 1),
+  (3, 'Egis', 701238226399, 'egispharmaceuticals@egis.com', 'Kereszturi 1475 Budapest 10', 'Hungary', 1),
+  (4, 'Lekam', 226358041,'biuro@lekam.com', 'Jana Pawla II 80 Warszawa', 'Poland', 1),
+  (5, 'Adamed', 422250556,'recepcja@adamed.com', 'ul. Szkolna 33 Warszawa', 'Poland', 1),
+  (6, 'Unia', 228501186,'unia@uniapharm.com', 'ul. Chlodna 56 Warszawa', 'Poland', 1)),
+  (7, 'GSK', 35462910182, 'gskservices@gsk.com', 'Brentford 980', 'United Kingdom', 0),
+  (8, 'Pfizer', 2127332323, 'pfizer@pfizer.com', '235 East 42nd Street NY', 'USA', 0),
+  (9, 'Polfa Warszawa S.A.' ,226913900,'polfawarszawainfo@polfa.com', 'Karolkowa 22 Warszawa', 'Poland', 1),
+  (10, 'Biofarm', 616651500, 'biofarm@biofarm.com', 'ul. Walbrzyska Poznan','Poland',1),
+  (11, 'Accord',5852687605,'info@accord.com', 'St, Paul 55108', 'USA', 0)
   
  INSERT INTO Leki VALUES
 	(1,'Sertagen',NULL,1,1,'Sertralina',207),
