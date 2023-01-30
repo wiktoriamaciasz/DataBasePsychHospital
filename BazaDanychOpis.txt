@@ -173,6 +173,28 @@ AS
 	END
 GO
 
+	j. WIDOK ILUSTRUJĄCY PRACOWNIKÓW 'MEDYCZNICH' SZPITALA
+GO
+CREATE VIEW vw_Pracownicy_Medyczni AS
+SELECT * FROM Pracownicy
+WHERE Stanowisko IN ('Lekarz', 'Pielęgniarz', 'Diagnostyk Laboratoryjny', 'Asystent Medyczny')
+GO
+
+	k.  WIDOK ILUSTRUJĄCY PRACOWNIKÓW 'BIUROWYCH' SZPITALA
+
+Go
+CREATE VIEW vw_Pracownicy_Biurowi AS
+SELECT * FROM Pracownicy
+WHERE Stanowisko IN ('Sekretarz', 'Dyrektor')
+GO
+
+	l. WIDOK ILUSTRUJĄCY PRACOWNIKÓW - DIETETYKÓW
+Go
+CREATE VIEW vw_Dietetycy AS
+SELECT * FROM Pracownicy
+WHERE Stanowisko IN ('Dietetyk')
+GO
+
 
 10.	Opis procedur składowanych
 
