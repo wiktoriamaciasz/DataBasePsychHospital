@@ -313,6 +313,7 @@ CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
 GO
 
 	d. Procedura oceniająca wyniki pacjenta w skali depresji Becca 
+Procedura po wprowadzeniu ID pacjenta oraz odpowiedniej daty badania zwraca interpretację wyników z testu Becca, wykorzystywanego podczas badania depresji. Procedura ma na celu ułatwić komunikację między psychologami a lekarzami, a także umożliwić odczytanie wyniku samemu pacjentowi w przystępnej formie.
 
 GO
 CREATE PROC TestBecca(@id_pacjenta INT, @data DATE) AS
@@ -333,6 +334,7 @@ GO
 
 
 	e. Procedura oceniająca epizod maniakalny w chorobie afektywnej dwubiegunowej za pomocą skali Younga
+Procedura działająca analogicznie do procedury opisanej wyżej (d. SkalaBECCA), w tym przypadku oceniane jest nasilenie epizodów manii u pacjentów z chorobą afektywną dwubiegunową. Funkcja ma ułatwić komunikację psycholog-lekarz i lekarz-pacjnt. Do budowy procedury wykorzystano konstrukcje warunkowe.
 GO
 CREATE PROC SkalaYOUNGA(@id_pacjenta INT, @data DATE) AS
     DECLARE @wynik INT
@@ -355,6 +357,7 @@ GO
 
 
 	f. Procedura oceniająca uzależnienie pacjenta od alkoholu z wykorzystaniem skali AUDIT;
+Procedura do oceny uzależnienie pacjenta od alkoholu w skali AUDIT - działa jak powyższe (d. skalaBECCA,e. skalaYOUNGA). Ułatwia interpretację otrzymanych zwrotnie wyników punktowych.
 GO
 CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
     DECLARE @wynik INT
@@ -366,49 +369,43 @@ CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
     RETURN @wynik
 GO
 
-	h. Procedura dodająca strategię leczenia dla danego pacjenta (imie, nazwisko, pesel) przypisując mu lekarza
+	h. Procedura dodająca strategię leczenia dla danego pacjenta
+Procedura dodająca strategię leczenia dla danego pacjenta (imie, nazwisko, pesel) przypisując mu lekarza
 GO
 CREATE PROC DodajLeczenie(@imie_pacj VARCHAR(256), @nazwisko_pacj VARCHAR(256), @pesel_pacj VARCHAR(11), @imie_lek VARCHAR(256), @nazw_lek VARCHAR(256), @pesel_lek VARCHAR(11))
 AS
 	BEGIN
 		DECLARE @id_pacj INT
 		SELECT @id_pacj = Pacjenci.ID FROM Pacjenci WHERE Pacjenci.PESEL = @pesel_pacj
-
 		DECLARE @id_lek INT
 		SELECT @id_lek = Pracownicy.ID FROM Pracownicy WHERE Pracownicy.PESEL = @pesel_lek
-
 		INSERT INTO StrategieLeczenia VALUES
 		( @id_pacj, NULL, NULL, NULL, @id_lek, NULL, GETDATE(), NULL )
-
 		SELECT * FROM StrategieLeczenia
 	END
 GO
 
-	i) Procedura wpisująca detale leczenia
+	i) Procedura wpisująca detale leczenia pacjenta.
+Procedura wpisująca szczegóły prowadzonego leczenia pacjenta. Umożliwi to szybki wgląd dowolnego lekarza w proces leczenia. Jest to przydatne narzędzie, ponieważ niesie najbardziej istotne informacje podczas omawiania przypadku danego pacjenta na zebraniach grupowych. 
 GO
 CREATE PROC UzupelnijLeczenie ( @id_leczenia INT, @choroba VARCHAR(256), @lek VARCHAR(256), @dawka VARCHAR(256), @oddzial VARCHAR(256) )
 AS
 	BEGIN
 		DECLARE @id_choroby INT
 		SELECT @id_choroby = Choroby.ID FROM Choroby WHERE Choroby.NazwaChoroby = @choroba
-		
 		DECLARE @id_leku INT
 		SELECT @id_leku = Leki.ID FROm Leki WHERE Leki.NazwaLeku = @lek
-
 		DECLARE @id_oddzialu INT
 		SELECT @id_oddzialu = Oddzialy.IdOddzialu FROm Oddzialy WHERE Oddzialy.NazwaOddzialy = @oddzial
-
 		UPDATE StrategieLeczenia
 		SET ID_Choroby = @id_choroby, ID_Leku = @id_leku, DawkaLeku = @dawka, ID_Oddzialu = @id_oddzialu
 		WHERE ID = @id_leczenia
-
 		SELECT * FROM StrategieLeczenia
 	END
 GO
 
-
 	j) Procedura wpisująca datę końcową leczenia
-GO
+Procedura uzupełniająca historię choroby - po zakończeniu leczenia (stosowaniu odpowiedniego leku w określonej dawce) zapisuje informacje o dacie zakończenia w bazie danych.
 CREATE PROC ZakonczLeczenie (@id_leczenia INT)
 AS
 	BEGIN
@@ -426,8 +423,6 @@ AS
 	SELECT * FROM StrategieLeczenia
 	END
 GO
-
-
 
 
 11.	Opis wyzwalaczy
@@ -470,8 +465,8 @@ PRINT 'Dodano nową strategię leczenia pacjenta.'
 SELECT * FROM inserted
 GO
 
-	e. WYZWALACZ INSTEAD OF INSERT NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
-
+	e. WYZWALACZ INSTEAD OF INSERT NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- 
+Wyzwalacz (instead of insert) stworzony dla tabeli 'Pacjenci' ma za zadanie sprawdzać poprawność i zgodność dodawanego pesela oraz daty
 GO
 CREATE TRIGGER TR_INSERT_Pacjenci ON Pacjenci
 INSTEAD OF INSERT
@@ -572,6 +567,7 @@ GO
 
 
 	f. WYZWALACZ INSTEAD OF UPDATE NA TABELI PACJENCI SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
+Wyzwalacz (instead of update) stworzony dla tabeli 'Pacjenci' ma za zadanie sprawdzać poprawność i zgodność pesela oraz daty podczas ich modyfikacji
 GO
 CREATE TRIGGER TR_UPDATE_Pacjenci ON Pacjenci
 INSTEAD OF UPDATE
@@ -663,7 +659,8 @@ DEALLOCATE Iterator
 GO
 
 
-	g. WYZWALACZ INSTEAD OF INSERT NA TABELI PRACOWNICY SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ PESELA
+	g. WYZWALACZ INSTEAD OF INSERT NA TABELI PRACOWNICY SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PRACOWNICY- POPRAWNOŚĆ PESELA
+Analogiczny przykład jak wyżej informuje o poprawności wprowadzanych danych - tym razem dla tabeli 'Pracownicy' szpitala podczas ich dodawania.
 GO
 CREATE TRIGGER TR_INSERT_Pracownicy ON Pracownicy
 INSTEAD OF INSERT
@@ -719,9 +716,8 @@ CLOSE Iterator
 DEALLOCATE Iterator
 GO
 
-
-
-	h. WYZWALACZ INSTEAD OF UPDATE NA TABELI PRACOWNICY SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ PESELA
+	h. WYZWALACZ INSTEAD OF UPDATE NA TABELI PRACOWNICY SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PRACOWNICY- POPRAWNOŚĆ PESELA
+Analogiczny przykład jak wyżej informuje o poprawności wprowadzanych danych - tym razem dla tabeli 'Pracownicy' szpitala podczas ich modyfikowania.
 GO
 CREATE TRIGGER TR_UPDATE_Pracownicy ON Pracownicy
 INSTEAD OF UPDATE
@@ -777,6 +773,7 @@ GO
 
 
 12.	Skrypt tworzący bazy danych
+
 /*
 TABLICE:
 -- TWORZENIE PACJENTOW, KONTATKU DO PACJENTOW
@@ -804,6 +801,7 @@ Pobyty [x],
 
 StrategieLeczenia [x]
 */
+
 -- TWORZENIE PACJENTOW, KONTATKU DO PACJENTOW
 
 CREATE TABLE Pacjenci (
@@ -913,6 +911,7 @@ CREATE TABLE ObjawyPacjentow (
 );
 
 -- TWORZENIE KATEGORII, LEKÓW, PRODUCENTÓW LEKÓW, INTERAKCJI, OBJAWÓW UBOCZNYCH
+
 CREATE TABLE KategoriaLeku(
 	IdKategorii INT Primary key,
 	NazwaKategorii VARCHAR(256)
@@ -1020,16 +1019,14 @@ CREATE TABLE StrategieLeczenia (
 );
 
 
-
-13.	Typowe zapytania
+13.	Typowe zapytania dla bazy danych
 
 	1) FUNKCJE I WIDOKI 
 
-	a. Dla funkcji wyliczającej wiek pacjenta F
+	a. FUNKCJA wyliczająca wiek pacjenta 
 SELECT ObliczWiek(2)
 
 	b. WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
-
 SELECT * FROM Info_Pobyty
 
 	c. WIDOK INFORMUJĄCY O WYPEŁNIENIU ODDZIALÓW SZPITALNYCH PRZEZ PACJENTÓW
@@ -1053,10 +1050,10 @@ SELECT * FROM f_Historia_Lekarzy_Pacjenta('Zofia', 'Janik')
 	i. Widok zwracający częstość występowania danych jednostek chorobowych w szpitalu
 SELECT * FROM CzestoscWystepowaniaJednostekChoorbowych
 
-	1) WYZWALACZE I PROCEDURY
+	2) WYZWALACZE I PROCEDURY
 
-	a. w tabeli pacjenci jest kolumna dataUrodzenia i Pesel na wypadek pacjentów nieposiadających numeru pesel i/lub udokumentowanej daty urodzenia - WYZWALACZ INSTEAD OF INSERT NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
-
+	a. w tabeli pacjenci znajdują się kolumny 'DataUrodzenia' i 'Pesel' na wypadek pacjentów nieposiadających numeru pesel i/lub udokumentowanej daty urodzenia - WYZWALACZ INSTEAD OF INSERT NA TABELI PACJENCI SPRAWDZAJĄCY DODAWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
+Przykład:
 INSERT INTO Pacjenci VALUES
 ('Tymoteusz', 'Jasiński', 'M', '1972-05-04', '72050459950', 1, 178),
 ('Dominik', 'Kamiński', 'M', '1988-05-19', '88051960935', 0, 185),
@@ -1065,13 +1062,12 @@ INSERT INTO Pacjenci VALUES
 ('Zygmunt', 'Sobczak', 'M', '2005-06-26', '05262649138', 1, 171),
 ('Wioletta', 'Jabłońska', 'K', '1953-11-18', NULL, 0, 187)
 
-
 	b. WYZWALACZ INSTEAD OF UPDATE NA TABELI PACJENCI SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ/ZGODNOŚĆ PESELA I DATY
 UPDATE Pacjenci
 SET Pesel = '58032157277'
 WHERE Pesel = '58032157278' -- nie przejdzie, bo byłby błędny pesel
 
-SELECT * FROm Pacjenci
+SELECT * FROM Pacjenci
 WHERE Pesel = '58032157278'
 
 UPDATE Pacjenci
@@ -1097,7 +1093,6 @@ INSERT INTO Pracownicy VALUES
 ('Janina', 'Maciejewska', 'K', '72052539942', 'Diagnostyk Laboratoryjny', 'Magister', 5863, 0, '2010-10-24', '+48 667925799', 'ul. Partyzantów 43/21', 'Sochaczew') -- nie przejdzie, ten sam PESEL
 
 	d. WYZWALACZ INSTEAD OF UPDATE NA TABELI PRACOWNICY SPRAWDZAJĄCY MODYFIKOWANE DANE DO TABELI PACJENCI- POPRAWNOŚĆ PESELA
-
 UPDATE Pracownicy
 SET Nazwisko = 'Nowak'
 WHERE Pesel = '44081854155' -- przejdzie, zmiana jest spójna
