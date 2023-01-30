@@ -2,8 +2,10 @@ Baza Danych Szpitala Psychiatrycznego - Opis
 --------------------------------------------
 Wiktoria Maciasz, Piotr Rywczak
 
+
 1.	Cel
 Celem stworzenia tej bazy danych jest uporządkowane przechowywanie informacji o pacjentach psychiatrycznych. Dzięki zapisywaniu dat ich pobytów w szpitalu jak i poszczególnych badań możliwe będzie łatwe śledzenie zmian ich stanu zdrowotnego podczas kolejnych hospitalizacji oraz zaplanowanie nowych efektywnych strategii. 
+
 
 2.	Główne założenia
 W bazie danych przechowywane będą głównie szczegółowe informacje z wszystkich pobytów hospitalizowanych pacjentów w szpitalu oraz powiązane z nimi istotne dane. 
@@ -13,20 +15,27 @@ Baza danych ułatwi także komunikację z rodziną pacjenta przechowując numery
 Lekarze korzystający z przechowywanych danych będą mogli wyświetlić informacje na temat tego czy dany pacjent jest ubezpieczony. Dostaną również wgląd do leków refundowanych, dostępnych w szpitalu, ich kategorii oraz do interakcji lekowych, w momencie, kiedy wprowadzać będą politerapię różnymi lekami. Jest to bardzo użyteczne, ponieważ niektóre leki psychiatryczne stosowane w połączeniu często mogą zmieniać swoją efektywność. Do bazy danych zostaną dodane wszystkie obserwowalne polekowe objawy uboczne – również do wglądu lekarzy w celu dopracowania odpowiedniego leczenia. Dodatkowo spisany zostanie dostawca leków wraz z firmą farmaceutyczną je produkującą, umożliwi to wgląd między innymi w minimalne różnice w produkcji.
 Jako dodatkowe dane w bazie danych zostanie zamieszczony stanowisko i kontakt do pracowników szpitala w celu ułatwienia komunikacji, a także wiadomość na temat zapełnienia i organizacji poszczególnych oddziałów.
 
+
 3.	Możliwości
 Oprócz praktycznego użycia danej bazy w prowadzeniu historii chorób pacjentów, nadzorowania ich zmieniającego się stanu zdrowia w czasie i wykorzystaniu tej wiedzy w przyszłym doborze odpowiednich strategii leczenia, utworzenie tej bazy danych da wiele dodatkowych możliwości. Największą z nich będzie składowanie olbrzymiej ilości informacji na temat pacjentów – ich płci, wieku, wagi, diagnoz, objawów chorobowych i powiązaniu tych danych z skutecznymi strategiami leczenia – takie działanie umożliwi w przyszłości zbudowanie odpowiednich algorytmów proponujących pewne leki z przeliczoną proponowaną ich dawką. Lekarz będzie mógł zestawić swoje zamierzenia z zasugerowanym przez algorytm leczeniem.  
+
 
 4.	Ograniczenia przyjęte przy projektowaniu
 Podczas tworzenia tej bazy danych ograniczyliśmy się do przechowywania danych dotyczących przede wszystkim pacjentów psychiatrycznych. Tak, aby docelowymi odbiorcami korzystającym z składowanych informacji byli lekarze/pielęgniarki.
 Nie skupiliśmy się szczegółowo na organizacji oddziałów szpitalnych, historii rachunkowej szpitala czy na sprawach organizacyjnych. Są to obszary istotne w funkcjonowaniu samego szpitala, ale nie należące do naszego obszaru zainteresowań, dotyczącego przede wszystkim pomocy w doborze odpowiednich strategii leczenia spośród dostępnego szerokiego wachlarza leków na rynku.
 
+
 5.	Diagram ER
+
 
 6.	Schemat bazy danych (diagram relacji)
 
+
 7.	Dodatkowe więzy integralności danych
 
+
 8.	Utworzone indeksy
+
 
 9.	Opis stworzonych widoków/funkcji
 
@@ -72,19 +81,17 @@ group by id_pacjenta, o.IdOddzialu) as t1
 group by t1.ID_Oddzialu, t1.NazwaOddzialu, t1.LiczbaWszystkichMiejsc
 GO
 
-
   d. WIDOK WYŚWIETLAJĄCY LEKARZY U ICH OBECNYCH PACJENTÓW
-Widok zwraca przejrzystą tabelę z najbardziej istotnymi informacjami osobowymi (Imie, Nazwisko, Stanowisko, Stopien naukowy) na temat lekarzy, którzy obecnie prowadzą leczenie dla pacjentów. Dla pacjentów tabela zwraca midzy innymi unikatowy numer pesel. Odczytanie tabeli ułatwia kulumna 'Leczy' i zaznaczenie kierunku grotem strzalki. 
+Widok zwraca przejrzystą tabelę z najbardziej istotnymi informacjami osobowymi (Imie, Nazwisko, Stanowisko, Stopien naukowy) na temat lekarzy, którzy obecnie prowadzą leczenie dla pacjentów. Dla pacjentów tabela zwraca między innymi unikatowy numer pesel. Odczytanie tabeli ułatwia kulumna 'Leczy' i zaznaczenie kierunku grotem strzalki. 
 GO
 CREATE VIEW vw_Pacjenci_Lekarzy AS
 SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta]
 FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
 GO
 
-
   e. FUNKCJA WYŚWIETLAJĄCA LEKARZA I JEGO OBECNYCH PACJENTÓW
 Funkcja  o podobnym zadaniu jak wyżej.
-Funkcja ta może pomóc w organizacji pracy w szpitalu, ponieważ wzrośnie świadomość rzeczywistego obłożenia pacjentami lekarzy. Do wygenerowania tych dnych zastosowano funkcję tablicową. 
+Funkcja ta może pomóc w organizacji pracy w szpitalu, ponieważ wzrośnie świadomość rzeczywistego obłożenia pacjentami lekarzy. Do wygenerowania tych danych zastosowano funkcję tablicową, aby wywołać funkcję niezbędne jest wprowadzenie imienia i nazwiska interesującego nas lekarza. 
 GO
 CREATE FUNCTION f_Pacjenci_Lekarza ( @imie VARCHAR(256), @nazwisko VARCHAR(256) )
 RETURNS table
@@ -122,9 +129,8 @@ WHERE P.Stanowisko = 'Lekarz'
 GROUP BY P.Nazwisko, L.NazwaLeku, P.ID, P.Imie
 GO
 
-
   h. FUNKCJA pokazująca pacjenta i jego obecnych lekarzy
-Funkcja ma na celu szybkie znalezienie lekarza prowadzącego wybranego pacjenta. 
+Funkcja ma na celu szybkie znalezienie lekarza prowadzącego wybranego pacjenta. W odróżnieniu do funkcji e. f_Pacjeci_Lekarza, dana funkcja do wywołania  potrzebuje imię i nazwisko inetersującego nas pacjenta. Jest to funkcja tablicowa, w środku zawiera pomocniczą kolumnę z grotami strzałek ułatwiającą zrozumienie relacji między wyświetlanymi osobami.
 GO
 CREATE FUNCTION f_Lekarze_Pacjenta ( @imie VARCHAR(256), @nazwisko VARCHAR(256) )
 RETURNS table
@@ -137,8 +143,8 @@ SELECT Pacjenci.ID FROM Pacjenci
 WHERE Pacjenci.Imie = @imie AND Pacjenci.Nazwisko = @nazwisko))
 GO
 
-
-  i. FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ NUMERU PESEL (SUMA KONTROLNA)
+  i. FUNKCJA SPRAWDZAJĄCA POPRAWNOŚĆ NUMERU PESEL PACJENTÓW W SZPITALU 
+  Funkcja ma na celu sprawdzać poprawność podanych numerów pesel pacjentów z wykorzytaniem sumy kontrolnej.
 GO
 CREATE FUNCTION CheckPESEL ( @PESEL VARCHAR(256) )
 RETURNS BIT
@@ -168,10 +174,10 @@ AS
 GO
 
 
-
 10.	Opis procedur składowanych
 
-	a. Procedura wylicza BMI dla danego pacjeta po wprowadzeniu jego ID oraz daty pomiaru, jest to możliwe ponieważ w tabeli Pacjenci jest zawarta informacja o wzroście w cm. 
+	a. PROCEDURA WYLICZAJĄCA BMI DLA WSKAZANEGO PACJENTA
+Procedura wylicza BMI dla danego pacjeta po wprowadzeniu jego ID oraz daty pomiaru, jest to możliwe ponieważ w tabeli Pacjenci jest zawarta informacja o wzroście w cm, a w szpitalu prowadzone pomiary wagi zapisywane w tabeli 'HistoriaWagi'. Są to przydatne informacje pod kątem sprawdzania efektów ubocznych niektórych leków psychiatrycznych wywołujących zwiększone tycie. Z drugiej strony historia zapisywana w tabeli i wyliczane BMI pozwoli na lepszą kontrolę stanu zdrowia osób z bulimią/anoreksją w szpitalu. 
 GO
 create proc bmi (@idpacjenta int, @data date) as 
     declare @waga FLOAT
@@ -184,7 +190,8 @@ create proc bmi (@idpacjenta int, @data date) as
 GO
 
 
-	b. Procedura sprawdzająca prawidłowość wyniku z badania moczu pacjenta. Konstrukcje warunkowe sprawdzają czy wynik pacjenta mieści się w zakresach normy.
+	b. Procedura sprawdzająca prawidłowość wyniku z badania moczu pacjenta. 
+Procedura sprawdza czy wyniki badania moczu pacjenta mieszczą się w podanych granicach normy, umożliwiają to konstrukcje warunkowe, które zwracają odpowiendi komunikat. Jest to w celu ułatwienia uzyskania szybciej diagnozy, wynik zwracany może też być dostępny dla pacjenta, który otrzyma ocenę swojego badania w prostej formie.  
 GO
 CREATE PROC WynikiMoczu (@id_pacjenta INT, @data DATE) AS
 	DECLARE @Barwa VARCHAR(256) 
@@ -261,9 +268,8 @@ CREATE PROC WynikiMoczu (@id_pacjenta INT, @data DATE) AS
 		PRINT 'Obecność azotynów w moczu - wynik nieprawidłowy' 
 GO
 
-
-
-	c. Procedura zwracająca prawidłowość wyników krwi pacjentów - procedura bierze poprawkę na wyznaczone normy osobno dla mężczyzn i kobiet.
+	c. Procedura zwracająca prawidłowość wyników krwi pacjentów 
+Procedura ocenia podstawowe wyniki morfologii krwi, bierze poprawkę na wyznaczone normy osobno dla mężczyzn i kobiet. Tak samo jak w przypadku badania moczu, procedura ma usprawniać postawienie diagnozy oraz może być bardziej przystępną informacją dla pacjenta.
 GO
 CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
 	DECLARE @Erytrocyty FLOAT
@@ -306,9 +312,8 @@ CREATE PROC WynikiKrwi (@id_pacjenta INT, @dataczas DATETIME) AS
 	PRINT('Poziom glukozy (mg/dl) - nieprawidłowy')
 GO
 
-
-
 	d. Procedura oceniająca wyniki pacjenta w skali depresji Becca 
+
 GO
 CREATE PROC TestBecca(@id_pacjenta INT, @data DATE) AS
     DECLARE @wynik INT
