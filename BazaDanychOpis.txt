@@ -54,7 +54,7 @@ ON Pacjenci (Nazwisko);
 
 W danej bazie danych również przydane okaże się wykorzystanie Filtered index, gdy będzie interesowało nas 'odfiltrowanie' z tabeli Pacjenci osób palących i niepalących, utworzenie indeksu znacznie obniży koszty zapytania. 
 CREATE INDEX IX_Pacjenci_Nazwisko
-ON Person (Nazwisko)
+ON Pacjenci (Nazwisko)
 INCLUDE (Imie)
 WHERE Palenie=1
 Teraz wydajność danego polecenia rośnie:
@@ -1108,7 +1108,7 @@ CREATE TABLE HistoriaStrategieLeczenia (
 	1) FUNKCJE I WIDOKI 
 
 	a. FUNKCJA wyliczająca wiek pacjenta 
-SELECT ObliczWiek(2)
+SELECT dbo.ObliczWiek(2)
 
 	b. WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
 SELECT * FROM Info_Pobyty
