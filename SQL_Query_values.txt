@@ -218,9 +218,9 @@ INSERT INTO Oddzialy VALUES
   (4, 'Oddział Psychogeriatryczny', 4, 40),
   (5, 'Oddział Psychiatryczny Dzieci i Młodzieży', 5, 40)
   
-INSERT INTO TypZatrudnienia VALUES
-	(1, 'umowa o pracę'),
-	(2, 'umowa zlecenie')
+INSERT INTO Zatrudnienia VALUES
+	(0, 'umowa o pracę'),
+	(1, 'umowa zlecenie')
 
 
 INSERT INTO Pracownicy VALUES
