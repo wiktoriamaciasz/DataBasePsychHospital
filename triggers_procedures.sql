@@ -2,7 +2,7 @@
 
 --#1
 -- info o update'owaniu pobytów w szpitalu 
-
+GO
 CREATE TRIGGER TR_UPDATE_Pobyty ON Pobyty
 AFTER UPDATE
 AS
@@ -248,5 +248,72 @@ CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
     ELSE 
     PRINT 'wynik w normie' 
     RETURN @wynik
+GO
+
+/*
+Procedura dodająca strategię leczenia dla danego pacjenta (imie, nazwisko, pesel) przypisując mu lekarza
+*/
+GO
+CREATE PROC DodajLeczenie(@imie_pacj VARCHAR(256), @nazwisko_pacj VARCHAR(256), @pesel_pacj VARCHAR(11), @imie_lek VARCHAR(256), @nazw_lek VARCHAR(256), @pesel_lek VARCHAR(11))
+AS
+	BEGIN
+		
+		DECLARE @id_pacj INT
+		SELECT @id_pacj = Pacjenci.ID FROM Pacjenci WHERE Pacjenci.PESEL = @pesel_pacj
+
+		DECLARE @id_lek INT
+		SELECT @id_lek = Pracownicy.ID FROM Pracownicy WHERE Pracownicy.PESEL = @pesel_lek
+
+		INSERT INTO StrategieLeczenia VALUES
+		( @id_pacj, NULL, NULL, NULL, @id_lek, NULL, GETDATE(), NULL )
+
+		SELECT * FROM StrategieLeczenia
+	END
+GO
+
+/*
+Procedura wpisująca detale leczenia
+*/
+GO
+CREATE PROC UzupelnijLeczenie ( @id_leczenia INT, @choroba VARCHAR(256), @lek VARCHAR(256), @dawka VARCHAR(256), @oddzial VARCHAR(256) )
+AS
+	BEGIN
+		DECLARE @id_choroby INT
+		SELECT @id_choroby = Choroby.ID FROM Choroby WHERE Choroby.NazwaChoroby = @choroba
+		
+		DECLARE @id_leku INT
+		SELECT @id_leku = Leki.ID FROm Leki WHERE Leki.NazwaLeku = @lek
+
+		DECLARE @id_oddzialu INT
+		SELECT @id_oddzialu = Oddzialy.IdOddzialu FROm Oddzialy WHERE Oddzialy.NazwaOddzialy = @oddzial
+
+		UPDATE StrategieLeczenia
+		SET ID_Choroby = @id_choroby, ID_Leku = @id_leku, DawkaLeku = @dawka, ID_Oddzialu = @id_oddzialu
+		WHERE ID = @id_leczenia
+
+		SELECT * FROM StrategieLeczenia
+	END
+GO
+
+/*
+Procedura wpisująca datę końcową leczenia
+*/
+GO
+CREATE PROC ZakonczLeczenie (@id_leczenia INT)
+AS
+	BEGIN
+	DECLARE @TEXT VARCHAR(256)
+	IF (SELECT DataZakonczenia FROM StrategieLeczenia WHERE StrategieLeczenia.ID = @id_leczenia) IS NULL BEGIN
+		UPDATE StrategieLeczenia
+		SET DataZakonczenia = GETDATE()
+		WHERE ID = @id_leczenia
+		SET @TEXT = 'Leczenie zakonczone'
+		END
+	ELSE
+		SET @TEXT = 'Leczenie już było zakonczone'
+
+	PRINT ( @TEXT )
+	SELECT * FROM StrategieLeczenia
+	END
 GO
 
