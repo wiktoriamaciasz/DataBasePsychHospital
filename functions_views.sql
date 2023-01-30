@@ -44,15 +44,25 @@ where DataZakonczenia is null
 group by id_pacjenta, o.IdOddzialu) as t1
 group by t1.ID_Oddzialu, t1.NazwaOddzialu, t1.LiczbaWszystkichMiejsc
 GO
+
+
+/*
+WIDOK pokazujący lekarzy i ich wszystkich pacjentow
+*/
+GO
+CREATE VIEW vw_Pacjenci_Lekarzy AS
+SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta], StrategieLeczenia.DataRozpoczecia, StrategieLeczenia.DataZakonczenia
+FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
+GO
+
 /*
 WIDOK pokazujący lekarzy i ich obecnych pacjentow
 */
 GO
-CREATE VIEW vw_Pacjenci_Lekarzy AS
-SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta]
-FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
+CREATE VIEW vw_Pacjenci_Lekarzy_AKT AS
+SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta], AktualneStrategieLeczenia.DataRozpoczecia
+FROM Pracownicy RIGHT JOIN AktualneStrategieLeczenia ON Pracownicy.ID = AktualneStrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON AktualneStrategieLeczenia.ID_Pacjenta = Pacjenci.ID
 GO
-
 
 /*
 FUNKCJA pokazująca lekarza i jego obecnych pacjentów
