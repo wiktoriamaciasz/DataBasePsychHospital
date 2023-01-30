@@ -139,17 +139,6 @@ CREATE TABLE KategoriaLeku(
 	NazwaKategorii VARCHAR(256)
 );
 
-CREATE TABLE Leki (
- 	ID INT PRIMARY KEY,
- 	NazwaLeku VARCHAR(255),
- 	Generacja INT,
- 	Producent INT,
- 	Kategoria INT,
- 	SubstancjaCzynna VARCHAR(255),
- 	IloscLekuNaStanie INT,
- 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii),
- );
- 
 CREATE TABLE ProducenciLekow (
 	ID INT PRIMARY KEY,
 	Nazwa VARCHAR(256),
@@ -159,6 +148,19 @@ CREATE TABLE ProducenciLekow (
 	Kraj VARCHAR(255),
 	UE BIT,
  );
+
+CREATE TABLE Leki (
+ 	ID INT PRIMARY KEY,
+ 	NazwaLeku VARCHAR(255),
+ 	Generacja INT,
+ 	Producent INT,
+ 	Kategoria INT,
+ 	SubstancjaCzynna VARCHAR(255),
+ 	IloscLekuNaStanie INT,
+ 	FOREIGN KEY(Kategoria) REFERENCES KategoriaLeku(IdKategorii),
+	FOREIGN KEY(Producent) REFERENCES ProducenciLekow(ID),
+ );
+ 
  
 CREATE TABLE InterakcjeLekowe (
 	ID_LEK_1 INT,
