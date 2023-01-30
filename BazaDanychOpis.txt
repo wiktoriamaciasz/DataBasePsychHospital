@@ -21,11 +21,126 @@ Podczas tworzenia tej bazy danych ograniczyliśmy się do przechowywania danych 
 Nie skupiliśmy się szczegółowo na organizacji oddziałów szpitalnych, historii rachunkowej szpitala czy na sprawach organizacyjnych. Są to obszary istotne w funkcjonowaniu samego szpitala, ale nie należące do naszego obszaru zainteresowań, dotyczącego przede wszystkim pomocy w doborze odpowiednich strategii leczenia spośród dostępnego szerokiego wachlarza leków na rynku.
 
 5.	Diagram ER
+
 6.	Schemat bazy danych (diagram relacji)
+
 7.	Dodatkowe więzy integralności danych
+
 8.	Utworzone indeksy
-9.	Opis stworzonych widoków
+
+9.	Opis stworzonych widoków/funkcji
+
+  a. FUNKCJA WYLICZAJĄCA WIEK PACJENTA
+Funkcja wyliczająca wiek pacjenta ma na celu zwracanie cały czas aktualnych danych - tak, aby nie trzeba było nieustannie modyfikować lat życia pacjenta przechowywanych w tabeli. Funkcja korzysta z daty urodzenia zapisanej w tabeli Pacjenci, jest poprawna co do dnia.
+Jako że pożadanym wynikiem jest jedynie wiek, utworzona została funkcja skalarna:   
+GO
+Create function ObliczWiek(@idpacjenta INT) 
+returns int 
+as 
+Begin 
+    DECLARE @DataUro DATE
+    SET @DataUro = (SELECT DataUrodzenia FROM Pacjenci WHERE ID =  @idpacjenta)
+	IF MONTH(@DataUro) = MONTH(getdate()) and day(@DataUro)>day(getdate()) 
+		return datediff(MONTH,@DataUro, getdate())/12 - 1
+	return datediff(MONTH,@DataUro, getdate())/12
+End
+GO
+
+  b. WIDOK PODAJĄCY INFORMACJE O DNIACH POBYTU W SZPITALU I LICZBIE HOSPITALIZACJI
+Widok w łatwy sposób daje wgląd do liczby dni spędzonych w szpitalu podczas kolejnych hospitalizacji pacjentów. Informacja ta może być przydatna dla lekarzy, ponieważ daje głębszy wgląd w czas trwania leczenia i wskazówki na temat nawrotu choroby.
+Dany widok łatwo jest otrzymać z wykorzystaniem fynkcji okna:
+GO
+CREATE VIEW Info_Pobyty AS
+SELECT *,
+	datediff(dd,DataPrzyjecia,DataWypisu) AS Dni,
+    COUNT(*) OVER (PARTITION BY ID_pacjenta
+		order by DataPrzyjecia
+        RANGE BETWEEN unbounded preceding AND unbounded following) [Liczba pobytów ogółem] 
+FROM Pobyty
+GO
+
+  c. WIDOK INFORMUJĄCY O WYPEŁNIENIU ODDZIALÓW SZPITALNYCH PRZEZ PACJENTÓW
+W celu uniknięcia przechowywania nadmiaru niepotrzebnych danych w tabelach, stworzono widok ilustrujący obecne zapełnienie miejsc na oddziałach. Widok wyświetla aktualną liczbę osób na oddziale, liczbę wszystkich miejsc ogólem, a także liczbę miejsc pozostałych - wolnych, w ostatiej kolumnie wyświetlana jest pełna nazwa oddziału. Stworzenie widoku jest możliwe przez wgląd do historii leczenia pacjentów znajdującej się w tabeli "StrategieLeczenia" oraz tabeli "Oddziały", mieszczącej informacje na temat struktury szpitala. 
+GO
+CREATE VIEW DostepneMiejscaNaOddzialach AS
+select count(*) as LiczbaOsobNaOddziale , t1.LiczbaWszystkichMiejsc, (t1.LiczbaWszystkichMiejsc-count(*)) AS PozostaleMiejsca ,t1.NazwaOddzialu from
+(select ID_Pacjenta, o.IdOddzialu as ID_Oddzialu, MIN(o.NazwaOddzialy) AS NazwaOddzialu, MIN(o.LiczbaMiejsc) AS LiczbaWszystkichMiejsc
+from StrategieLeczenia sl inner join oddzialy o
+on o.IdOddzialu = sl.Id_Oddzialu
+where DataZakonczenia is null
+group by id_pacjenta, o.IdOddzialu) as t1
+group by t1.ID_Oddzialu, t1.NazwaOddzialu, t1.LiczbaWszystkichMiejsc
+GO
+
+
+  d. WIDOK WYŚWIETLAJĄCY LEKARZY U ICH OBECNYCH PACJENTÓW
+Widok zwraca przejrzystą tabelę z najbardziej istotnymi informacjami osobowymi (Imie, Nazwisko, Stanowisko, Stopien naukowy) na temat lekarzy, którzy obecnie prowadzą leczenie dla pacjentów. Dla pacjentów tabela zwraca midzy innymi unikatowy numer pesel. Odczytanie tabeli ułatwia kulumna 'Leczy' i zaznaczenie kierunku grotem strzalki. 
+GO
+CREATE VIEW vw_Pacjenci_Lekarzy AS
+SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta]
+FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
+GO
+
+
+  e. FUNKCJA WYŚWIETLAJĄCA LEKARZA I JEGO OBECNYCH PACJENTÓW
+Funkcja  o podobnym zadaniu jak wyżej.
+Funkcja ta może pomóc w organizacji pracy w szpitalu, ponieważ wzrośnie świadomość rzeczywistego obłożenia pacjentami lekarzy. Do wygenerowania tych dnych zastosowano funkcję tablicową. 
+GO
+CREATE FUNCTION f_Pacjenci_Lekarza ( @imie VARCHAR(256), @nazwisko VARCHAR(256) )
+RETURNS table
+AS
+RETURN
+(SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta]
+FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
+WHERE Pracownicy.ID IN (
+SELECT Pracownicy.ID FROM Pracownicy
+WHERE Pracownicy.Imie = @imie AND Pracownicy.Nazwisko = @nazwisko))
+GO
+
+  f. Widok zwracający częstość występowania danych jednostek chorobowych w szpitalu
+Użyteczny widok wyświetlający podsumowanie danych z całego szpitala - select zwraca liczbę danych jednostek chorobowych w sumie. Pozwala to na lepsze rozporządzanie zamówieniami na leki i zatrudnieniem odpowiednich specjalistów.
+Połączono tabele: 'Pacjenci', 'WszystkieChorobyPacjentów' (ponieważ jeden pacjent może mieć więcej niż jedną diagnozę) i 'Choroby', następnie wynik pogrupowano odpowiednio i wyświetlono interesujące dane.
+GO
+CREATE VIEW CzestoscWystepowaniaJednostekChoorbowych AS
+SELECT COUNT(*) AS [Liczba Pacjentów], NazwaChoroby [Nazwa Choroby] FROM Pacjenci P
+INNER JOIN 
+WszystkieChorobyPacjentow WCP ON P.ID = WCP.ID_Pacjenta
+INNER JOIN
+Choroby C ON WCP.ID_Choroby=C.IDChoroby
+GROUP BY NazwaChoroby
+GO
+
+  g. Widok ilustrujący najpopularniejsze leki używane przez lekarzy w terapii pacjentów w danym szpitalu
+Do stworzenia tego wyniku połączono tabele 'StrategieLeczenia' przechowującą historię hospitalizacji pacjentów i poszczególnych ich lekarzy prowadzących, tabelę 'Leki' oraz 'Pracownicy', z której wydzielono tylko lekarzy. Operacje te miały na celu uzyskanie danych o popularności danych leków stosowanych w terapiach i wybieranych przez konkretnych lekarzy. Ma to na celu zwiększyć możliwości stosowania najbardziej odpowiednich medykamentów.    
+GO
+CREATE VIEW UzycieLekow AS
+SELECT P.ID, P.Imie, P.Nazwisko, L.NazwaLeku, COUNT(NazwaLeku) Ilość FROM Pracownicy P
+INNER JOIN StrategieLeczenia SL
+ON P.ID=SL.LekarzProwadzacy
+INNER JOIN Leki L ON L.ID= SL.ID_LEKU 
+WHERE P.Stanowisko = 'Lekarz'
+GROUP BY P.Nazwisko, L.NazwaLeku, P.ID, P.Imie
+GO
+
+
+  h. FUNKCJA pokazująca pacjenta i jego obecnych lekarzy
+Funkcja ma na celu szybkie znalezienie lekarza prowadzącego wybranego pacjenta. 
+GO
+CREATE FUNCTION f_Lekarze_Pacjenta ( @imie VARCHAR(256), @nazwisko VARCHAR(256) )
+RETURNS table
+AS
+RETURN
+(SELECT Pracownicy.Imie AS [Imie Lekarza], Pracownicy.Nazwisko [Nazwisko Lekarza], Pracownicy.Stanowisko, Pracownicy.StopienNaukowy, '=>' AS Leczy, Pacjenci.Imie [Imie Pacjenta], Pacjenci.Nazwisko [Nazwisko Pacjenta], Pacjenci.Pesel [PESEL Pacjenta]
+FROM Pracownicy RIGHT JOIN StrategieLeczenia ON Pracownicy.ID = StrategieLeczenia.LekarzProwadzacy INNER JOIN Pacjenci ON StrategieLeczenia.ID_Pacjenta = Pacjenci.ID
+WHERE Pacjenci.ID IN (
+SELECT Pacjenci.ID FROM Pacjenci
+WHERE Pacjenci.Imie = @imie AND Pacjenci.Nazwisko = @nazwisko))
+GO
+
+
 10.	Opis procedur składowanych
 11.	Opis wyzwalaczy
 12.	Skrypt tworzący bazy danych
 13.	Typowe zapytania
+14. Strategie pielęgnacji bazy danych (kopie zapasowe)
+W celu pielęgnaci bazy danych za pomocą SQL Server utworzono backup bazy danych pt. "BazaDanychSzpitala-KopiaZapasowa", który zapisano na dysku. Dodatkowym zabezpieczeniem jest przechowywanie Projektu w prywatnym repozytorium na Githubie.  
