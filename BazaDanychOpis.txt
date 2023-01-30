@@ -35,6 +35,20 @@ Nie skupiliśmy się szczegółowo na organizacji oddziałów szpitalnych, histo
 
 
 8.	Utworzone indeksy
+Utworzenie indeksów w danej bazie danych umożliwi wzrost wydajności wyszukiwania poszczególnych inforamcji. Duże ilości danych przechowywala będzie przykładowo tabela Pacjenci, wyszukiwanie konkretnego nazwiska będzie ciągnęło za sobą więc duży koszt, ponieważ na kolumnie Nazwisko nie ma indeksu (tak więc tabela musiała zostać przejrzana w całości).
+Kiedy na kolumnie Nazwisko zakładamy indeks typu nonclustered wydajność operacji select wzrośnie:
+CREATE INDEX IX_Pacjenci_Nazwisko
+ON Pacjenci (Nazwisko); 
+
+W danej bazie danych również przydane okaże się wykorzystanie Filtered index, gdy będzie interesowało nas 'odfiltrowanie' z tabeli Pacjenci osób palących i niepalących, utworzenie indeksu znacznie obniży koszty zapytania. 
+CREATE INDEX IX_Pacjenci_Nazwisko
+ON Person (Nazwisko)
+INCLUDE (Imie)
+WHERE Palenie=1
+Teraz wydajność danego polecenia rośnie:
+SELECT Nazwisko,Imie
+FROM Pacjenci
+WHERE Palenie=1
 
 
 9.	Opis stworzonych widoków/funkcji
