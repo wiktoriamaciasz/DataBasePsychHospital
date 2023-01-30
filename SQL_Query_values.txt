@@ -276,6 +276,100 @@ INSERT INTO Pracownicy VALUES
 -- WPROWADZENIE DANYCH PRZYKŁADOWYCH DO POBYTÓW PACJENTÓW W SZPITALU
 
 -- WPROWADZENIE DANYCH PRZYKŁADOWYCH DO STRATEGII LECZENIA
-INSERT INTO StrategieLeczenia VALUES
-(1,4,14,5,30,12,1,'2020-11-21','2020-12-01'),
-(1,6,6,5,50,12,1,'2022-10-20','2022-10-30')
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- WYKONAĆ PRZED DODANIEM TRIGGERÓW!!!!!!!!!!!!!!!!!!!!
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+INSERT INTO AktualneStrategieLeczenia VALUES
+(62, 11, 1, '70', 26, 1, '2012-12-19'),
+(38, 12, 4, '88', 28, 1, '2010-04-27'),
+(15, 13, 7, '108', 30, 2, '2020-11-23'),
+(66, 14, 10, '130', 32, 4, '2022-09-02'),
+(42, 1, 13, '154', 34, 2, '2021-12-17'),
+(18, 2, 1, '180', 36, 1, '2012-08-15'),
+(69, 3, 4, '208', 38, 1, '2009-04-10'),
+(69, 3, 4, '208', 38, 1, '2009-04-10'),
+(46, 4, 7, '238', 40, 2, '2018-03-04'),
+(22, 5, 10, '270', 42, 4, '2014-02-07'),
+(72, 6, 13, '304', 44, 2, '2012-10-09'),
+(49, 7, 1, '340', 46, 1, '2021-02-23'),
+(26, 8, 4, '378', 48, 1, '2017-12-26'),
+(2, 9, 7, '418', 50, 2, '2010-05-08'),
+(56, 13, 4, '98', 58, 1, '2009-01-17'),
+(32, 14, 7, '148', 60, 2, '2016-02-01'),
+(9, 1, 10, '200', 62, 4, '2016-04-23'),
+(60, 2, 13, '254', 64, 2, '2017-04-09'),
+(36, 3, 1, '310', 66, 1, '2011-05-16'),
+(12, 4, 4, '368', 68, 1, '2019-07-14'),
+(20, 10, 7, '258', 5, 2, '2011-04-29'),
+(62, 11, 1, '70', 26, 1, '2015-08-04'),
+(38, 12, 4, '88', 28, 1, '2020-02-23'),
+(15, 13, 7, '108', 30, 2, '2018-08-18'),
+(66, 14, 10, '130', 32, 4, '2018-12-09'),
+(42, 1, 13, '154', 34, 2, '2019-07-07'),
+(18, 2, 1, '180', 36, 1, '2016-01-09'),
+(69, 3, 4, '208', 38, 1, '2017-08-30'),
+(46, 4, 7, '238', 40, 2, '2019-09-27'),
+(22, 5, 10, '270', 42, 4, '2019-12-29'),
+(72, 6, 13, '304', 44, 2, '2022-09-20'),
+(49, 7, 1, '340', 46, 1, '2015-12-23'),
+(26, 8, 4, '378', 48, 1, '2015-06-12'),
+(2, 9, 7, '418', 50, 2, '2017-04-25'),
+(52, 10, 10, '460', 52, 4, '2015-02-14'),
+(29, 11, 13, '4', 54, 2, '2015-03-24'),
+(6, 12, 1, '50', 56, 1, '2015-12-09'),
+(56, 13, 4, '98', 58, 1, '2022-09-27'),
+(32, 14, 7, '148', 60, 2, '2019-07-16'),
+(9, 1, 10, '200', 62, 4, '2020-10-01'),
+(60, 2, 13, '254', 64, 2, '2018-10-16'),
+(36, 3, 1, '310', 66, 1, '2020-08-01'),
+(12, 4, 4, '368', 68, 1, '2019-02-24')
+
+INSERT INTO HistoriaStrategieLeczenia (ID, ID_Pacjenta, ID_Choroby, ID_Leku, DawkaLeku, LekarzProwadzacy, ID_Oddzialu, DataRozpoczecia, DataZakonczenia)
+SELECT AktualneStrategieLeczenia.ID, AktualneStrategieLeczenia.ID_Pacjenta, AktualneStrategieLeczenia.ID_Choroby, AktualneStrategieLeczenia.ID_Leku, AktualneStrategieLeczenia.DawkaLeku, AktualneStrategieLeczenia.LekarzProwadzacy, AktualneStrategieLeczenia.ID_Oddzialu, AktualneStrategieLeczenia.DataRozpoczecia, NULL AS [DataZakonczenia]
+FROM AktualneStrategieLeczenia
+WHERE AktualneStrategieLeczenia.ID IN (1, 2, 3, 4, 5, 7, 8, 9, 12, 13 )
+
+DELETE FROM AktualneStrategieLeczenia
+WHERE ID IN (1, 2, 3, 4, 5, 7, 8, 9, 12, 13 )
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2020-12-01'
+WHERE ID = 1
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-10-30'
+WHERE ID = 2
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-06-13'
+WHERE ID = 3
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-12-18'
+WHERE ID = 4
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-12-23'
+WHERE ID = 5
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2016-03-19'
+WHERE ID = 7
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2015-12-12'
+WHERE ID = 8
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-06-11'
+WHERE ID = 9
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2022-05-16'
+WHERE ID = 12
+
+UPDATE HistoriaStrategieLeczenia
+SET DataZakonczenia = '2020-06-23'
+WHERE ID = 13
