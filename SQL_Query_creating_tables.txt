@@ -142,7 +142,7 @@ CREATE TABLE KategoriaLeku(
 CREATE TABLE ProducenciLekow (
 	ID INT PRIMARY KEY,
 	Nazwa VARCHAR(256),
-	NumerKontaktowy INT,
+	NumerKontaktowy VARCHAR(255),
 	Email VARCHAR(255),
 	Adres VARCHAR(255),
 	Kraj VARCHAR(255),
