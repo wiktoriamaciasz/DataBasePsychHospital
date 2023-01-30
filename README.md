@@ -1,15 +1,15 @@
 
-#Baza Danych Szpitala Psychiatrycznego - Opis
+# Baza Danych Szpitala Psychiatrycznego - Opis
 --------------------------------------------
 ##Wiktoria Maciasz, Piotr Rywczak
 
 
-##1.	Cel
+## 1.	Cel
 Celem stworzenia tej bazy danych jest uporządkowane przechowywanie informacji o pacjentach psychiatrycznych. 
 Dzięki zapisywaniu dat ich pobytów w szpitalu jak i poszczególnych badań możliwe będzie łatwe śledzenie zmian ich 
 stanu zdrowotnego podczas kolejnych hospitalizacji oraz zaplanowanie nowych efektywnych strategii. 
 
-##2.	Główne założenia
+## 2.	Główne założenia
 W bazie danych przechowywane będą głównie szczegółowe informacje z wszystkich pobytów hospitalizowanych pacjentów w 
 szpitalu oraz powiązane z nimi istotne dane. 
 Zapisywane będą wyniki pacjentów z badań podstawowych (badanie moczu, krwi) umożliwiające wykluczenie organicznego 
@@ -33,7 +33,7 @@ produkującą, umożliwi to wgląd między innymi w minimalne różnice w produk
 Jako dodatkowe dane w bazie danych zostanie zamieszczony stanowisko i kontakt do pracowników szpitala w celu ułatwienia komunikacji, 
 a także wiadomość na temat zapełnienia i organizacji poszczególnych oddziałów.
 
-##3.	Możliwości
+## 3.	Możliwości
 Oprócz praktycznego użycia danej bazy w prowadzeniu historii chorób pacjentów, nadzorowania ich zmieniającego się stanu zdrowia w czasie
 i wykorzystaniu tej wiedzy w przyszłym doborze odpowiednich strategii leczenia, utworzenie tej bazy danych da wiele dodatkowych możliwości. 
 Największą z nich będzie składowanie olbrzymiej ilości informacji na temat pacjentów – ich płci, wieku, wagi, diagnoz, objawów chorobowych 
