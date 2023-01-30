@@ -32,6 +32,18 @@ Nie skupiliśmy się szczegółowo na organizacji oddziałów szpitalnych, histo
 
 
 7.	Dodatkowe więzy integralności danych
+Aby zachować integralność w bazie danych zastosowano klucze obce, dodatkowo ograniczenie check w tabelach, przykładowo: 
+CREATE TABLE Pobyty (
+	ID_pacjenta INT,
+	DataPrzyjecia DATE,
+	DataWypisu DATE,
+	PRIMARY KEY (ID_Pacjenta, DataPrzyjecia),
+	FOREIGN KEY(ID_Pacjenta) REFERENCES Pacjenci(ID),
+	CHECK (DataWypisu>DataPrzyjecia)
+);
+Ograniczenie CHECK nie pozwala aby Data Wypisu była wcześniejsza niż Data Przyjęcia pacjenta. 
+
+Zaprojektowano też funkcję sprawdzającą poprawność numeru pesel Pacjentów/Lekarzy oraz wyzwalacze sprawdzające modyfikowane dane w tabelach.
 
 
 8.	Utworzone indeksy
