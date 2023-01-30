@@ -103,6 +103,15 @@ CREATE PROC SkalaYOUNGA(@id_pacjenta INT, @data DATE) AS
 15. PROCEDURA OCENIAJĄCA UZALEŻNIENIE OD ALKOHOLU W SKALI AUDIT
 CREATE PROC SkalaAudit (@id_pacjenta INT, @data DATE) AS
 
+16. PROCEDURA dodająca strategię leczenia dla danego pacjenta (imie, nazwisko, pesel) przypisując mu lekarza
+CREATE PROC DodajLeczenie(@imie_pacj VARCHAR(256), @nazwisko_pacj VARCHAR(256), @pesel_pacj VARCHAR(11), @imie_lek VARCHAR(256), @nazw_lek VARCHAR(256), @pesel_lek VARCHAR(11))
+
+17. PROCEDURA wpisująca detale leczenia
+CREATE PROC UzupelnijLeczenie ( @id_leczenia INT, @choroba VARCHAR(256), @lek VARCHAR(256), @dawka VARCHAR(256), @oddzial VARCHAR(256) )
+
+18. PROCEDURA wpisująca datę końcową leczenia w obecnym dniu
+CREATE PROC ZakonczLeczenie (@id_leczenia INT)
+
 DO ZROBIENIA
 - Procedury sprawdzajace wyniki testow psychologicznych - pozostałe
 
